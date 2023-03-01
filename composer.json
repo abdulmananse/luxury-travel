@@ -9,10 +9,12 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "johngrogg/ics-parser": "^3.2",
+        "laravel/breeze": "1.9.2",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "revolution/laravel-google-sheets": "^5.8"
+        "revolution/laravel-google-sheets": "^5.8",
+        "spatie/laravel-permission": "^5.7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
