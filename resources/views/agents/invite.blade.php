@@ -12,7 +12,9 @@
 
                     <form method="POST" action="{{ route('agents.sendInvitation') }}">
                         @csrf
-                        <x-textarea id="email" class="block mt-1 w-full" name="emails" required />
+                        <x-textarea id="email" class="block mt-1 w-full" name="emails" />
+                        {!! $errors->first('emails', '<label class="error">:message</label>') !!}
+
                         <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">
                                 {{ __('Send Email') }}

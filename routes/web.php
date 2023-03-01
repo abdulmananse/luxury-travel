@@ -26,6 +26,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('agents/invite', [AgentController::class, 'invite'])->name('agents.invite')->middleware('permission:Manage Agents');
     Route::post('agents/invite', [AgentController::class, 'sendInvitation'])->name('agents.sendInvitation')->middleware('permission:Manage Agents');
+    
+    Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
+    Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
 
     Route::post('create-task', [HomeController::class, 'createTask']);
     Route::get('detail/{id}', [HomeController::class, 'show']);

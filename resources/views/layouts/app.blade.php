@@ -16,6 +16,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -34,6 +35,11 @@
             {{ $slot }}
         </main>
     </div>
+
+
+    @stack('scripts')
+
+    @include('layouts.notification')
 </body>
 
 </html>
