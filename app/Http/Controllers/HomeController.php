@@ -92,16 +92,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function search(Request $request)
     {
-
-        $salesPersons = $this->salesPersons;
-
-        $salesPersonsList = [];
-        if (isset($salesPersons->type_config->options)) {
-            $salesPersonsList = $salesPersons->type_config->options;
-        }
-
         $properties = [];
         $startDate = $endDate = '';
         if ($request->filled('daterange')) {
@@ -145,7 +137,7 @@ class HomeController extends Controller
             }
 
             $page = ($request->filled('page')) ? (int) $request->page : 1;
-            $paginate = 200;
+            $paginate = 6;
 
             $query = 'SELECT
                     properties.id,
@@ -205,7 +197,17 @@ class HomeController extends Controller
         $cities = Property::whereNotNull('destination')->groupBy('destination')->pluck('destination');
         $maxBedrooms = Property::select(DB::raw('MAX(CAST(properties.no_of_bedrooms AS UNSIGNED)) as no_of_bedrooms'))->first()->no_of_bedrooms;
 
-        return view('properties', compact('cities', 'properties', 'maxBedrooms', 'salesPersonsList', 'endDate', 'startDate'));
+        return view('properties', get_defined_vars());
+    }
+    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        return view('home');
     }
 
     public function errorLogs(Request $request)
