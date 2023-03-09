@@ -1,94 +1,94 @@
 // paginacija 
-const cardsPerPage = 9;
-const cardsContainer = document.querySelector('.properties-card');
-const cards = Array.from(cardsContainer.querySelectorAll('.card-info'));
-const pagination = document.querySelector('.pagination');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
+// const cardsPerPage = 9;
+// const cardsContainer = document.querySelector('.properties-card');
+// const cards = Array.from(cardsContainer.querySelectorAll('.card-info'));
+// const pagination = document.querySelector('.pagination');
+// const prevBtn = document.querySelector('.prev-btn');
+// const nextBtn = document.querySelector('.next-btn');
 let currentPage = 1;
 
 function showCards(page) {
-  const start = (page - 1) * cardsPerPage;
-  const end = start + cardsPerPage;
-  cards.forEach((card, index) => {
-    if (index >= start && index < end) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
+  // const start = (page - 1) * cardsPerPage;
+  // const end = start + cardsPerPage;
+  // cards.forEach((card, index) => {
+  //   if (index >= start && index < end) {
+  //     card.style.display = 'block';
+  //   } else {
+  //     card.style.display = 'none';
+  //   }
 
-  });
+  // });
 }
 
 function showPageNumbers() {
-  const totalPages = Math.ceil(cards.length / cardsPerPage);
-  pagination.innerHTML = '';
-  for (let i = 1; i <= totalPages; i++) {
-    const page = document.createElement('span');
-    page.textContent = i;
-    if (i === currentPage) {
-      page.classList.add('current-page');
-    }
-    pagination.appendChild(page);
-  }
+  // const totalPages = Math.ceil(cards.length / cardsPerPage);
+  // pagination.innerHTML = '';
+  // for (let i = 1; i <= totalPages; i++) {
+  //   const page = document.createElement('span');
+  //   page.textContent = i;
+  //   if (i === currentPage) {
+  //     page.classList.add('current-page');
+  //   }
+  //   pagination.appendChild(page);
+  // }
 }
 
-prevBtn.addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
-    showCards(currentPage);
-    showPageNumbers();
-  }
+// prevBtn.addEventListener('click', () => {
+//   if (currentPage > 1) {
+//     currentPage--;
+//     showCards(currentPage);
+//     showPageNumbers();
+//   }
 
-  if (currentPage == 1) {
-    prevBtn.style.color = '#fff8f0';
-    nextBtn.style.color = '#0b3841';
+//   if (currentPage == 1) {
+//     prevBtn.style.color = '#fff8f0';
+//     nextBtn.style.color = '#0b3841';
 
-  }else{
-    prevBtn.style.color = '#0b3841';
-    nextBtn.style.color = '#0b3841';
-  }
-});
+//   }else{
+//     prevBtn.style.color = '#0b3841';
+//     nextBtn.style.color = '#0b3841';
+//   }
+// });
 
-nextBtn.addEventListener('click', () => {
-  if (currentPage < Math.ceil(cards.length / cardsPerPage)) {
-    currentPage++;
-    showCards(currentPage);
-    showPageNumbers();
+// nextBtn.addEventListener('click', () => {
+//   if (currentPage < Math.ceil(cards.length / cardsPerPage)) {
+//     currentPage++;
+//     showCards(currentPage);
+//     showPageNumbers();
 
-    if (currentPage == Math.ceil(cards.length / cardsPerPage)) {
-      nextBtn.style.color = '#fff8f0';
-      prevBtn.style.color = '#0b3841';
+//     if (currentPage == Math.ceil(cards.length / cardsPerPage)) {
+//       nextBtn.style.color = '#fff8f0';
+//       prevBtn.style.color = '#0b3841';
 
-    }else{
-      nextBtn.style.color = '#0b3841';
-      prevBtn.style.color = '#0b3841';
-    }
+//     }else{
+//       nextBtn.style.color = '#0b3841';
+//       prevBtn.style.color = '#0b3841';
+//     }
 
-  }
-});
+//   }
+// });
 
-pagination.addEventListener('click', (event) => {
-  if (event.target.tagName === 'SPAN') {
-    currentPage = parseInt(event.target.textContent);
-    showCards(currentPage);
-    showPageNumbers();
+// pagination.addEventListener('click', (event) => {
+//   if (event.target.tagName === 'SPAN') {
+//     currentPage = parseInt(event.target.textContent);
+//     showCards(currentPage);
+//     showPageNumbers();
 
 
-    if (currentPage == Math.ceil(cards.length / cardsPerPage)) {
-      nextBtn.style.color = '#fff8f0';
-      prevBtn.style.color = '#0b3841';
+//     if (currentPage == Math.ceil(cards.length / cardsPerPage)) {
+//       nextBtn.style.color = '#fff8f0';
+//       prevBtn.style.color = '#0b3841';
 
-    }
+//     }
 
-    if (currentPage == 1) {
-      prevBtn.style.color = '#fff8f0';
-      nextBtn.style.color = '#0b3841';
+//     if (currentPage == 1) {
+//       prevBtn.style.color = '#fff8f0';
+//       nextBtn.style.color = '#0b3841';
   
-    }
+//     }
 
-  }
-});
+//   }
+// });
 
 showCards(currentPage);
 showPageNumbers();

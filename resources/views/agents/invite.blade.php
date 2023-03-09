@@ -1,29 +1,32 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Invite Agents') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-
-                    <form method="POST" action="{{ route('agents.sendInvitation') }}">
-                        @csrf
-                        <x-textarea id="email" class="block mt-1 w-full" name="emails" />
-                        {!! $errors->first('emails', '<label class="error">:message</label>') !!}
-
-                        <div class="flex items-center justify-end mt-4">
-                            <x-button class="ml-3">
-                                {{ __('Send Email') }}
-                            </x-button>
-                        </div>
-                    </form>
-
-                </div>
+    <section class="backgroundColor">
+        <div class="container add-agents-page">
+            <div class="back-step">
+                <img src="./img/arrowinvalid-name@3x.png" />
+                <p>Back</p>
             </div>
+            <h3>Add agents</h3>
+            <p id="add-agents-p" style="font-family: 'playfair-display-regular' !important">
+                Enter up to 100 travel agent emails, separated by commas or by space.
+            </p>
+
+            <form method="POST" action="{{ route('agents.sendInvitation') }}">
+                @csrf
+
+                <x-textarea id="email" rows="9" name="emails" /> <br />
+                {!! $errors->first('emails', '<label class="error">:message</label>') !!}
+                <div class="d-flex add-invites">
+                    <p>
+                        Duplicates will be removed. Already active<br />emails will not
+                        receive another invite.
+                    </p>
+                    <div class="agents-button">
+                        <button class="cancel">Cancel</button>
+                        <button type="submit" class="invites">Send Invites</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>
+    </section>
+
 </x-app-layout>

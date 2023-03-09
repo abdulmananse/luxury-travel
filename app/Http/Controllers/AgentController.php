@@ -11,6 +11,18 @@ use Session;
 
 class AgentController extends Controller
 {
+    public function index (Request $request)
+    {
+        $agents = Invitation::orderBy('id', 'desc');
+
+        if ($request->filled('name')) {
+            $agents->where('email', $request->name);
+        }
+
+        $agents = $agents->get();
+        return view('agents.index', get_defined_vars());
+    }
+
     public function invite ()
     {
         return view('agents.invite');

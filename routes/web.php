@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('search', [HomeController::class, 'search'])->name('search')->middleware('permission:Search Properties');
     Route::get('search-properties', [HomeController::class, 'searchProperties'])->middleware('permission:Search Properties');
 
+    Route::get('agents', [AgentController::class, 'index'])->name('agents.index')->middleware('permission:Manage Agents');
     Route::get('agents/invite', [AgentController::class, 'invite'])->name('agents.invite')->middleware('permission:Manage Agents');
     Route::post('agents/invite', [AgentController::class, 'sendInvitation'])->name('agents.sendInvitation')->middleware('permission:Manage Agents');
     

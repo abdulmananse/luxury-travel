@@ -117,6 +117,9 @@ class HomeController extends Controller
                     case 'No. of Bedrooms':
                         $orderBy = 'CAST(properties.no_of_bedrooms AS UNSIGNED) ASC';
                         break;
+                    case 'No. of Guests':
+                        $orderBy = 'CAST(properties.max_guests AS UNSIGNED) ASC';
+                        break;
                     case 'Property Type':
                         $orderBy = 'properties.property_type ASC';
                         break;
@@ -137,7 +140,7 @@ class HomeController extends Controller
             }
 
             $page = ($request->filled('page')) ? (int) $request->page : 1;
-            $paginate = 6;
+            $paginate = 12;
 
             $query = 'SELECT
                     properties.id,
@@ -196,6 +199,7 @@ class HomeController extends Controller
 
         $cities = Property::whereNotNull('destination')->groupBy('destination')->pluck('destination');
         $maxBedrooms = Property::select(DB::raw('MAX(CAST(properties.no_of_bedrooms AS UNSIGNED)) as no_of_bedrooms'))->first()->no_of_bedrooms;
+        $maxGuests = Property::select(DB::raw('MAX(CAST(properties.max_guests AS UNSIGNED)) as max_guests'))->first()->max_guests;
 
         return view('properties', get_defined_vars());
     }

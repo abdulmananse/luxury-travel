@@ -46,6 +46,7 @@
     <section class="backgroundColor">
         <div class="container">
             <div class="agents-menu">
+                <a class="agents-a active" href="{{ route('agents.index') }}">Agents</a>
                 <a class="agents-a active" href="{{ route('search') }}">Property Search</a>
                 <a class="profile-a" href="#">Profile</a>
                 <a class="logout" href="{{ route('logout') }}">Logout</a>
