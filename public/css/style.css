@@ -2273,3 +2273,7 @@ select option:focus {
     padding: 10px 20px;
   }
 }
+
+
+.company-form, .profile-form-agency {color: rgb(11, 56, 65);}
+.profile-left .active {color: rgb(166, 90, 63);}

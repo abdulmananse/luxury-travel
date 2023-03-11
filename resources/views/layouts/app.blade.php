@@ -23,7 +23,7 @@
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
-    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script> --}}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -46,8 +46,12 @@
     <section class="backgroundColor">
         <div class="container">
             <div class="agents-menu">
-                <a class="agents-a active" href="{{ route('agents.index') }}">Agents</a>
-                <a class="agents-a active" href="{{ route('search') }}">Property Search</a>
+                <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
+                    href="{{ route('companies.index') }}">Companies</a>
+                <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
+                    href="{{ route('agents.index') }}">Agents</a>
+                <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
+                    href="{{ route('agents.index') }}" href="{{ route('search') }}">Property Search</a>
                 <a class="profile-a" href="#">Profile</a>
                 <a class="logout" href="{{ route('logout') }}">Logout</a>
             </div>

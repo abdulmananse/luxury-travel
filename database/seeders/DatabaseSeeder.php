@@ -31,6 +31,10 @@ class DatabaseSeeder extends Seeder
             $role->syncPermissions([$permission1->id, $permission2->id]);
         }
 
+        Role::updateOrCreate([
+            'name' => 'Company'
+        ]);
+
         $agentRole = Role::updateOrCreate([
             'name' => 'Agent'
         ]);
