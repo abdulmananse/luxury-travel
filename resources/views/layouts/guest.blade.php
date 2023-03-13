@@ -53,18 +53,18 @@
         <section class="backgroundColor">
             <div class="container">
                 <div class="agents-menu">
-                    @can('Companies Index')
-                        <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
-                            href="{{ route('companies.index') }}">Companies</a>
-                    @endcan
-                    @can('Agents Index')
-                        <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
-                            href="{{ route('agents.index') }}">Agents</a>
-                    @endcan
-                    @can('Search Properties')
-                        <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
-                            href="{{ route('search') }}">Property Search</a>
-                    @endcan
+                    {{-- @can('Companies Index') --}}
+                    <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
+                        href="{{ route('companies.index') }}">Companies</a>
+                    {{-- @endcan --}}
+                    {{-- @can('Agents Index') --}}
+                    <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
+                        href="{{ route('agents.index') }}">Agents</a>
+                    {{-- @endcan --}}
+                    {{-- @can('Search Properties') --}}
+                    <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
+                        href="{{ route('search') }}">Property Search</a>
+                    {{-- @endcan --}}
                     <a class="profile-a" href="#">Profile</a>
                     <a class="logout" href="{{ route('logout') }}">Logout</a>
                 </div>
