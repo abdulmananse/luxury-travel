@@ -9,7 +9,9 @@
                         Invite travel agents to see your inventory, search, and send you
                         targeted leads.
                     </p>
+                    @if(!Auth::user()->id)
                     <button class="signUp-btn">Sign up</button>
+                    @endif
                 </div>
                 <div class="col-xl-6 img-galerry">
                     <div class="left-img">

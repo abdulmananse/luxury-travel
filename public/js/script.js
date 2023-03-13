@@ -1,4 +1,4 @@
-// paginacija 
+// paginacija
 // const cardsPerPage = 9;
 // const cardsContainer = document.querySelector('.properties-card');
 // const cards = Array.from(cardsContainer.querySelectorAll('.card-info'));
@@ -84,11 +84,12 @@ function showPageNumbers() {
 //     if (currentPage == 1) {
 //       prevBtn.style.color = '#fff8f0';
 //       nextBtn.style.color = '#0b3841';
-  
+
 //     }
 
 //   }
 // });
+;
 
 showCards(currentPage);
 showPageNumbers();

@@ -25,7 +25,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         if ($role) {
-            $user = User::updateOrCreate(['username' => 'contact_person', 'name' => 'Contact Person', 'email' => 'contact.person@gmail.com'], ['password' => Hash::make('12345678')]);
+            $user = User::updateOrCreate([
+                'username' => 'contact_person',
+                'name' => 'Contact Person',
+                'email' => 'contact.person@gmail.com'
+            ], [
+                'password' => Hash::make('12345678')
+            ]);
             $user->syncRoles($role);
 
             $role->syncPermissions([$permission1->id, $permission2->id]);
@@ -40,12 +46,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         if ($agentRole) {
-            $user = User::updateOrCreate(['username' => 'agent', 'name' => 'Agent', 'email' => 'agent@gmail.com'], [ 'password' => Hash::make('12345678')]);
+            $user = User::updateOrCreate([
+                'username' => 'agent',
+                'name' => 'Agent',
+                'email' => 'agent@gmail.com'
+            ], [
+                'password' => Hash::make('12345678')
+            ]);
             $user->syncRoles($agentRole);
-            
+
             $agentRole->syncPermissions([$permission1->id]);
         }
 
-        
+
     }
 }

@@ -1562,27 +1562,58 @@ select option:focus {
   outline: none;
 }
 
-/* .pagination {
+.pagination {
   display: flex;
   margin: 0 20px;
   justify-content: center;
-  position: absolute;
-  bottom: 10px;
-  left: 47%;
 }
 
-.pagination span {
+.pagination .page-item,
+.pagination .page-item .page-link,
+.pagination .page-item.disabled .page-link  {
   font-family: "playfair-display-regular";
   font-size: 24px;
   line-height: 1.5;
   color: #0b3841;
   margin-right: 8px;
   cursor: pointer;
+  margin: 0;
+  background: none;
+  border: none;
 }
 
-.pagination span.current-page {
+.pagination span.current-page,
+.pagination .page-item.active .page-link {
   color: #d08e56;
+  margin: 0;
+  background: none;
+  border: none;
 }
+
+.pagination .page-item:first-child{
+    visibility: hidden;
+    position: relative;
+}
+.pagination .page-item:first-child:after{
+    visibility: visible;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    content: "Prev";
+}
+
+.pagination .page-item:last-child{
+    visibility: hidden;
+    position: relative;
+}
+.pagination .page-item:last-child:after{
+    visibility: visible;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    content: "Next";
+}
+
 .pagination-container {
   display: flex;
   justify-content: space-between;
@@ -1602,7 +1633,7 @@ select option:focus {
   font-size: 14px;
   line-height: 1.71;
   color: #0b3841;
-} */
+}
 
 @media (max-width: 1400px) {
   .second-info {

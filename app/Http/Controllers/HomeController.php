@@ -103,6 +103,10 @@ class HomeController extends Controller
                 $destination = $request->city;
                 $where .= ' AND destination LIKE "%' . $destination . '%" ';
             }
+            if ($request->filled('guests')) {
+                $guests = (int) $request->guests;
+                $where .= ' AND max_guests = ' . $guests . ' ';
+            }
             if ($request->filled('bedrooms')) {
                 $bedrooms = (int) $request->bedrooms;
                 $where .= ' AND no_of_bedrooms = ' . $bedrooms . ' ';
@@ -220,7 +224,7 @@ class HomeController extends Controller
             DB::raw('MAX(CAST(properties.no_of_bathrooms AS UNSIGNED)) as no_of_bathrooms')
             )->first();
 
-        
+
         $maxBedrooms = $propertyAttr->no_of_bedrooms;
         $maxGuests = $propertyAttr->max_guests;
         $bathrooms = $propertyAttr->no_of_bathrooms;
@@ -229,7 +233,7 @@ class HomeController extends Controller
 
         return view('properties', get_defined_vars());
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *

@@ -1,0 +1,19 @@
+API Key Name: LuxuryPortal
+API Key ID: N0CswWaQQSCC1p4Jg-eVKQ
+API Key: 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
+
+
+Invitation Received Email Template Id: d-6ea57b11a73d43de8172e7680566411b
+Variables: invite_link
+
+New Lead Email Template Id: d-b0cc1af23f7941579fd2d6afe546ad91
+Variables: agent_name, property_name, check_in, check_out, nights, grossbookingvalue, comissionvalue, agent_name, agency_name 
+
+
+
+
+SENDGRID_API_KEY='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'
+DEFAULT_SENDER_EMAIL='contact@luxurytravelportal.com'
+DEFAULT_SENDER_NAME='Luxury Travel Portal'
+MAIL_DRIVER=sendgrid
+MAIL_MAILER=sendgrid

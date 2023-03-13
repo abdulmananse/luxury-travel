@@ -42,17 +42,17 @@
                     <div class="d-flex drop-menu guests-border">
                         <p class="select-search">CLIENT BUDGET</p>
                         <div class="select-destionation">
-                            <span>{{ @request()->price ? @request()->price : 'Price' }}</span>
+                            <span>{{ @request()->price ? '$' . @request()->price : 'Price' }}</span>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open guests-open budget">
                             <span>{{ @request()->price ? '$' . request()->price : 'Price' }}</span>
-                            <input type="range" min="100" max="10000" step="50"
+                            <input type="range" min="100" max="50000" step="100"
                                 value="{{ @request()->price ? request()->price : 500 }}" id="price"
                                 name="price" />
-                            {{-- <div class="budget-applay">
-                                <button class="budget-applay-button">Applay</button>
-                            </div> --}}
+                            <div class="budget-applay">
+                                <button class="budget-applay-button">Apply</button>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex drop-menu">
@@ -150,10 +150,11 @@
                             </div>
                             <div class="card-content">
                                 <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
-                                <h4>{{ $property->name }}</h4>
+                                <h4>{{ (in_array('Contact_Person', Auth()->user()->getRoleNames()->toArray())) ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
-                                        <p>{{ $property->property_id }}</p>
+                                        <p>{{ $property->destination }}<br />
+                                        {{ $property->community }}</p>
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="publisher-contact d-flex">
@@ -162,7 +163,7 @@
                                         </div>
                                         <div class="publisher-contact d-flex">
                                             <p class="contact-card">Contact:</p>
-                                            <p>{{ auth()->user()->name }}</p>
+                                            <p>Roberto Carneiro</p>
                                         </div>
                                     </div>
                                 </div>
@@ -190,11 +191,16 @@
                                     </div>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Comission:</p>
-                                        <p>{{ $property->commision }}</p>
+                                        <p>{{ $property->commision }}%</p>
                                     </div>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
-                                        <p>{{ $property->total_price > 0 ? ($property->total_price * str_replace('%', '', $property->commision)) / 100 : 'N/A' }}
+                                        <p>
+                                            @if($property->total_price > 0)
+                                            {!! $property->currency_symbol !!} {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                            @else
+                                            {{ 'N/A' }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -274,7 +280,12 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
-                                                <p>{{ $property->total_price > 0 ? ($property->total_price * str_replace('%', '', $property->commision)) / 100 : 'N/A' }}
+                                                <p>
+                                                    @if($property->total_price > 0)
+                                                    {!! $property->currency_symbol !!} {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                                    @else
+                                                    {{ 'N/A' }}
+                                                    @endif
                                                 </p>
                                                 <img class="info-i"
                                                     src="{{ asset('img') }}/infoinvalid-name@3x.png" />
@@ -314,8 +325,8 @@
             <div class="container">
                 <div class="search-no-available">
                     <h3>No Available Properties</h3>
-                    <p>We didn’t find any properties based on your chosen filterset.</p>
-                    <button>Reset Filters & Search</button>
+                    <p>We didn't find any properties based on your chosen filterset.</p>
+                    <button onclick="window.location.href='{{ route('search') }}'">Reset Filters & Search</button>
                 </div>
             </div>
         @endif
@@ -323,7 +334,7 @@
 
 
         @if ($properties)
-            <div class="row justify-content-center float-end pt-3 pagina">
+            <div class="row justify-content-center float-end pt-3 pagina w-100">
                 {!! $properties->appends($_GET)->links('pagination::bootstrap-4') !!}
             </div>
         @endif

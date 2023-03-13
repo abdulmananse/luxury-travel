@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 footer-right">
-                    <a href="home-page.html"><img src="{{ asset('img/footerlogo@3x.png') }}" /></a>
+                    <a href="{{ url('') }}"><img src="{{ asset('img/footerlogo@3x.png') }}" /></a>
                     <h5>
                         Blakely Tower - Jumeirah Beach Road - Dubai Marina - Dubai -
                         United Arab Emirates
@@ -113,7 +113,7 @@
             </div>
             <div class="d-flex justify-content-between footer-bottom align-items-center"
                 style="border-top: solid 1px #0b3841">
-                <a href="home-page.html"><img src="{{ asset('img/logo@3x.png') }}"
+                <a href="{{ url('') }}"><img src="{{ asset('img/logo@3x.png') }}"
                         style="width: 152px; height: 58px" /></a>
                 <div class="social-icon">
                     <a href="instagram.com/luxurytravelportal"><img
