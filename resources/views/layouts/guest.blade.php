@@ -40,12 +40,37 @@
     <header>
         <div class="container text-center">
             <a href="{{ route('homepage') }}"><img src="{{ asset('img/logologo@3x.png') }}" /></a>
-            <div class="login text-right">
-                <p>Login</p>
-            </div>
-            <div class="border-header" style="border-top: none"></div>
+            @guest
+                <a href="{{ route('login') }}" class="login text-right">
+                    <p>Login</p>
+                </a>
+                <div class="border-header" style="border-top: none"></div>
+            @endguest
         </div>
     </header>
+
+    @auth
+        <section class="backgroundColor">
+            <div class="container">
+                <div class="agents-menu">
+                    @can('Companies Index')
+                        <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
+                            href="{{ route('companies.index') }}">Companies</a>
+                    @endcan
+                    @can('Agents Index')
+                        <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
+                            href="{{ route('agents.index') }}">Agents</a>
+                    @endcan
+                    @can('Search Properties')
+                        <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
+                            href="{{ route('search') }}">Property Search</a>
+                    @endcan
+                    <a class="profile-a" href="#">Profile</a>
+                    <a class="logout" href="{{ route('logout') }}">Logout</a>
+                </div>
+            </div>
+        </section>
+    @endauth
 
     <div>
         {{ $slot }}

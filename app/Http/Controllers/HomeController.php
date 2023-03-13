@@ -107,6 +107,14 @@ class HomeController extends Controller
                 $bedrooms = (int) $request->bedrooms;
                 $where .= ' AND no_of_bedrooms = ' . $bedrooms . ' ';
             }
+            if ($request->filled('bathrooms')) {
+                $bathrooms = (int) $request->bathrooms;
+                $where .= ' AND no_of_bathrooms = ' . $bathrooms . ' ';
+            }
+            if ($request->filled('property_type')) {
+                $where .= ' AND property_type = "' . $request->property_type . '" ';
+            }
+
             $orderBy = 'properties.name ASC';
             $sortBy = $request->sort_by;
             if ($sortBy) {
@@ -151,6 +159,7 @@ class HomeController extends Controller
                     properties.currency,
                     properties.currency_symbol,
                     properties.community,
+                    properties.commision,
                     properties.country,
                     properties.destination,
                     properties.city,
@@ -159,6 +168,10 @@ class HomeController extends Controller
                     properties.no_of_beds,
                     properties.no_of_bathrooms,
                     properties.no_of_bedrooms,
+                    properties.pdf_link,
+                    properties.ical_link,
+                    properties.images_folder_link,
+                    properties.price_doc_link,
                     SUM(IF((CAST("' . $startDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $endDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
                 FROM properties
                 LEFT JOIN `events` ON events.property_id = properties.id
@@ -186,6 +199,10 @@ class HomeController extends Controller
                 $properties[$key]->average = $totalPrice / count($rangeDatesArray);
             }
 
+            if ($request->filled('price')) {
+                $properties = collect($properties)->where('total_price', '<=', $request->price)->toArray();
+            }
+
             $offset = ($page * $paginate) - $paginate;
 
             if ($sortBy && $sortBy == 'Price Low to High') {
@@ -197,9 +214,18 @@ class HomeController extends Controller
 
         }
 
+        $propertyAttr = Property::select(
+            DB::raw('MAX(CAST(properties.no_of_bedrooms AS UNSIGNED)) as no_of_bedrooms'),
+            DB::raw('MAX(CAST(properties.max_guests AS UNSIGNED)) as max_guests'),
+            DB::raw('MAX(CAST(properties.no_of_bathrooms AS UNSIGNED)) as no_of_bathrooms')
+            )->first();
+
+        
+        $maxBedrooms = $propertyAttr->no_of_bedrooms;
+        $maxGuests = $propertyAttr->max_guests;
+        $bathrooms = $propertyAttr->no_of_bathrooms;
         $cities = Property::whereNotNull('destination')->groupBy('destination')->pluck('destination');
-        $maxBedrooms = Property::select(DB::raw('MAX(CAST(properties.no_of_bedrooms AS UNSIGNED)) as no_of_bedrooms'))->first()->no_of_bedrooms;
-        $maxGuests = Property::select(DB::raw('MAX(CAST(properties.max_guests AS UNSIGNED)) as max_guests'))->first()->max_guests;
+        $propertyTypes = Property::groupBy('property_type')->pluck('property_type');
 
         return view('properties', get_defined_vars());
     }

@@ -8,6 +8,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon.ico') }}">
+
     <!-- Fonts -->
     {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> --}}
 
@@ -36,27 +39,35 @@
     </script>
 </head>
 
-<body>
+<body style="background-color: #fff8f0;">
     <header>
         <div class="container text-center">
             <a href="home-page.html"><img src="{{ asset('img') }}/logologo@3x.png" /></a>
         </div>
     </header>
 
-    <section class="backgroundColor">
-        <div class="container">
-            <div class="agents-menu">
-                <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
-                    href="{{ route('companies.index') }}">Companies</a>
-                <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
-                    href="{{ route('agents.index') }}">Agents</a>
-                <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
-                    href="{{ route('agents.index') }}" href="{{ route('search') }}">Property Search</a>
-                <a class="profile-a" href="#">Profile</a>
-                <a class="logout" href="{{ route('logout') }}">Logout</a>
+    @auth
+        <section class="backgroundColor">
+            <div class="container">
+                <div class="agents-menu">
+                    @can('Companies Index')
+                        <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
+                            href="{{ route('companies.index') }}">Companies</a>
+                    @endcan
+                    @can('Agents Index')
+                        <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
+                            href="{{ route('agents.index') }}">Agents</a>
+                    @endcan
+                    @can('Search Properties')
+                        <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
+                            href="{{ route('search') }}">Property Search</a>
+                    @endcan
+                    <a class="profile-a" href="#">Profile</a>
+                    <a class="logout" href="{{ route('logout') }}">Logout</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endauth
 
     <div>
         {{ $slot }}

@@ -2277,3 +2277,21 @@ select option:focus {
 
 .company-form, .profile-form-agency {color: rgb(11, 56, 65);}
 .profile-left .active {color: rgb(166, 90, 63);}
+
+.btn-filter a {
+  padding: 7px 20px;
+  height: fit-content;
+  width: 100%;
+}
+.download-file a {
+  border: solid 0.5px #0b3841;
+  background-color: #fff;
+  padding: 12px;
+  width: 100%;
+  font-family: "playfair-display-regular";
+  font-size: 20px;
+  text-align: center;
+  color: #0b3841;
+  display: flex;
+
+}

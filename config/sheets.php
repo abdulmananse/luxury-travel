@@ -12,6 +12,7 @@ return [
         ['index' => 7, 'db_key' => 'google_calendar_link'],
         ['index' => 8, 'db_key' => 'ical_link'],
         ['index' => 13, 'db_key' => 'currency'],
+        ['index' => 21, 'db_key' => 'commission'],
         ['index' => 29, 'db_key' => 'property_rating'],
         ['index' => 30, 'db_key' => 'property_type'],
         ['index' => 31, 'db_key' => 'design_type'],

@@ -20,9 +20,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
+    Route::redirect('dashboard', '/')->name('dashboard');
     
     Route::get('search', [HomeController::class, 'search'])->name('search')->middleware('permission:Search Properties');
     Route::get('search-properties', [HomeController::class, 'searchProperties'])->middleware('permission:Search Properties');
