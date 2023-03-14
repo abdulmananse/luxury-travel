@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $permission1 = Permission::updateOrCreate(['name' => 'Search Properties']);
         $permission2 = Permission::updateOrCreate(['name' => 'Manage Agents']);
+        $permission3 = Permission::updateOrCreate(['name' => 'Manage Companies']);
 
         $role = Role::updateOrCreate([
             'name' => 'Contact_Person'
@@ -34,12 +35,16 @@ class DatabaseSeeder extends Seeder
             ]);
             $user->syncRoles($role);
 
-            $role->syncPermissions([$permission1->id, $permission2->id]);
+            $role->syncPermissions([$permission1->id, $permission2->id, $permission3->id]);
         }
 
-        Role::updateOrCreate([
+        $companyRole = Role::updateOrCreate([
             'name' => 'Company'
         ]);
+        
+        if ($companyRole) {
+            $companyRole->syncPermissions([$permission1->id, $permission2->id]);
+        }
 
         $agentRole = Role::updateOrCreate([
             'name' => 'Agent'

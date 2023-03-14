@@ -19,8 +19,9 @@ use App\Models\Property;
 use App\Models\Event as EventModel;
 use App\Models\Log as ModelsLog;
 use App\Models\PropertyPrice;
-
+use App\Models\User;
 use DB;
+use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
@@ -861,5 +862,25 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false], 200);
         }
+    }
+
+    public function profile () {
+        $role = roleName();
+
+        if ($role == 'Agent') {
+            $agent = Auth::user();
+            $name = explode(' ', $agent->name);
+            $agent->first_name = $name[0];
+            $agent->last_name = $name[1];
+
+            return view('agents.profile', get_defined_vars());
+        }
+
+        $company = Auth::user();
+        $name = explode(' ', $company->name);
+        $company->first_name = $name[0];
+        $company->last_name = $name[1];
+
+        return view('companies.profile', get_defined_vars());
     }
 }

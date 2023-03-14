@@ -150,11 +150,11 @@
                             </div>
                             <div class="card-content">
                                 <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
-                                <h4>{{ (in_array('Contact_Person', Auth()->user()->getRoleNames()->toArray())) ? $property->name : $property->property_id }}</h4>
+                                <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
                                         <p>{{ $property->destination }}<br />
-                                        {{ $property->community }}</p>
+                                            {{ $property->community }}</p>
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="publisher-contact d-flex">
@@ -196,10 +196,11 @@
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
-                                            @if($property->total_price > 0)
-                                            {!! $property->currency_symbol !!} {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                            @if ($property->total_price > 0)
+                                                {!! $property->currency_symbol !!}
+                                                {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
                                             @else
-                                            {{ 'N/A' }}
+                                                {{ 'N/A' }}
                                             @endif
                                         </p>
                                     </div>
@@ -281,10 +282,11 @@
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
                                                 <p>
-                                                    @if($property->total_price > 0)
-                                                    {!! $property->currency_symbol !!} {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                                    @if ($property->total_price > 0)
+                                                        {!! $property->currency_symbol !!}
+                                                        {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
                                                     @else
-                                                    {{ 'N/A' }}
+                                                        {{ 'N/A' }}
                                                     @endif
                                                 </p>
                                                 <img class="info-i"
@@ -351,9 +353,6 @@
     @endpush
 
     @push('scripts')
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-        <script type='text/javascript' src="{{ asset('js/loadingoverlay.min.js') }}"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <script type="text/javascript" src="{{ asset('js') }}/script.js"></script>
         <script>

@@ -9,9 +9,37 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
+
+    public function registerMediaConversions(Media $media = null): void 
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
+    }
+
+    /**
+     * Get the teacher's image
+     *
+     * @return string
+     */
+    public function getImageAttribute()
+    {
+        $media = $this->getMedia('avatar')->first();
+        unset($this->media);
+        if($media) {
+            return $media->getUrl();
+        }
+        return null;
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +56,7 @@ class User extends Authenticatable
         'company_email',
         'company_website',
         'comission',
+        'invited',
         'password',
     ];
 

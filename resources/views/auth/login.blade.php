@@ -2,8 +2,6 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <!-- Validation Errors -->
-    <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
     <section class="backgroundColor">
         <div class="container login-height">
@@ -11,16 +9,17 @@
                 @csrf
                 <div class="login-page">
                     <div class="email">
-                        <x-label for="email" :value="__('Email')" />
-                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                        <x-label for="email" :value="__('Email/Username')" />
+                        <x-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')"
                             required autofocus />
+                        {!! $errors->first('email', '<label class="error">:message</label>') !!}
                     </div>
                     <div class="pass">
                         <x-label for="password" :value="__('Password')" />
                         <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
                             autocomplete="current-password" placeholder="•••••••••••" />
                         <p>
-                            <a href="href="{{ route('password.request') }}""
+                            <a href="{{ route('password.request') }}"
                                 style="color: #0b3841; text-decoration: underline">forgot
                                 password?</a>
                         </p>

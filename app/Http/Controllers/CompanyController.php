@@ -81,4 +81,34 @@ class CompanyController extends Controller
 
         return view('companies.create', get_defined_vars());
     }
+
+    public function update (Request $request)
+    {
+        $this->validate($request, [
+            'company_name' => 'required',
+            'company_email' => 'required|email|unique:users,company_email,' . $request->id,
+            'company_phone' => 'required',
+            'company_website' => 'nullable',
+            'first_name' => 'required',
+            'last_name' => 'nullable',
+            'email' => 'required|email|unique:users,email,' . $request->id,
+            'phone' => 'required',
+        ]);
+
+        $userData = $request->all();
+        $userData['name'] = $request->first_name . ' ' . $request->last_name;
+        $userData['username'] = $request->email;
+
+        $user = User::find($request->id);
+       
+
+        if ($request->hasFile('photo')) {
+            $user->clearMediaCollection('avatar');
+            $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
+        }
+        $user->update($userData);
+        
+        Session::flash('success', 'Company profile successfully updated');
+        return redirect()->route('profile');
+    }
 }

@@ -18,6 +18,8 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
+Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
+Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('dashboard', '/')->name('dashboard');
@@ -25,18 +27,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('search', [HomeController::class, 'search'])->name('search')->middleware('permission:Search Properties');
     Route::get('search-properties', [HomeController::class, 'searchProperties'])->middleware('permission:Search Properties');
 
+    Route::get('profile', [HomeController::class, 'profile'])->name('profile');
+
     Route::get('companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::get('companies/create', [CompanyController::class, 'create'])->name('companies.create');
     Route::post('companies', [CompanyController::class, 'store'])->name('companies.store');
     Route::get('companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
-    
+    Route::post('companies/update', [CompanyController::class, 'update'])->name('companies.update');
+
     Route::get('agents', [AgentController::class, 'index'])->name('agents.index')->middleware('permission:Manage Agents');
     Route::get('agents/invite', [AgentController::class, 'invite'])->name('agents.invite')->middleware('permission:Manage Agents');
     Route::post('agents/invite', [AgentController::class, 'sendInvitation'])->name('agents.sendInvitation')->middleware('permission:Manage Agents');
     
-    Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
-    Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
-
+    Route::post('agents/update', [AgentController::class, 'update'])->name('agents.update');
+    
     Route::post('create-task', [HomeController::class, 'createTask']);
     Route::get('detail/{id}', [HomeController::class, 'show']);
     Route::get('import-sheets', [HomeController::class, 'importSheets']);

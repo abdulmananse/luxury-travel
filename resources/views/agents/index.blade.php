@@ -29,7 +29,13 @@
                                 <td class="active-column">
                                     {{ $agent->status == 1 ? 'Approved' : 'Pending' }}
                                 </td>
-                                <td>Remove Access</td>
+                                <td>
+                                    @if (!$agent->status)
+                                        <a href="{{ route('agents.register', base64_encode($agent->email)) }}">Link</a>
+                                    @else
+                                        Remove Access
+                                    @endif
+                                </td>
 
                             </tr>
                         @empty

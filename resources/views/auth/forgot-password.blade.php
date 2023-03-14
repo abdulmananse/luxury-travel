@@ -1,4 +1,29 @@
 <x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <section class="backgroundColor">
+        <div class="container login-height">
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+                <div class="login-page">
+                    <div class="email">
+                        <x-label for="email" :value="__('Email')" />
+
+                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                            autofocus />
+
+                        {!! $errors->first('email', '<label class="error">:message</label>') !!}
+                    </div>
+                    <button class="login-btn">{{ __('Email Password Reset Link') }}</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</x-guest-layout>
+
+<x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -23,7 +48,8 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                    required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">

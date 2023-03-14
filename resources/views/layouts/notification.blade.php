@@ -1,4 +1,4 @@
-<script src="{{ asset('js/toastr.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/toastr.min.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}">
 
 
