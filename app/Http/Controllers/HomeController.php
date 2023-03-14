@@ -871,7 +871,7 @@ class HomeController extends Controller
             $agent = Auth::user();
             $name = explode(' ', $agent->name);
             $agent->first_name = $name[0];
-            $agent->last_name = $name[1];
+            $agent->last_name = @$name[1];
 
             return view('agents.profile', get_defined_vars());
         }
@@ -879,7 +879,7 @@ class HomeController extends Controller
         $company = Auth::user();
         $name = explode(' ', $company->name);
         $company->first_name = $name[0];
-        $company->last_name = $name[1];
+        $company->last_name = @$name[1];
 
         return view('companies.profile', get_defined_vars());
     }
