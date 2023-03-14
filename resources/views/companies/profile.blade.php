@@ -43,20 +43,37 @@
                                 {!! $errors->first('company_website', '<label class="error">:message</label>') !!}
 
                             </div>
-                            <div class="col-lg-6 right-input d-none">
+                            <div class="col-lg-6 right-input">
 
                                 <label>Comission Amount</label>
-                                <div class="select-comission">
-                                    <p class="value-drop">dropdown</p>
-                                    <img src="./img/downninvalid-name@3x.png" />
+
+                                <select name="comission">
+                                    <option>Comission Amount</option>
+                                    <option value="5" {{ $company->comission == 5 ? 'selected' : '' }}>5%</option>
+                                    <option value="10" {{ $company->comission == 10 ? 'selected' : '' }}>10%
+                                    </option>
+                                    <option value="15" {{ $company->comission == 15 ? 'selected' : '' }}>15%
+                                    </option>
+                                    <option value="20" {{ $company->comission == 20 ? 'selected' : '' }}>20%
+                                    </option>
+                                    <option value="25" {{ $company->comission == 25 ? 'selected' : '' }}>25%
+                                    </option>
+                                </select>
+
+                                <br />
+                                <label>Profile Photo</label>
+                                <div class="upload position-relative">
+                                    <input class="custom-file-input" type="file" placeholder="Upload"
+                                        id="photoGallery" name="photo">
+                                    <div class="upload-style">Upload</div>
+                                    <img src="./img/invalid-arrowtop@3x.png" />
                                 </div>
-                                <div class="comissionOpen">
-                                    <span>5%</span>
-                                    <span>10%</span>
-                                    <span>15%</span>
-                                    <span>20%</span>
-                                    <span>25%</span>
-                                </div>
+
+                                @if ($company->image)
+                                    <img width="70" height="70" src="{{ $company->image }}" />
+                                @endif
+
+
                             </div>
                         </div>
                         @if (@$company)

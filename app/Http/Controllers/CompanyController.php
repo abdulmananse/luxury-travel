@@ -98,10 +98,10 @@ class CompanyController extends Controller
         $userData = $request->all();
         $userData['name'] = $request->first_name . ' ' . $request->last_name;
         $userData['username'] = $request->email;
+        $userData['comission'] = @$request->comission;
 
         $user = User::find($request->id);
        
-
         if ($request->hasFile('photo')) {
             $user->clearMediaCollection('avatar');
             $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
