@@ -164,7 +164,7 @@ class HomeController extends Controller
                     properties.currency,
                     properties.currency_symbol,
                     properties.community,
-                    properties.commision,
+                    properties.commission,
                     properties.country,
                     properties.destination,
                     properties.city,
