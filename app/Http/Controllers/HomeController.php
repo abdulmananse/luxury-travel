@@ -435,6 +435,8 @@ class HomeController extends Controller
 
                             DuplicateProperty::updateOrCreate($where, $propertyCompleteData);
 
+                            dd($propertyCompleteData);
+
                             $propertyInfo = DuplicateProperty::where($where)->first();
                             DuplicatePropertyPrice::where('property_id', $propertyInfo->id)->delete();
                             foreach ($propertyPrices as $priceArray) {
@@ -578,9 +580,7 @@ class HomeController extends Controller
                         switch ($sheetId) {
                             case '🏡 Information':
 
-                                $verifyCalendar =
-
-                                    $keys = config('sheets.keys_information');
+                                $keys = config('sheets.keys_information');
 
                                 foreach ($keys as $key) {
                                     $this->readIndex = $index = $key['index'] - 1;

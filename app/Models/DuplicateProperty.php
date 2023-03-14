@@ -21,6 +21,7 @@ class DuplicateProperty extends Model
         'currency',
         'currency_symbol',
         'community',
+        'commission',
         'name',
         'account',
         'pis',

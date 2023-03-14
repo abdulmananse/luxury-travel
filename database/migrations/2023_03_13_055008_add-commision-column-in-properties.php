@@ -14,10 +14,10 @@ class AddCommisionColumnInProperties extends Migration
     public function up()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->string('commision', 5)->after('community')->nullable();
+            $table->string('commission', 5)->after('community')->nullable();
         });
         Schema::table('duplicate_properties', function (Blueprint $table) {
-            $table->string('commision', 5)->after('community')->nullable();
+            $table->string('commission', 5)->after('community')->nullable();
         });
     }
 
@@ -29,10 +29,10 @@ class AddCommisionColumnInProperties extends Migration
     public function down()
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->dropColumn('commision');
+            $table->dropColumn('commission');
         });
         Schema::table('duplicate_properties', function (Blueprint $table) {
-            $table->dropColumn('commision');
+            $table->dropColumn('commission');
         });
     }
 }
