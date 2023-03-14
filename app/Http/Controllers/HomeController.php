@@ -435,8 +435,6 @@ class HomeController extends Controller
 
                             DuplicateProperty::updateOrCreate($where, $propertyCompleteData);
 
-                            dd($propertyCompleteData);
-
                             $propertyInfo = DuplicateProperty::where($where)->first();
                             DuplicatePropertyPrice::where('property_id', $propertyInfo->id)->delete();
                             foreach ($propertyPrices as $priceArray) {
