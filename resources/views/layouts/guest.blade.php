@@ -41,10 +41,10 @@
         <section class="backgroundColor">
             <div class="container">
                 <div class="agents-menu">
-                    @can('Manage Companies')
+                    {{-- @can('Manage Companies')
                         <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
                             href="{{ route('companies.index') }}">Companies</a>
-                    @endcan
+                    @endcan --}}
                     @can('Manage Agents')
                         <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
                             href="{{ route('agents.index') }}">Agents</a>
