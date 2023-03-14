@@ -164,7 +164,7 @@ class HomeController extends Controller
                     properties.currency,
                     properties.currency_symbol,
                     properties.community,
-                    properties.commision,
+                    properties.commission,
                     properties.country,
                     properties.destination,
                     properties.city,
@@ -578,9 +578,7 @@ class HomeController extends Controller
                         switch ($sheetId) {
                             case '🏡 Information':
 
-                                $verifyCalendar =
-
-                                    $keys = config('sheets.keys_information');
+                                $keys = config('sheets.keys_information');
 
                                 foreach ($keys as $key) {
                                     $this->readIndex = $index = $key['index'] - 1;

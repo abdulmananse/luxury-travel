@@ -27,7 +27,7 @@ class Property extends Model
         'currency',
         'currency_symbol',
         'community',
-        'commision',
+        'commission',
         'name',
         'account',
         'pis',

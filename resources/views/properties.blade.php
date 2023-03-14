@@ -191,14 +191,14 @@
                                     </div>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Comission:</p>
-                                        <p>{{ $property->commision }}%</p>
+                                        <p>{{ $property->commission }}%</p>
                                     </div>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
                                             @if ($property->total_price > 0)
                                                 {!! $property->currency_symbol !!}
-                                                {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                                {{ number_format(($property->total_price * str_replace('%', '', $property->commission)) / 100, 2) }}
                                             @else
                                                 {{ 'N/A' }}
                                             @endif
@@ -284,7 +284,7 @@
                                                 <p>
                                                     @if ($property->total_price > 0)
                                                         {!! $property->currency_symbol !!}
-                                                        {{ number_format(($property->total_price * str_replace('%', '', $property->commision)) / 100, 2) }}
+                                                        {{ number_format(($property->total_price * str_replace('%', '', $property->commission)) / 100, 2) }}
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
