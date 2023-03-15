@@ -699,6 +699,10 @@ select {
   padding: 12px 12px;
   margin-bottom: 24px;
 }
+input:disabled,
+input:read-only{
+    background-color: lightgrey;
+}
 .save {
   padding: 4px 60px 8px 60px;
   font-size: 20px !important;
@@ -2005,6 +2009,9 @@ select option:focus {
     font-size: 14px !important;
     margin-right: 24px;
     margin-left: 40px;
+  }
+  .profile-left .active {
+      color: rgb(255, 255, 255) !important;
   }
   .company,
   .contact,

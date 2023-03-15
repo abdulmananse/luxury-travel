@@ -18,7 +18,7 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
 
-    public function registerMediaConversions(Media $media = null): void 
+    public function registerMediaConversions(Media $media = null): void
     {
         $this
             ->addMediaConversion('preview')
@@ -27,13 +27,28 @@ class User extends Authenticatable implements HasMedia
     }
 
     /**
-     * Get the teacher's image
+     * Get the image
      *
      * @return string
      */
     public function getImageAttribute()
     {
         $media = $this->getMedia('avatar')->first();
+        unset($this->media);
+        if($media) {
+            return $media->getUrl();
+        }
+        return null;
+    }
+
+    /**
+     * Get the company logo
+     *
+     * @return string
+     */
+    public function getCompanyLogoAttribute()
+    {
+        $media = $this->getMedia('company_logo')->first();
         unset($this->media);
         if($media) {
             return $media->getUrl();
@@ -55,7 +70,7 @@ class User extends Authenticatable implements HasMedia
         'company_phone',
         'company_email',
         'company_website',
-        'comission',
+        'commission',
         'invited',
         'password',
     ];
@@ -78,4 +93,27 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'first_name',
+        'last_name',
+    ];
+
+    /**
+     * Get first name
+     */
+    public function getfirstNameAttribute()
+    {
+        $name = explode(' ', $this->name);
+        return $name[0];
+    }
+
+    /**
+     * Get last name
+     */
+    public function getlastNameAttribute()
+    {
+        $name = explode(' ', $this->name);
+        return $name[1];
+    }
 }

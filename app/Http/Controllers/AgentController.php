@@ -15,7 +15,7 @@ class AgentController extends Controller
 {
     public function index (Request $request)
     {
-        
+
         //Notification::route('mail', 'abdulmanan4d@gmail.com')->notify(new InviteAgent());
         // try {
         //     Notification::route('mail', $ddc->email)
@@ -38,7 +38,7 @@ class AgentController extends Controller
     {
         return view('agents.invite');
     }
-    
+
     public function sendInvitation (Request $request)
     {
         $this->validate($request, [
@@ -75,7 +75,7 @@ class AgentController extends Controller
                 return redirect()->route('login');
             }
         }
-        
+
         Session::flash('error', 'invalid link');
         return redirect()->route('login');
     }
@@ -88,10 +88,10 @@ class AgentController extends Controller
             'last_name' => ['required', 'string', 'max:60'],
             'phone' => ['required', 'string', 'max:30'],
             'username' => ['required', 'string', 'alpha_dash', 'max:60', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()], 
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'invited' => ['nullable', 'string', 'max:30'],
         ]);
-       
+
         $invitation = Invitation::where('email', $email)->first();
         if ($invitation && !$invitation->status) {
             $user = User::where('email', $email)->first();
@@ -108,7 +108,7 @@ class AgentController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             if ($user) {
-                
+
                 $user->syncRoles('Agent');
 
                 if ($request->hasFile('photo')) {
@@ -125,7 +125,7 @@ class AgentController extends Controller
 
         return back()->withErrors(['name' => 'invalid link']);
     }
-    
+
     public function update (Request $request)
     {
         $this->validate($request, [
@@ -133,10 +133,9 @@ class AgentController extends Controller
             'first_name' => ['required', 'string', 'max:60'],
             'last_name' => ['required', 'string', 'max:60'],
             'phone' => ['required', 'string', 'max:30'],
-            'email' => ['required', 'email', 'max:90', 'unique:users,email,' . $request->id],
-            'username' => ['required', 'string', 'alpha_dash', 'max:60', 'unique:users,username,' . $request->id],
+            'photo' => 'nullable|image',
         ]);
-       
+
         $user = User::where('id', $request->id)->first();
 
         if ($request->hasFile('photo')) {
@@ -144,7 +143,11 @@ class AgentController extends Controller
             $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
         }
 
-        $user->update($request->all());
+        $userData = $request->all();
+        unset($userData['email']);
+        unset($userData['username']);
+
+        $user->update($userData);
 
         Session::flash('success', 'Profile successfully updated');
         return redirect()->route('profile');

@@ -10,7 +10,10 @@
                     <form method="POST" action="{{ route('agents.createAgent', $email) }}">
                         @csrf
                         <div class="d-flex form-input">
+
                             <div class="col-lg-6 left-input">
+                                <label class="mt-4">Invited by: Tripwix</label>
+                                <hr />
                                 <label>Your Agency</label>
                                 <input placeholder="Company Name" type="text" name="company_name"
                                     value="{{ old('company_name') }}" />
@@ -39,6 +42,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 right-input">
+                                <label class="mt-4">&nbsp;</label>
+                                <hr />
                                 <label>Username</label>
                                 <input placeholder="Username" type="text" name="username"
                                     value="{{ old('username') }}" />
@@ -56,10 +61,6 @@
 
                                 <label>Confirm Password</label>
                                 <input placeholder="•••••••••••" type="password" name="password_confirmation" />
-
-                                <label>Invited by</label>
-                                <input placeholder="Tripwix Vacation Rentals" type="text" id="invited"
-                                    name="invited" />
 
                             </div>
                         </div>

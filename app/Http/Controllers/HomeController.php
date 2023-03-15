@@ -177,6 +177,7 @@ class HomeController extends Controller
                     properties.ical_link,
                     properties.images_folder_link,
                     properties.price_doc_link,
+                    properties.price_pdf_link,
                     SUM(IF((CAST("' . $startDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $endDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
                 FROM properties
                 LEFT JOIN `events` ON events.property_id = properties.id
@@ -229,6 +230,8 @@ class HomeController extends Controller
         $maxBedrooms = $propertyAttr->no_of_bedrooms;
         $maxGuests = $propertyAttr->max_guests;
         $bathrooms = $propertyAttr->no_of_bathrooms;
+        $contactPerson = User::role('Contact_Person')->first();
+        $vatPercentage = 16;
         $cities = Property::whereNotNull('destination')->groupBy('destination')->pluck('destination');
         $propertyTypes = Property::groupBy('property_type')->pluck('property_type');
 
@@ -867,17 +870,11 @@ class HomeController extends Controller
 
         if ($role == 'Agent') {
             $agent = Auth::user();
-            $name = explode(' ', $agent->name);
-            $agent->first_name = $name[0];
-            $agent->last_name = @$name[1];
 
             return view('agents.profile', get_defined_vars());
         }
 
         $company = Auth::user();
-        $name = explode(' ', $company->name);
-        $company->first_name = $name[0];
-        $company->last_name = @$name[1];
 
         return view('companies.profile', get_defined_vars());
     }

@@ -55,21 +55,21 @@ class CompanyController extends Controller
                 'company_phone' => 'required',
                 'company_website' => 'nullable',
             ]);
-            
+
             $userData = $request->all();
             $userData['name'] = $request->company_name;
             $userData['username'] = $request->company_email;
             $userData['email'] = $request->company_email;
             $userData['password'] = Hash::make($request->company_email);
-    
+
             $user = User::create($userData);
             if ($user) {
                 $role = Role::where('name', 'Company')->first();
                 $user->syncRoles($role);
-    
+
                 return redirect()->route('companies.show', [$user->id, 'tab' => 'contact']);
             }
-    
+
             return back()->withErrors(['error' => 'Something wrong']);
         }
     }
@@ -85,29 +85,39 @@ class CompanyController extends Controller
     public function update (Request $request)
     {
         $this->validate($request, [
-            'company_name' => 'required',
-            'company_email' => 'required|email|unique:users,company_email,' . $request->id,
-            'company_phone' => 'required',
+            'company_name' => 'nullable',
+            'company_email' => 'nullable|email|unique:users,company_email,' . $request->id,
+            'company_phone' => 'nullable',
             'company_website' => 'nullable',
-            'first_name' => 'required',
+            'first_name' => 'nullable',
             'last_name' => 'nullable',
-            'email' => 'required|email|unique:users,email,' . $request->id,
-            'phone' => 'required',
+            'phone' => 'nullable',
+            'company_logo' => 'nullable|image',
+            'photo' => 'nullable|image',
         ]);
 
         $userData = $request->all();
         $userData['name'] = $request->first_name . ' ' . $request->last_name;
         $userData['username'] = $request->email;
-        $userData['comission'] = @$request->comission;
+        $userData['commission'] = @$request->commission;
+
+        unset($userData['email']);
+        unset($userData['username']);
+
 
         $user = User::find($request->id);
-       
+
         if ($request->hasFile('photo')) {
             $user->clearMediaCollection('avatar');
             $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
         }
+
+        if ($request->hasFile('company_logo')) {
+            $user->clearMediaCollection('company_logo');
+            $user->addMediaFromRequest('company_logo')->toMediaCollection('company_logo');
+        }
         $user->update($userData);
-        
+
         Session::flash('success', 'Company profile successfully updated');
         return redirect()->route('profile');
     }
