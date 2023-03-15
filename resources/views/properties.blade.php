@@ -149,7 +149,7 @@
                                 </div>
                             </div>
                             <div class="card-content">
-                                <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                <img class="profile-picture" src="{{ $contactPerson->image }}" />
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
@@ -159,11 +159,11 @@
                                     <div class="col-lg-7">
                                         <div class="publisher-contact d-flex">
                                             <p class="publisher">Publisher:</p>
-                                            <p>Tripwix</p>
+                                            <p>{{ $contactPerson->company_name }}</p>
                                         </div>
                                         <div class="publisher-contact d-flex">
                                             <p class="contact-card">Contact:</p>
-                                            <p>Roberto Carneiro</p>
+                                            <p>{{ $contactPerson->name }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -172,33 +172,40 @@
                                         <p class="contact-card">Bedrooms:</p>
                                         <p>{{ $property->no_of_bedrooms }}</p>
                                     </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Max Guests:</p>
-                                        <p>{{ $property->max_guests }}</p>
-                                    </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Bathrooms:</p>
-                                        <p>{{ $property->no_of_bathrooms }}</p>
-                                    </div>
+                                    <?php
+                                    if ($property->total_price > 0){
+                                        $totalPriceWithVat = ($property->total_price + (($property->total_price*$vatPercentage)/100));
+                                    }else{
+                                        $totalPriceWithVat = 0;
+                                    }
+                                    ?>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Guest Total:</p>
                                         @if ($property->total_price > 0)
-                                            <p>{!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                            <p>{!! $property->currency_symbol !!}{{ number_format($totalPriceWithVat, 2) }}
                                             </p>
                                         @else
                                             <p>N/A</p>
                                         @endif
                                     </div>
                                     <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Comission:</p>
-                                        <p>{{ $property->commission }}%</p>
+                                        <p class="contact-card">Bathrooms:</p>
+                                        <p>{{ $property->no_of_bathrooms }}</p>
+                                    </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Commission:</p>
+                                        <p>{{ $contactPerson->commission }}%</p>
+                                    </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Max Guests:</p>
+                                        <p>{{ $property->max_guests }}</p>
                                     </div>
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
                                             @if ($property->total_price > 0)
                                                 {!! $property->currency_symbol !!}
-                                                {{ number_format(($property->total_price * str_replace('%', '', $property->commission)) / 100, 2) }}
+                                                {{ number_format(($totalPriceWithVat * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                             @else
                                                 {{ 'N/A' }}
                                             @endif
@@ -228,7 +235,7 @@
                                         </div>
                                         <div>
                                             <p>Rates</p>
-                                            <a target="_blank" href="{{ $property->price_doc_link }}">Download</a>
+                                            <a target="_blank" href="{{ $property->price_pdf_link }}">Download</a>
                                         </div>
                                         <div>
                                             <p>HQ Photos</p>
@@ -265,7 +272,7 @@
                                             <p class="contact-card">Guest Pays:</p>
                                             <div class="cost-info">
                                                 @if ($property->total_price > 0)
-                                                    <p>{!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                                    <p>{!! $property->currency_symbol !!}{{ number_format($totalPriceWithVat, 2) }}
                                                     </p>
                                                 @else
                                                     <p>N/A</p>
@@ -284,7 +291,7 @@
                                                 <p>
                                                     @if ($property->total_price > 0)
                                                         {!! $property->currency_symbol !!}
-                                                        {{ number_format(($property->total_price * str_replace('%', '', $property->commission)) / 100, 2) }}
+                                                        {{ number_format(($totalPriceWithVat * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
@@ -307,10 +314,10 @@
                                         </div>
                                     </div>
                                     <div class="text-request">
-                                        <p>Message for Roberto:</p>
+                                        <p>Message for {{ $contactPerson->first_name }}:</p>
                                         <textarea rows="4" maxlength="50"></textarea>
                                         <p class="request-info">
-                                            Roberto Carneiro from Tripwix will reach out to you.
+                                            {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will reach out to you.
                                         </p>
                                     </div>
                                 </div>

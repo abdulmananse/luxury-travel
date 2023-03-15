@@ -28,7 +28,9 @@ class DatabaseSeeder extends Seeder
         if ($role) {
             $user = User::updateOrCreate([
                 'username' => 'contact_person',
-                'name' => 'Contact Person',
+                'name' => 'Roberto Carneiro',
+                'company_name' => 'Tripwix',
+                'commission' => '5',
                 'email' => 'contact.person@gmail.com'
             ], [
                 'password' => Hash::make('12345678')
@@ -41,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $companyRole = Role::updateOrCreate([
             'name' => 'Company'
         ]);
-        
+
         if ($companyRole) {
             $companyRole->syncPermissions([$permission1->id, $permission2->id]);
         }
@@ -54,6 +56,7 @@ class DatabaseSeeder extends Seeder
             $user = User::updateOrCreate([
                 'username' => 'agent',
                 'name' => 'Agent',
+                'company_name' => 'Tripwix',
                 'email' => 'agent@gmail.com'
             ], [
                 'password' => Hash::make('12345678')

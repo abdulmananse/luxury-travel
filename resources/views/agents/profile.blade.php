@@ -42,12 +42,12 @@
                             </div>
                             <div class="col-lg-6 right-input">
                                 <label>Username</label>
-                                <input placeholder="Username" type="text" name="username"
+                                <input placeholder="Username" type="text" disabled name="username"
                                     value="{{ old('username', $agent->username) }}" />
                                 {!! $errors->first('username', '<label class="error">:message</label>') !!}
 
                                 <label>Your Email</label>
-                                <input placeholder="john@example.com" type="email" name="email"
+                                <input placeholder="john@example.com" disabled type="email" name="email"
                                     value="{{ old('email', $agent->email) }}" />
                                 {!! $errors->first('email', '<label class="error">:message</label>') !!}
 

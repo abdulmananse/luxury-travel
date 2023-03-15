@@ -17,7 +17,7 @@
                     <form method="POST" action="{{ route('companies.update') }}" enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="tab" value="contact" />
+                        <input type="hidden" name="tab" value="company" />
                         <input type="hidden" name="id" value="{{ $company->id }}" />
 
                         <div class="company" style="display: {{ @$tab != 'contact' ? 'flex' : 'none' }};">
@@ -45,32 +45,31 @@
                             </div>
                             <div class="col-lg-6 right-input">
 
-                                <label>Comission Amount</label>
+                                <label>Commission Amount</label>
 
-                                <select name="comission">
-                                    <option>Comission Amount</option>
-                                    <option value="5" {{ $company->comission == 5 ? 'selected' : '' }}>5%</option>
-                                    <option value="10" {{ $company->comission == 10 ? 'selected' : '' }}>10%
+                                <select name="commission">
+                                    <option value="5" {{ $company->commission == 5 ? 'selected' : '' }}>5%</option>
+                                    <option value="10" {{ $company->commission == 10 ? 'selected' : '' }}>10%
                                     </option>
-                                    <option value="15" {{ $company->comission == 15 ? 'selected' : '' }}>15%
+                                    <option value="15" {{ $company->commission == 15 ? 'selected' : '' }}>15%
                                     </option>
-                                    <option value="20" {{ $company->comission == 20 ? 'selected' : '' }}>20%
+                                    <option value="20" {{ $company->commission == 20 ? 'selected' : '' }}>20%
                                     </option>
-                                    <option value="25" {{ $company->comission == 25 ? 'selected' : '' }}>25%
+                                    <option value="25" {{ $company->commission == 25 ? 'selected' : '' }}>25%
                                     </option>
                                 </select>
 
                                 <br />
-                                <label>Profile Photo</label>
+                                <label>Company Logo</label>
                                 <div class="upload position-relative">
                                     <input class="custom-file-input" type="file" placeholder="Upload"
-                                        id="photoGallery" name="photo">
+                                        id="photoGallery" name="company_logo">
                                     <div class="upload-style">Upload</div>
-                                    <img src="./img/invalid-arrowtop@3x.png" />
+                                    <img src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                 </div>
 
-                                @if ($company->image)
-                                    <img width="70" height="70" src="{{ $company->image }}" />
+                                @if ($company->company_logo)
+                                    <img width="70" height="70" src="{{ $company->company_logo }}" />
                                 @endif
 
 
@@ -91,7 +90,7 @@
                                     {!! $errors->first('last_name', '<label class="error">:message</label>') !!}
 
                                     <label>Contact Email</label>
-                                    <input type="email" name="email" placeholder="Email"
+                                    <input type="email" disabled name="email" placeholder="Email"
                                         value="{{ old('email', $company->email) }}" />
                                     {!! $errors->first('email', '<label class="error">:message</label>') !!}
 
@@ -107,7 +106,7 @@
                                         <input class="custom-file-input" type="file" placeholder="Upload"
                                             id="photoGallery" name="photo">
                                         <div class="upload-style">Upload</div>
-                                        <img src="./img/invalid-arrowtop@3x.png" />
+                                        <img src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                     </div>
 
                                     @if ($company->image)
