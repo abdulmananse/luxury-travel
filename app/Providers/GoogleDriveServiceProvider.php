@@ -25,8 +25,10 @@ class GoogleDriveServiceProvider extends ServiceProvider
                 $options['teamDriveId'] = $config['teamDriveId'];
             }
 
-            $adapter = new GoogleDriveAdapter($service, $config['folderId'], $options);
-
+            //$config['folderId']
+            //1Pr-bOspv7sKsSzdi_OHeloZxiMgW6SPl
+            $adapter = new GoogleDriveAdapter($service, '', $options);
+            
             return new \League\Flysystem\Filesystem($adapter);
         });
     }
