@@ -21,7 +21,7 @@
                         @forelse ($agents as $agent)
                             <tr>
                                 <td class="profile-img">
-                                    <img src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                    <img src="{{ asset('img') }}/default-avatar.png" />
                                 </td>
                                 <td class="slice">{{ $agent->email }}</td>
                                 <td class="name-column">Jane Smith</td>

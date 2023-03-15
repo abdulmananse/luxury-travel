@@ -105,7 +105,7 @@ class User extends Authenticatable implements HasMedia
     public function getfirstNameAttribute()
     {
         $name = explode(' ', $this->name);
-        return $name[0];
+        return isset($name[0]) ? $name[0] : '';
     }
 
     /**
@@ -114,6 +114,6 @@ class User extends Authenticatable implements HasMedia
     public function getlastNameAttribute()
     {
         $name = explode(' ', $this->name);
-        return $name[1];
+        return isset($name[1]) ? $name[1] : '';
     }
 }
