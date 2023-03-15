@@ -68,8 +68,8 @@ class HomeController extends Controller
         //     if (isset($imageLink[1])) {
         //         $dir = str_replace('?usp=sharing', '', $imageLink[1]);
         //         $contents = collect($disk->listContents($dir, false));
-        //         $files = $contents->where('type', '=', 'file');
-
+        //         $files = $contents->where('type', '=', 'file')->take(4);
+                
         //         foreach($files as $file) {
         //             $readStream = $disk->getDriver()->readStream($file['path']);
         //             $filename = $file['filename'].'.'.$file['extension'];
@@ -78,15 +78,11 @@ class HomeController extends Controller
         //             if (!file_exists($folder)) {
         //                 mkdir($folder, 0777, true);
         //             }
-                    
         //             $targetFile = "{$folder}/{$filename}";
-
         //             file_put_contents($targetFile, stream_get_contents($readStream), FILE_APPEND);
-
-        //             exit;
         //         }
+        //         exit;
         //     }
-              
         // }
 
         return view('home');
