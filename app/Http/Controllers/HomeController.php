@@ -24,6 +24,7 @@ use DB;
 use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -48,6 +49,24 @@ class HomeController extends Controller
         $this->readProperty = '';
         $this->readPropertySheet = '';
         $this->readIndex = '';
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $disk = Storage::disk('google');
+        
+        $dir = '/';
+        $recursive = false; // Get subdirectories also?
+
+        $contents = collect($disk->listContents($dir, $recursive));
+        dd($contents);
+
+        return view('home');
     }
 
     public function searchProperties(Request $request)
@@ -235,15 +254,7 @@ class HomeController extends Controller
         return view('properties', get_defined_vars());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        return view('home');
-    }
+   
 
     public function errorLogs(Request $request)
     {
