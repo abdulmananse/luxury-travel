@@ -24,6 +24,7 @@ use DB;
 use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -48,6 +49,43 @@ class HomeController extends Controller
         $this->readProperty = '';
         $this->readPropertySheet = '';
         $this->readIndex = '';
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+
+        // $disk = Storage::disk('google');
+
+        // $properties = Property::select('property_id', 'images_folder_link')->get();
+        // foreach($properties as $property) {
+
+        //     $imageLink = explode('folders/', $property->images_folder_link);
+        //     if (isset($imageLink[1])) {
+        //         $dir = str_replace('?usp=sharing', '', $imageLink[1]);
+        //         $contents = collect($disk->listContents($dir, false));
+        //         $files = $contents->where('type', '=', 'file')->take(4);
+
+        //         foreach($files as $file) {
+        //             $readStream = $disk->getDriver()->readStream($file['path']);
+        //             $filename = $file['filename'].'.'.$file['extension'];
+
+        //             $folder = storage_path("app/public/{$property->property_id}");
+        //             if (!file_exists($folder)) {
+        //                 mkdir($folder, 0777, true);
+        //             }
+        //             $targetFile = "{$folder}/{$filename}";
+        //             file_put_contents($targetFile, stream_get_contents($readStream), FILE_APPEND);
+        //         }
+        //         exit;
+        //     }
+        // }
+
+        return view('home');
     }
 
     public function searchProperties(Request $request)
@@ -240,15 +278,7 @@ class HomeController extends Controller
         return view('properties', get_defined_vars());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        return view('home');
-    }
+
 
     public function errorLogs(Request $request)
     {
@@ -872,11 +902,17 @@ class HomeController extends Controller
 
         if ($role == 'Agent') {
             $agent = Auth::user();
+            $name = explode(' ', $agent->name);
+            $agent->first_name = $name[0];
+            $agent->last_name = @$name[1];
 
             return view('agents.profile', get_defined_vars());
         }
 
         $company = Auth::user();
+        $name = explode(' ', $company->name);
+        $company->first_name = $name[0];
+        $company->last_name = @$name[1];
 
         return view('companies.profile', get_defined_vars());
     }

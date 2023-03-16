@@ -205,7 +205,7 @@
                                         <p>
                                             @if ($property->total_price > 0)
                                                 {!! $property->currency_symbol !!}
-                                                {{ number_format(($totalPriceWithVat * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
+                                                {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                             @else
                                                 {{ 'N/A' }}
                                             @endif
@@ -291,7 +291,7 @@
                                                 <p>
                                                     @if ($property->total_price > 0)
                                                         {!! $property->currency_symbol !!}
-                                                        {{ number_format(($totalPriceWithVat * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
+                                                        {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                                     @else
                                                         {{ 'N/A' }}
                                                     @endif
