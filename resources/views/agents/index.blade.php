@@ -18,8 +18,8 @@
             <div class="wrapper-table">
                 <table>
                     <tbody>
-                        @forelse ($agents as $agent)
-                            <tr>
+                        @forelse ($agents as $key => $agent)
+                            <tr class="{{ ($key%2 !== 0) ? 'background-orange' : ''}}">
                                 <td class="profile-img">
                                     <img src="{{ asset('img') }}/default-avatar.png" />
                                 </td>
