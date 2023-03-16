@@ -97,128 +97,130 @@ class HomeController extends Controller
     {
         $properties = [];
         $startDate = $endDate = '';
-        if ($request->filled('daterange')) {
 
-            $where = ' WHERE 1 AND properties.ical_link IS NOT NULL ';
-            if ($request->filled('city')) {
-                $destination = $request->city;
-                $where .= ' AND destination LIKE "%' . $destination . '%" ';
-            }
-            if ($request->filled('guests')) {
-                $guests = (int) $request->guests;
-                $where .= ' AND max_guests = ' . $guests . ' ';
-            }
-            if ($request->filled('bedrooms')) {
-                $bedrooms = (int) $request->bedrooms;
-                $where .= ' AND no_of_bedrooms = ' . $bedrooms . ' ';
-            }
-            if ($request->filled('bathrooms')) {
-                $bathrooms = (int) $request->bathrooms;
-                $where .= ' AND no_of_bathrooms = ' . $bathrooms . ' ';
-            }
-            if ($request->filled('property_type')) {
-                $where .= ' AND property_type = "' . $request->property_type . '" ';
-            }
+        $where = ' WHERE 1 AND properties.ical_link IS NOT NULL ';
+        if ($request->filled('city')) {
+            $destination = $request->city;
+            $where .= ' AND destination LIKE "%' . $destination . '%" ';
+        }
+        if ($request->filled('guests')) {
+            $guests = (int) $request->guests;
+            $where .= ' AND max_guests = ' . $guests . ' ';
+        }
+        if ($request->filled('bedrooms')) {
+            $bedrooms = (int) $request->bedrooms;
+            $where .= ' AND no_of_bedrooms = ' . $bedrooms . ' ';
+        }
+        if ($request->filled('bathrooms')) {
+            $bathrooms = (int) $request->bathrooms;
+            $where .= ' AND no_of_bathrooms = ' . $bathrooms . ' ';
+        }
+        if ($request->filled('property_type')) {
+            $where .= ' AND property_type = "' . $request->property_type . '" ';
+        }
 
-            $orderBy = 'properties.name ASC';
-            $sortBy = $request->sort_by;
-            if ($sortBy) {
-                switch ($sortBy) {
-                    case 'Property Name A to Z':
-                        $orderBy = 'properties.name ASC';
-                        break;
-                    case 'No. of Bedrooms':
-                        $orderBy = 'CAST(properties.no_of_bedrooms AS UNSIGNED) ASC';
-                        break;
-                    case 'No. of Guests':
-                        $orderBy = 'CAST(properties.max_guests AS UNSIGNED) ASC';
-                        break;
-                    case 'Property Type':
-                        $orderBy = 'properties.property_type ASC';
-                        break;
-                    case 'Community Ascending':
-                        $orderBy = 'properties.community ASC';
-                        break;
-                }
+        $orderBy = 'properties.name ASC';
+        $sortBy = $request->sort_by;
+        if ($sortBy) {
+            switch ($sortBy) {
+                case 'Property Name A to Z':
+                    $orderBy = 'properties.name ASC';
+                    break;
+                case 'No. of Bedrooms':
+                    $orderBy = 'CAST(properties.no_of_bedrooms AS UNSIGNED) ASC';
+                    break;
+                case 'No. of Guests':
+                    $orderBy = 'CAST(properties.max_guests AS UNSIGNED) ASC';
+                    break;
+                case 'Property Type':
+                    $orderBy = 'properties.property_type ASC';
+                    break;
+                case 'Community Ascending':
+                    $orderBy = 'properties.community ASC';
+                    break;
             }
-
+        }
+        if($request->daterange){
             list($startDate, $endDate) = explode(' - ', $request->daterange);
             $iterateStartDate = $startDate = Carbon::createFromFormat('m/d/Y', $startDate)->format('Y-m-d');
             $endDate = Carbon::createFromFormat('m/d/Y', $endDate)->format('Y-m-d');
-
-            $rangeDatesArray = [];
-            while (strtotime($iterateStartDate) <= strtotime($endDate)) {
-                $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
-                $iterateStartDate = date('Y-m-d', strtotime("+1 day", strtotime($iterateStartDate)));
-            }
-
-            $page = ($request->filled('page')) ? (int) $request->page : 1;
-            $paginate = 12;
-
-            $query = 'SELECT
-                    properties.id,
-                    properties.clickup_id,
-                    properties.name,
-                    properties.property_id,
-                    properties.account,
-                    properties.currency,
-                    properties.currency_symbol,
-                    properties.community,
-                    properties.commission,
-                    properties.country,
-                    properties.destination,
-                    properties.city,
-                    properties.property_type,
-                    properties.max_guests,
-                    properties.no_of_beds,
-                    properties.no_of_bathrooms,
-                    properties.no_of_bedrooms,
-                    properties.pdf_link,
-                    properties.ical_link,
-                    properties.images_folder_link,
-                    properties.price_doc_link,
-                    properties.price_pdf_link,
-                    SUM(IF((CAST("' . $startDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $endDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
-                FROM properties
-                LEFT JOIN `events` ON events.property_id = properties.id
-                ' . $where . '
-                GROUP BY
-                    properties.id,properties.property_id
-                HAVING total_bookings = 0
-                ORDER BY ' . $orderBy;
-
-            $properties = DB::select(DB::raw($query));
-
-
-            foreach ($properties as $key => $property) {
-                $totalPrice = 0;
-                foreach ($rangeDatesArray as $date) {
-                    $prices = PropertyPrice::where(['property_id' => $property->id])->whereDate('from', '<=', $date)->whereDate('to', '>=', $date)->first();
-                    if ($prices) {
-                        $totalPrice += $prices->per_night_price;
-                        $properties[$key]->prices[$date] = $prices->per_night_price;
-                    } else {
-                        $properties[$key]->prices[$date] = 0.00;
-                    }
-                }
-                $properties[$key]->total_price = $totalPrice;
-                $properties[$key]->average = $totalPrice / count($rangeDatesArray);
-            }
-
-            if ($request->filled('price')) {
-                $properties = collect($properties)->where('total_price', '<=', $request->price)->toArray();
-            }
-
-            $offset = ($page * $paginate) - $paginate;
-
-            if ($sortBy && $sortBy == 'Price Low to High') {
-                $properties = collect($properties)->sortBy('average')->toArray();
-            }
-
-            $itemstoshow = array_slice($properties, $offset, $paginate);
-            $properties = new LengthAwarePaginator($itemstoshow, count($properties), $paginate, $page, ['path' => $request->url()]);
-
+        }else{
+            $iterateStartDate = $startDate = Carbon::now()->format('Y-m-d');
+            $endDate = Carbon::now()->format('Y-m-d');
         }
+
+        $rangeDatesArray = [];
+        while (strtotime($iterateStartDate) <= strtotime($endDate)) {
+            $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
+            $iterateStartDate = date('Y-m-d', strtotime("+1 day", strtotime($iterateStartDate)));
+        }
+
+        $page = ($request->filled('page')) ? (int) $request->page : 1;
+        $paginate = 12;
+
+        $query = 'SELECT
+                properties.id,
+                properties.clickup_id,
+                properties.name,
+                properties.property_id,
+                properties.account,
+                properties.currency,
+                properties.currency_symbol,
+                properties.community,
+                properties.commission,
+                properties.country,
+                properties.destination,
+                properties.city,
+                properties.property_type,
+                properties.max_guests,
+                properties.no_of_beds,
+                properties.no_of_bathrooms,
+                properties.no_of_bedrooms,
+                properties.pdf_link,
+                properties.ical_link,
+                properties.images_folder_link,
+                properties.price_doc_link,
+                properties.price_pdf_link,
+                SUM(IF((CAST("' . $startDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $endDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
+            FROM properties
+            LEFT JOIN `events` ON events.property_id = properties.id
+            ' . $where . '
+            GROUP BY
+                properties.id,properties.property_id
+            HAVING total_bookings = 0
+            ORDER BY ' . $orderBy;
+
+        $properties = DB::select(DB::raw($query));
+
+
+        foreach ($properties as $key => $property) {
+            $totalPrice = 0;
+            foreach ($rangeDatesArray as $date) {
+                $prices = PropertyPrice::where(['property_id' => $property->id])->whereDate('from', '<=', $date)->whereDate('to', '>=', $date)->first();
+                if ($prices) {
+                    $totalPrice += $prices->per_night_price;
+                    $properties[$key]->prices[$date] = $prices->per_night_price;
+                } else {
+                    $properties[$key]->prices[$date] = 0.00;
+                }
+            }
+            $properties[$key]->total_price = $totalPrice;
+            $properties[$key]->average = $totalPrice / count($rangeDatesArray);
+        }
+
+        if ($request->filled('price')) {
+            $properties = collect($properties)->where('total_price', '<=', $request->price)->toArray();
+        }
+
+        $offset = ($page * $paginate) - $paginate;
+
+        if ($sortBy && $sortBy == 'Price Low to High') {
+            $properties = collect($properties)->sortBy('average')->toArray();
+        }
+
+        $itemstoshow = array_slice($properties, $offset, $paginate);
+        $properties = new LengthAwarePaginator($itemstoshow, count($properties), $paginate, $page, ['path' => $request->url()]);
+
 
         $propertyAttr = Property::select(
             DB::raw('MAX(CAST(properties.no_of_bedrooms AS UNSIGNED)) as no_of_bedrooms'),
