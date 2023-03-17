@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('import:sheets')->timezone('EET')->dailyAt('07:00')->withoutOverlapping();
         $schedule->command('import:properties')->timezone('EET')->dailyAt('07:15')->withoutOverlapping();
         $schedule->command('import:calendar')->timezone('EET')->hourly()->withoutOverlapping();
+        //$schedule->command('import:images')->timezone('EET')->dailyAt('05:00')->withoutOverlapping();
         //$schedule->command('import:confirm-properties')->timezone('EET')->hourly();
     }
 

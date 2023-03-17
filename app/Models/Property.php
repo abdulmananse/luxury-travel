@@ -18,8 +18,41 @@ class Property extends Model implements HasMedia
     {
         $this
             ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 1024, 786)
+            ->fit(Manipulations::FIT_CROP, 500, 300)
             ->nonQueued();
+    }
+
+    /**
+     * Get the image
+     *
+     * @return string
+     */
+    public function getImageAttribute()
+    {
+        $media = $this->getMedia('images')->first();
+        unset($this->media);
+        if($media) {
+            return $media->getUrl();
+        }
+        return null;
+    }
+
+    /**
+     * Get the images
+     *
+     * @return string
+     */
+    public function getImagesAttribute()
+    {
+        $media = $this->getMedia('images');
+        unset($this->media);
+        $images = [];
+        if($media) {
+            foreach($media as $image){
+                $images[] = $image->getUrl();
+            }
+        }
+        return $images;
     }
 
     public function getShortDescriptionAttribute()

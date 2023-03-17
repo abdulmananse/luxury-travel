@@ -139,10 +139,17 @@
                 <h3>Available Properties</h3>
                 <div class="properties-card">
                     @forelse($properties as $property)
+                    <?php
+                    $propertyModel = App\Models\Property::find(1);
+                    ?>
                         <div class="card-info">
                             <div class="card-img">
                                 <div class="shadow-left"></div>
-                                <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @if($propertyModel->images)
+                                    <img src="{{ $propertyModel->images[0] }}" />
+                                    @else
+                                    <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @endif
                                 <div class="shadow-right"></div>
                                 <div class="properties-slide">
                                     <img src="{{ asset('img') }}/sliderinvalid-name@3x.png" />
@@ -223,7 +230,11 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @if($propertyModel->image)
+                                    <img src="{{ $propertyModel->image }}" />
+                                    @else
+                                    <img :alt="{{ $propertyModel->image }}" src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @endif
                                 </div>
                                 <div class="card-content">
                                     <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />

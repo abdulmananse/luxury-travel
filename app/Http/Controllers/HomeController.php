@@ -16,17 +16,11 @@ use ICal\ICal;
 
 use App\Models\Sheet;
 use App\Models\Property;
-use App\Models\Event as EventModel;
 use App\Models\Log as ModelsLog;
 use App\Models\PropertyPrice;
 use App\Models\User;
 use DB;
 use Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use ZipArchive;
-use File;
 
 class HomeController extends Controller
 {
@@ -60,96 +54,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        ini_set('max_execution_time', 0);
-        $disk = Storage::disk('google');
-        
-        $properties = Property::select('id', 'property_id', 'images_folder_link')->get();
-        foreach($properties as $property) {
-
-            $imageLink = explode('folders/', $property->images_folder_link);
-            if (isset($imageLink[1])) {
-                $dir = str_replace('?usp=sharing', '', $imageLink[1]);
-                $contents = collect($disk->listContents($dir, false));
-                $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
-                //dd($files->toArray());
-                
-                $property->clearMediaCollection('images');
-
-                $folder = storage_path("app/public/{$property->property_id}");
-                $this->deleteDirectory($folder);
-                mkdir($folder, 0777, true);
-                
-                $i=1;
-                foreach($files as $file) {
-                    //dd($file);
-                    $readStream = $disk->getDriver()->readStream($file['path']);
-                    $fileData = stream_get_contents($readStream);
-                    $filename = $file['filename'].'.'.$file['extension'];
-
-                    $targetFile = "{$folder}/{$filename}";
-                    file_put_contents($targetFile, $fileData, FILE_APPEND);
-
-                    if ($i<=4) {
-                        $tempFolder = storage_path("app/public/temp");
-                        if (!file_exists($tempFolder)) {
-                            mkdir($tempFolder, 0777, true);
-                        }
-
-                        $tempTargetFile = "{$tempFolder}/{$filename}";
-                        file_put_contents($tempTargetFile, $fileData, FILE_APPEND);
-                        $property->addMedia($tempTargetFile)->toMediaCollection('images');
-                    }
-
-                    $i++;
-                    //exit;
-                }
-
-                
-                $zip = new ZipArchive;
-                $zipFileName = $property->property_id . '.zip';
-    
-                if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE)
-                {
-                    $files = File::files($folder);
-        
-                    foreach ($files as $key => $value) {
-                        $relativeNameInZipFile = basename($value);
-                        $zip->addFile($value, $relativeNameInZipFile);
-                    }
-                    
-                    $zip->close();
-
-                    $this->deleteDirectory($folder);
-                }
-
-                break;
-            }
-        }
-
         return view('home');
-    }
-
-    private function deleteDirectory($dir) {
-        if (!file_exists($dir)) {
-            return true;
-        }
-    
-        if (!is_dir($dir)) {
-            return unlink($dir);
-        }
-    
-        foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') {
-                continue;
-            }
-    
-            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
-                return false;
-            }
-    
-        }
-    
-        return rmdir($dir);
     }
 
     public function searchProperties(Request $request)
