@@ -27,10 +27,10 @@ class AgentController extends Controller
         $agents = Invitation::orderBy('id', 'desc');
 
         if ($request->filled('name')) {
-            $agents->where('email', $request->name);
+            $agents->where('email', 'LIKE', '%'. $request->name . '%');
         }
 
-        $agents = $agents->get();
+        $agents = $agents->paginate(50);
         return view('agents.index', get_defined_vars());
     }
 

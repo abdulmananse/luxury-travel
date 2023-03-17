@@ -46,6 +46,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($agents)
+            <div class="row justify-content-center float-end pt-3 pagina w-100">
+                {!! $agents->appends($_GET)->links('pagination::bootstrap-4') !!}
+            </div>
+        @endif
         </div>
     </section>
 

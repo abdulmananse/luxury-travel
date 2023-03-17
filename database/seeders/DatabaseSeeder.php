@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Invitation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -62,6 +63,22 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('12345678')
             ]);
             $user->syncRoles($agentRole);
+
+            for($i = 1; $i < 15000; $i++){
+                $user = User::updateOrCreate([
+                    'username' => 'agent_' . $i,
+                    'name' => 'Agent ' . $i,
+                    'company_name' => 'Tripwix',
+                    'email' => 'agent_' . $i . '@gmail.com'
+                ], [
+                    'password' => Hash::make('12345678')
+                ]);
+                Invitation::create([
+                    'email' => 'agent_' . $i . '@gmail.com',
+                    'status' => 0
+                ]);
+                $user->syncRoles($agentRole);
+            }
 
             $agentRole->syncPermissions([$permission1->id]);
         }
