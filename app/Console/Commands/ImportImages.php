@@ -59,8 +59,8 @@ class ImportImages extends Command
             $this->createDbErrorLog($destinationName, $pisLink, $message, 'GoogleDriveImages', 'error', 'Tech Team');
 
             sleep(5);
-            $$this->_skipProperties[] = $this->readProperty->property_id;
-            $this->importGoogleDriveImages($$this->_skipProperties);
+            $this->_skipProperties[] = $this->readProperty->property_id;
+            $this->importGoogleDriveImages($this->_skipProperties);
         }
         return 0;
     }
@@ -68,8 +68,12 @@ class ImportImages extends Command
     private function importGoogleDriveImages($skipProperties = []){
         $disk = Storage::disk('google');
         $properties = Property::select('id', 'property_id', 'images_folder_link')->get();
+        $propertiesDownloaded = 0;
         foreach($properties as $property) {
-            if (!in_array($property->property_id, $skipProperties)) {
+
+            $zipFileName = $property->property_id . '.zip';
+            if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
+                $propertiesDownloaded += 1;
                 $this->readProperty = $property;
                 $imageLink = explode('folders/', $property->images_folder_link);
                 if (isset($imageLink[1])) {
@@ -111,7 +115,6 @@ class ImportImages extends Command
 
 
                     $zip = new ZipArchive;
-                    $zipFileName = $property->property_id . '.zip';
 
                     if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE)
                     {
