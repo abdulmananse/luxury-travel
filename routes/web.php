@@ -20,10 +20,11 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
 Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
+Route::get('import-images', [HomeController::class, 'importGoogleDriveImages']);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('dashboard', '/')->name('dashboard');
-    
+
     Route::get('search', [HomeController::class, 'search'])->name('search')->middleware('permission:Search Properties');
     Route::get('search-properties', [HomeController::class, 'searchProperties'])->middleware('permission:Search Properties');
 
@@ -38,9 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('agents', [AgentController::class, 'index'])->name('agents.index')->middleware('permission:Manage Agents');
     Route::get('agents/invite', [AgentController::class, 'invite'])->name('agents.invite')->middleware('permission:Manage Agents');
     Route::post('agents/invite', [AgentController::class, 'sendInvitation'])->name('agents.sendInvitation')->middleware('permission:Manage Agents');
-    
+
     Route::post('agents/update', [AgentController::class, 'update'])->name('agents.update');
-    
+
     Route::post('create-task', [HomeController::class, 'createTask']);
     Route::get('detail/{id}', [HomeController::class, 'show']);
     Route::get('import-sheets', [HomeController::class, 'importSheets']);

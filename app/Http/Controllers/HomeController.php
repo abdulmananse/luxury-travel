@@ -16,11 +16,16 @@ use ICal\ICal;
 
 use App\Models\Sheet;
 use App\Models\Property;
+use App\Models\CronJob;
 use App\Models\Log as ModelsLog;
+use Illuminate\Support\Facades\Storage;
 use App\Models\PropertyPrice;
 use App\Models\User;
 use DB;
 use Auth;
+
+use ZipArchive;
+use File;
 
 class HomeController extends Controller
 {
@@ -34,6 +39,8 @@ class HomeController extends Controller
     public $readProperty;
     public $readPropertySheet;
     public $readIndex;
+    public $readImageProperty;
+    public $_skipImageProperty;
 
 
     public function __construct()
@@ -884,5 +891,118 @@ class HomeController extends Controller
         $company->last_name = @$name[1];
 
         return view('companies.profile', get_defined_vars());
+    }
+
+    public function importGoogleDriveImages($skipProperties = []){
+        try {
+            ini_set('max_execution_time', 0);
+            //ModelsLog::where('type', 'GoogleDriveImages')->delete();
+            $disk = Storage::disk('google');
+            $properties = Property::select('id', 'property_id', 'images_folder_link')->get();
+            $propertiesDownloaded = 0;
+            foreach($properties as $property) {
+
+                $zipFileName = $property->property_id . '.zip';
+                if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
+                    if($propertiesDownloaded == 0)
+                        CronJob::create(['command' => "Starting: import:images"]);
+                    $propertiesDownloaded += 1;
+                    $this->readImageProperty = $property;
+                    $imageLink = explode('folders/', $property->images_folder_link);
+                    if (isset($imageLink[1])) {
+                        $dir = str_replace('?usp=sharing', '', $imageLink[1]);
+                        $contents = collect($disk->listContents($dir, false));
+                        $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
+                        //dd($files->toArray());
+
+                        $property->clearMediaCollection('images');
+
+                        $folder = storage_path("app/public/{$property->property_id}");
+                        $this->deleteDirectory($folder);
+                        mkdir($folder, 0777, true);
+
+                        $i=1;
+                        foreach($files as $file) {
+                            //dd($file);
+                            $readStream = $disk->getDriver()->readStream($file['path']);
+                            $fileData = stream_get_contents($readStream);
+                            $filename = $file['filename'].'.'.$file['extension'];
+
+                            $targetFile = "{$folder}/{$filename}";
+                            file_put_contents($targetFile, $fileData, FILE_APPEND);
+
+                            if ($i<=4) {
+                                $tempFolder = storage_path("app/public/temp");
+                                if (!file_exists($tempFolder)) {
+                                    mkdir($tempFolder, 0777, true);
+                                }
+
+                                $tempTargetFile = "{$tempFolder}/{$filename}";
+                                file_put_contents($tempTargetFile, $fileData, FILE_APPEND);
+                                $property->addMedia($tempTargetFile)->toMediaCollection('images');
+                            }
+
+                            $i++;
+                            //exit;
+                        }
+
+
+                        $zip = new ZipArchive;
+
+                        if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE)
+                        {
+                            $files = File::files($folder);
+
+                            foreach ($files as $key => $value) {
+                                $relativeNameInZipFile = basename($value);
+                                $zip->addFile($value, $relativeNameInZipFile);
+                            }
+
+                            $zip->close();
+
+                            $this->deleteDirectory($folder);
+                        }
+                    }
+                    if($propertiesDownloaded >= 60){
+                        CronJob::create(['command' => "Completed: import:images"]);
+                        break;
+                    }
+                }
+            }
+        }
+        catch (\Exception $e) {
+            $error = $this->parseException($e);
+            $message = "Unable to download images. {ErrorMessage} $error";
+            $destinationName = '';
+            $pisLink = '';
+            $this->createDbErrorLog($destinationName, $pisLink, $message, 'GoogleDriveImages', 'error', 'Tech Team');
+
+            sleep(5);
+            $this->_skipImageProperty[] = $this->readImageProperty->property_id;
+            $this->importGoogleDriveImages($this->_skipImageProperty);
+        }
+    }
+
+    private function deleteDirectory($dir) {
+        if (!file_exists($dir)) {
+            return true;
+        }
+
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+
+        foreach (scandir($dir) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+
+        }
+
+        return rmdir($dir);
     }
 }

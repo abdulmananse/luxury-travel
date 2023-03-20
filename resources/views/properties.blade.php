@@ -140,7 +140,7 @@
                 <div class="properties-card">
                     @forelse($properties as $property)
                     <?php
-                    $propertyModel = App\Models\Property::find(1);
+                    $propertyModel = App\Models\Property::find($property->id);
                     ?>
                         <div class="card-info">
                             <div class="card-img">
@@ -251,7 +251,7 @@
                                         <div>
                                             <p>HQ Photos</p>
                                             <a target="_blank"
-                                                href="{{ $property->images_folder_link }}">Download</a>
+                                                href="{{ (file_exists(storage_path('app/public/' . $property->property_id . '.zip')) ? config('app.url') . '/storage/' . $property->property_id . '.zip' : $property->images_folder_link) }}">Download</a>
                                         </div>
                                     </div>
                                 </div>
