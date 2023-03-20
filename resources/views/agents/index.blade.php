@@ -1,5 +1,9 @@
 <x-app-layout>
 
+    @section('title')
+        | Agents
+    @endsection
+
     <section class="backgroundColor">
         <div class="container agents">
             <h3>Agents</h3>
@@ -19,7 +23,7 @@
                 <table>
                     <tbody>
                         @forelse ($agents as $key => $agent)
-                            <tr class="{{ ($key%2 !== 0) ? 'background-orange' : ''}}">
+                            <tr class="{{ $key % 2 !== 0 ? 'background-orange' : '' }}">
                                 <td class="profile-img">
                                     <img src="{{ asset('img') }}/default-avatar.png" />
                                 </td>
@@ -47,10 +51,10 @@
                 </table>
             </div>
             @if ($agents)
-            <div class="row justify-content-center float-end pt-3 pagina w-100">
-                {!! $agents->appends($_GET)->links('pagination::bootstrap-4') !!}
-            </div>
-        @endif
+                <div class="row justify-content-center float-end pt-3 pagina w-100">
+                    {!! $agents->appends($_GET)->links('pagination::bootstrap-4') !!}
+                </div>
+            @endif
         </div>
     </section>
 

@@ -1,5 +1,9 @@
 <x-app-layout>
 
+    @section('title')
+        | Profile
+    @endsection
+
     <?php
     $name = explode(' ', @$company->name);
     $firstName = $name[0];

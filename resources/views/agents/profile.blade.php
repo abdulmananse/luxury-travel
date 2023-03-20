@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('title')
+        | Profile
+    @endsection
+
     <section class="backgroundColor">
         <div class="container profile">
             <div class="d-flex row profile-company">

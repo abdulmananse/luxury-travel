@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('title')
+        | Property Search
+    @endsection
+
     <form method="GET" action="{{ route('search') }}" class="row1 g-31 form-input1 search-form">
         <section class="backgroundColor">
             <div class="container">
@@ -139,17 +144,17 @@
                 <h3>Available Properties</h3>
                 <div class="properties-card">
                     @forelse($properties as $property)
-                    <?php
-                    $propertyModel = App\Models\Property::find($property->id);
-                    ?>
+                        <?php
+                        $propertyModel = App\Models\Property::find($property->id);
+                        ?>
                         <div class="card-info">
                             <div class="card-img">
                                 <div class="shadow-left"></div>
-                                    @if($propertyModel->images)
+                                @if ($propertyModel->images)
                                     <img src="{{ $propertyModel->images[0] }}" />
-                                    @else
+                                @else
                                     <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
-                                    @endif
+                                @endif
                                 <div class="shadow-right"></div>
                                 <div class="properties-slide">
                                     <img src="{{ asset('img') }}/sliderinvalid-name@3x.png" />
@@ -180,9 +185,9 @@
                                         <p>{{ $property->no_of_bedrooms }}</p>
                                     </div>
                                     <?php
-                                    if ($property->total_price > 0){
-                                        $totalPriceWithVat = ($property->total_price + (($property->total_price*$vatPercentage)/100));
-                                    }else{
+                                    if ($property->total_price > 0) {
+                                        $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
+                                    } else {
                                         $totalPriceWithVat = 0;
                                     }
                                     ?>
@@ -210,7 +215,7 @@
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
-                                            @if ($property->total_price > 0)
+                                            @if ($property->total_price > 0 && $contactPerson->commission != null)
                                                 {!! $property->currency_symbol !!}
                                                 {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                             @else
@@ -230,10 +235,11 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if($propertyModel->image)
-                                    <img src="{{ $propertyModel->image }}" />
+                                    @if ($propertyModel->image)
+                                        <img src="{{ $propertyModel->image }}" />
                                     @else
-                                    <img :alt="{{ $propertyModel->image }}" src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                        <img :alt="{{ $propertyModel->image }}"
+                                            src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
                                 </div>
                                 <div class="card-content">
@@ -251,7 +257,7 @@
                                         <div>
                                             <p>HQ Photos</p>
                                             <a target="_blank"
-                                                href="{{ (file_exists(storage_path('app/public/' . $property->property_id . '.zip')) ? config('app.url') . '/storage/' . $property->property_id . '.zip' : $property->images_folder_link) }}">Download</a>
+                                                href="{{ file_exists(storage_path('app/public/' . $property->property_id . '.zip')) ? config('app.url') . '/storage/' . $property->property_id . '.zip' : $property->images_folder_link }}">Download</a>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +306,7 @@
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
                                                 <p>
-                                                    @if ($property->total_price > 0)
+                                                    @if ($property->total_price > 0 && $contactPerson->commission != null)
                                                         {!! $property->currency_symbol !!}
                                                         {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
                                                     @else
@@ -328,7 +334,8 @@
                                         <p>Message for {{ $contactPerson->first_name }}:</p>
                                         <textarea rows="4" maxlength="50"></textarea>
                                         <p class="request-info">
-                                            {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will reach out to you.
+                                            {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will
+                                            reach out to you.
                                         </p>
                                     </div>
                                 </div>

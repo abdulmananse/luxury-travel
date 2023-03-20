@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('title')
+        | Add Agent
+    @endsection
+
     <section class="backgroundColor">
         <div class="container add-agents-page">
             <div class="back-step">

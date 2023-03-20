@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    @section('title')
+        | Home
+    @endsection
+
     <section class="backgroundColor">
         <div class="container d-flex global-padding align-items-center">
             <div class="row">
@@ -9,8 +14,8 @@
                         Invite travel agents to see your inventory, search, and send you
                         targeted leads.
                     </p>
-                    @if(!Auth::user())
-                    <button class="signUp-btn">Sign up</button>
+                    @if (!Auth::user())
+                        <button class="signUp-btn">Sign up</button>
                     @endif
                 </div>
                 <div class="col-xl-6 img-galerry">
