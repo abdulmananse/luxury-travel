@@ -21,6 +21,7 @@ Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
 Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
 Route::get('import-images', [HomeController::class, 'importGoogleDriveImages']);
+Route::post('send-request', [HomeController::class, 'sendRequest']);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('dashboard', '/')->name('dashboard');

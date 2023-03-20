@@ -331,8 +331,14 @@
                                         </div>
                                     </div>
                                     <div class="text-request">
-                                        <p>Message for {{ $contactPerson->first_name }}:</p>
-                                        <textarea rows="4" maxlength="50"></textarea>
+                                        <form class="request-form">
+                                            @csrf
+                                            <p>Message for {{ $contactPerson->first_name }}:</p>
+                                            <input type="hidden" name="user_id" value="{{ $contactPerson->id }}" />
+                                            <input type="hidden" name="property_id" class="property-id"
+                                                value="{{ $property->id }}" />
+                                            <textarea rows="4" name="message" maxlength="50" class="request-textarea"></textarea>
+                                        </form>
                                         <p class="request-info">
                                             {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will
                                             reach out to you.
@@ -415,40 +421,41 @@
                 $(".send-request").click(function(e) {
                     e.preventDefault();
                     const _self = $(this);
+                    const _parent = _self.parents(".download-card-request-open");
+                    const textarea = _parent.find(".request-textarea");
+                    const propertyId = _parent.find(".property-id").val();
+                    const _form = _parent.find('.request-form');
+                    const formData = _form.serialize();
+
+                    if (textarea.val() == '') {
+                        errorMessage('Request message is required');
+                        return false;
+                    }
 
                     _self.LoadingOverlay('show');
 
-                    setTimeout(function() {
-                        successMessage('Request successfully sent');
-                        _self.LoadingOverlay('hide');
-                        $(".arrow-back-request").click();
-                    }, 3000);
-
-
-                    // $.ajax({
-                    //     type: 'post',
-                    //     url: _form.attr('action'),
-                    //     processData: false,
-                    //     dataType: 'json',
-                    //     data: formData,
-                    //     success: function(res) {
-                    //         if (res.success) {
-                    //             //successMessage('Task successfully created');
-                    //             ticketForm.classList.remove('open')
-                    //             ticketFormThanks.classList.add('open')
-                    //             $("#property_id").val('');
-                    //             $(".datepicker").val('');
-                    //         } else {
-                    //             errorMessage('Task not created');
-                    //         }
-                    //     },
-                    //     error: function(request, status, error) {
-                    //         showAjaxErrorMessage(request);
-                    //     },
-                    //     complete: function(res) {
-                    //         _self.LoadingOverlay('hide');
-                    //     }
-                    // });
+                    $.ajax({
+                        type: 'post',
+                        url: '{{ url('send-request') }}',
+                        processData: false,
+                        dataType: 'json',
+                        data: formData,
+                        success: function(res) {
+                            if (res.success) {
+                                textarea.val('');
+                                successMessage('Request successfully sent');
+                                $(".arrow-back-request").click();
+                            } else {
+                                errorMessage('Request not sent');
+                            }
+                        },
+                        error: function(request, status, error) {
+                            showAjaxErrorMessage(request);
+                        },
+                        complete: function(res) {
+                            _self.LoadingOverlay('hide');
+                        }
+                    });
                 });
 
             });

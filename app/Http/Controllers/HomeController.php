@@ -21,6 +21,7 @@ use App\Models\Log as ModelsLog;
 use App\Models\PropertyImagesLog;
 use Illuminate\Support\Facades\Storage;
 use App\Models\PropertyPrice;
+use App\Models\PropertyRequest;
 use App\Models\User;
 use DB;
 use Auth;
@@ -1024,5 +1025,13 @@ class HomeController extends Controller
         }
 
         return rmdir($dir);
+    }
+
+    public function sendRequest (Request $request) {
+        $this->validate($request, ['property_id' => 'required', 'message' => 'required']);
+
+        PropertyRequest::create($request->all());
+
+        return ['success' => true, 'data' => $request->all()];
     }
 }
