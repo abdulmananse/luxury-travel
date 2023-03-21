@@ -921,7 +921,8 @@ class HomeController extends Controller
                         $this->readImageProperty = $property;
                         $imageLink = explode('folders/', $property->images_folder_link);
                         if (isset($imageLink[1])) {
-                            $dir = str_replace('?usp=sharing', '', $imageLink[1]);
+                            $imageDir = explode('?', $imageLink[1]);
+                            $dir = $imageDir[0];
                             $contents = collect($disk->listContents($dir, false));
                             $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
                             //dd($files->toArray());
