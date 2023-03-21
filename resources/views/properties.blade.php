@@ -186,7 +186,11 @@
                             </div>
 
                             <div class="card-content">
+                                @if($contactPerson->image)
                                 <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                @else
+                                <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                @endif
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
@@ -265,12 +269,15 @@
                                     @if ($propertyModel->image)
                                         <img src="{{ $propertyModel->image }}" />
                                     @else
-                                        <img :alt="{{ $propertyModel->image }}"
-                                            src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
                                 </div>
                                 <div class="card-content">
+                                    @if($contactPerson->image)
+                                    <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                    @else
                                     <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                    @endif
                                     <h4>Download</h4>
                                     <div class="download-file">
                                         <div>
@@ -302,10 +309,18 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @if ($propertyModel->images)
+                                        <img src="{{ $propertyModel->images[0] }}" />
+                                    @else
+                                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                    @endif
                                 </div>
                                 <div class="card-content">
+                                    @if($contactPerson->image)
+                                    <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                    @else
                                     <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                    @endif
                                     <h4>Request to Book</h4>
                                     <div class="bedrooms">
                                         <div class="publisher-contact d-flex">
