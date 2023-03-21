@@ -43,6 +43,7 @@ class HomeController extends Controller
     public $readIndex;
     public $readImageProperty;
     public $_skipImageProperty;
+    public $_readingDirectory;
 
 
     public function __construct()
@@ -908,10 +909,10 @@ class HomeController extends Controller
             foreach ($properties as $property) {
                 $downloadImageData = ['property_id' => $property->id, 'download_date' => date('Y-m-d')];
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
-        
+
                 if (!$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
-                
+
                     $zipFileName = $property->property_id . '.zip';
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
                         if ($propertiesDownloaded == 0) {
@@ -920,6 +921,7 @@ class HomeController extends Controller
                         $propertiesDownloaded += 1;
                         $this->readImageProperty = $property;
                         $imageLink = explode('folders/', $property->images_folder_link);
+                        $this->_readingDirectory = $imageLink;
                         if (isset($imageLink[1])) {
                             $dir = str_replace('?usp=sharing', '', $imageLink[1]);
                             $contents = collect($disk->listContents($dir, false));
@@ -972,7 +974,7 @@ class HomeController extends Controller
 
                                 $this->deleteDirectory($folder);
                             }
-                        
+
                             PropertyImagesLog::where($downloadImageData)->update(['status' => 1, 'response' => 'Successfully Download']);
 
                         } else {
@@ -989,13 +991,12 @@ class HomeController extends Controller
         }
         catch (\Exception $e) {
             $error = $this->parseException($e);
-            $message = "Unable to download images. {ErrorMessage} $error";
-            $destinationName = '';
-            $pisLink = '';
+            $directory = json_encode($this->_readingDirectory);
+            $message = "Unable to download images. {Dir} $directory {ErrorMessage} $error";
+            $destinationName = ($this->readImageProperty->destination) ? $this->readImageProperty->destination : '';
+            $pisLink = $this->readImageProperty->property_id;
             $this->createDbErrorLog($destinationName, $pisLink, $message, 'GoogleDriveImages', 'error', 'Tech Team');
-
-            sleep(5);
-            
+            sleep(2);
             $downloadImageData = ['property_id' => $this->readImageProperty->property_id, 'download_date' => date('Y-m-d')];
             PropertyImagesLog::where($downloadImageData)->update(['status' => 2, 'response' => $message]);
 
@@ -1005,26 +1006,36 @@ class HomeController extends Controller
     }
 
     private function deleteDirectory($dir) {
-        if (!file_exists($dir)) {
+        try{
+            if (!file_exists($dir)) {
+                return true;
+            }
+
+            if (!is_dir($dir)) {
+                return unlink($dir);
+            }
+
+            foreach (scandir($dir) as $item) {
+                if ($item == '.' || $item == '..') {
+                    continue;
+                }
+
+                if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                    return false;
+                }
+
+            }
+
+            return rmdir($dir);
+        }
+        catch (\Exception $e) {
+            $error = $this->parseException($e);
+            $message = "Unable to delete folder. {Dir} $dir {ErrorMessage} $error";
+            $destinationName = ($this->readImageProperty->destination) ? $this->readImageProperty->destination : '';
+            $pisLink = $this->readImageProperty->property_id;
+            $this->createDbErrorLog($destinationName, $pisLink, $message, 'GoogleDriveImages', 'error', 'Tech Team');
             return true;
         }
-
-        if (!is_dir($dir)) {
-            return unlink($dir);
-        }
-
-        foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') {
-                continue;
-            }
-
-            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
-                return false;
-            }
-
-        }
-
-        return rmdir($dir);
     }
 
     public function sendRequest (Request $request) {
