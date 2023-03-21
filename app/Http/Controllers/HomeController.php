@@ -917,14 +917,13 @@ class HomeController extends Controller
                 !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
-                        if ($propertiesDownloaded == 0) {
-                            CronJob::create(['command' => "Starting: import:images"]);
-                        }
                         $this->readImageProperty = $property;
                         $imageLink = explode('folders/', $property->images_folder_link);
                         $this->_readingDirectory = $imageLink;
                         if (isset($imageLink[1])) {
-
+                            if ($propertiesDownloaded == 0) {
+                                CronJob::create(['command' => "Starting: import:images"]);
+                            }
                             $propertiesDownloaded += 1;
                             $imageDir = explode('?', $imageLink[1]);
                             $dir = $imageDir[0];
