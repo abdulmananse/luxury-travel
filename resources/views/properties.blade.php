@@ -32,7 +32,7 @@
                     <div class="d-flex drop-menu destination-drop ml-4">
                         <p class="select-search">GUESTS</p>
                         <div class="select-destionation guests-label">
-                            <span>{{ @request()->guests ? @request()->guests : 'Guests' }}</span>
+                            <span>{{ @request()->guests . ' Guests' }}</span>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
@@ -417,7 +417,7 @@
                     $('input[name=city]').val($(this).attr('data-value'));
                 });
                 $('.select-guest-name').click(function() {
-                    $('.guests-label span').html($(this).attr('data-value'));
+                    $('.guests-label span').html($(this).attr('data-value') + ' Guests');
                     $('input[name=guests]').val($(this).attr('data-value'));
                 });
                 $('.select-property_type-name').click(function() {
