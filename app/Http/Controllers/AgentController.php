@@ -16,7 +16,7 @@ class AgentController extends Controller
     public function index (Request $request)
     {
 
-        //Notification::route('mail', 'abdulmanan4d@gmail.com')->notify(new InviteAgent());
+        Notification::route('mail', 'abdulmanan4d@gmail.com')->notify(new InviteAgent());
         // try {
         //     Notification::route('mail', $ddc->email)
         //                 ->notify(new DPIApprove(['uuid' => $application->uuid]));
