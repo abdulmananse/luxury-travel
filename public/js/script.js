@@ -178,4 +178,78 @@ priceInput.addEventListener('input', function() {
 });
 
 
+const priceRange = $('.price-range');
+const valueDrop = $('.budget-value-drop');
+const priceSlider = document.querySelector('#price');
 
+priceSlider.addEventListener('click', function () {
+  valueDrop.addClass('color');
+})
+
+priceSlider.addEventListener('mousemove', function() {
+  
+  const position = (priceSlider.value - priceSlider.min) / (priceSlider.max - priceSlider.min);
+  const rangeWidth = priceSlider.offsetWidth - 14; 
+
+  const thumbPosition = position * rangeWidth;
+  priceSlider.style.setProperty('--thumb-position', `${thumbPosition}px`);
+
+  const maxValue = parseInt(priceSlider.max);
+  const currentValue = parseInt(priceSlider.value);
+  const step = parseInt(priceSlider.step);
+
+  const maxRangeValue = Math.min(maxValue, currentValue + step * 2);
+
+  if(maxRangeValue == '100000'){
+
+    priceRange.text(`$ ${maxRangeValue}+`);
+    valueDrop.text(`$ ${maxRangeValue}+`);
+  
+    //priceRange.textContent = `$ ${maxRangeValue}+`;
+    //valueDrop.textContent = `$ ${maxRangeValue}+`;
+
+  }else{
+    priceRange.text(`$ ${maxRangeValue}`);
+    valueDrop.text(`$ ${maxRangeValue}`);
+
+    // priceRange.textContent = `$ ${maxRangeValue}`;
+    // valueDrop.textContent = `$ ${maxRangeValue}`;
+  }
+});
+
+
+const slides = document.querySelector('.properties-slides');
+const nextSlideButton = document.querySelector('#next');
+
+nextSlideButton.addEventListener('click', () => {
+  const currentScrollPosition = slides.scrollLeft;
+  const slideWidth = slides.clientWidth;
+  const numberOfSlides = slides.children.length;
+
+  let nextScrollPosition = currentScrollPosition + slideWidth;
+
+  if (nextScrollPosition >= slideWidth * numberOfSlides) {
+    nextScrollPosition = 0;
+  }
+
+  slides.scrollTo({
+    left: nextScrollPosition,
+    behavior: 'smooth'
+  });
+});
+
+window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
+(function(d,t) {
+  var BASE_URL="https://app.chatwoot.com";
+  var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=BASE_URL+"/packs/js/sdk.js";
+  g.defer = true;
+  g.async = true;
+  s.parentNode.insertBefore(g,s);
+  g.onload=function(){
+    window.chatwootSDK.run({
+      websiteToken: '128s8TU3ijo6dQecRJmFasCx',
+      baseUrl: BASE_URL
+    })
+  }
+})(document,"script");

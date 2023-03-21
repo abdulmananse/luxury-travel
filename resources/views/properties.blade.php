@@ -32,13 +32,14 @@
                     <div class="d-flex drop-menu destination-drop ml-4">
                         <p class="select-search">GUESTS</p>
                         <div class="select-destionation guests-label">
-                            <span>{{ @request()->guests ? @request()->guests : 'Guests' }}</span>
+                            <span>{{ @request()->guests . ' Guests' }}</span>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
-                            @for ($i = 1; $i <= $maxGuests; $i++)
+                            <span class="custom-option select-guest-name" data-value="1">1 Guest</span>
+                            @for ($i = 2; $i <= $maxGuests; $i++)
                                 <span class="custom-option select-guest-name"
-                                    data-value="{{ $i }}">{{ $i }}</span>
+                                    data-value="{{ $i }}">{{ $i }} Guests</span>
                             @endfor
                             <input type="text" class="d-none" name="guests" value="{{ @request()->guests }}" />
                         </div>
@@ -46,13 +47,14 @@
                     <input type="text" class="d-none" name="sort_by" value="{{ @request()->sort_by }}" />
                     <div class="d-flex drop-menu guests-border">
                         <p class="select-search">CLIENT BUDGET</p>
-                        <div class="select-destionation">
-                            <span>{{ @request()->price ? '$' . @request()->price : 'Price' }}</span>
+                        <div id="select-budget" class="select-destionation">
+                            <p class="budget-value-drop">{{ @request()->price ? '$' . @request()->price : 'Price' }}
+                            </p>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open guests-open budget">
-                            <span>{{ @request()->price ? '$' . request()->price : 'Price' }}</span>
-                            <input type="range" min="100" max="50000" step="100"
+                            <p class="price-range">{{ @request()->price ? '$' . request()->price : 'Price' }}</p>
+                            <input type="range" min="100" max="100000" step="100"
                                 value="{{ @request()->price ? request()->price : 500 }}" id="price"
                                 name="price" />
                             <div class="budget-applay">
@@ -137,7 +139,7 @@
         </section>
     </form>
 
-    <section class="backgroundColor">
+    <section id="search-results" class="background-color">
 
         @if (count($properties))
             <div class="container availabile">
@@ -148,7 +150,7 @@
                         $propertyModel = App\Models\Property::find($property->id);
                         ?>
                         <div class="card-info">
-                            <div class="card-img">
+                            {{-- <div class="card-img">
                                 <div class="shadow-left"></div>
                                 @if ($propertyModel->images)
                                     <img src="{{ $propertyModel->images[0] }}" />
@@ -159,7 +161,30 @@
                                 <div class="properties-slide">
                                     <img src="{{ asset('img') }}/sliderinvalid-name@3x.png" />
                                 </div>
+                            </div> --}}
+
+                            <div class="card-img">
+                                <div class="shadow-left"></div>
+
+                                <div class="properties-slides">
+                                    @if ($propertyModel->images)
+                                        @foreach ($propertyModel->images as $image)
+                                            <img src="{{ $image }}" />
+                                        @endforeach
+                                    @else
+                                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                        <img src="{{ asset('img') }}/2slider1bitmap@3x.png" />
+                                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                                        <img src="{{ asset('img') }}/2slider1bitmap@3x.png" />
+                                    @endif
+                                </div>
+
+                                <div class="shadow-right"></div>
+                                <div class="properties-slide">
+                                    <img id="next" src="{{ asset('img') }}/slider--invalid-name@3x.png" />
+                                </div>
                             </div>
+
                             <div class="card-content">
                                 @if($contactPerson->image)
                                 <img class="profile-picture" src="{{ $contactPerson->image }}" />
@@ -188,6 +213,14 @@
                                         <p class="contact-card">Bedrooms:</p>
                                         <p>{{ $property->no_of_bedrooms }}</p>
                                     </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Max Guests:</p>
+                                        <p>{{ $property->max_guests }}</p>
+                                    </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Bathrooms:</p>
+                                        <p>{{ $property->no_of_bathrooms }}</p>
+                                    </div>
                                     <?php
                                     if ($property->total_price > 0) {
                                         $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
@@ -204,18 +237,12 @@
                                             <p>N/A</p>
                                         @endif
                                     </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Bathrooms:</p>
-                                        <p>{{ $property->no_of_bathrooms }}</p>
-                                    </div>
+
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Commission:</p>
                                         <p>{{ $contactPerson->commission }}%</p>
                                     </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Max Guests:</p>
-                                        <p>{{ $property->max_guests }}</p>
-                                    </div>
+
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
@@ -368,6 +395,10 @@
                     @empty
                     @endforelse
                 </div>
+
+                <div class="row justify-content-center float-end pt-3 pagina w-100">
+                    {!! $properties->appends($_GET)->links('pagination::bootstrap-4') !!}
+                </div>
             </div>
         @else
             <div class="container">
@@ -376,14 +407,6 @@
                     <p>We didn't find any properties based on your chosen filterset.</p>
                     <button onclick="window.location.href='{{ route('search') }}'">Reset Filters & Search</button>
                 </div>
-            </div>
-        @endif
-
-
-
-        @if ($properties)
-            <div class="row justify-content-center float-end pt-3 pagina w-100">
-                {!! $properties->appends($_GET)->links('pagination::bootstrap-4') !!}
             </div>
         @endif
 
@@ -409,7 +432,7 @@
                     $('input[name=city]').val($(this).attr('data-value'));
                 });
                 $('.select-guest-name').click(function() {
-                    $('.guests-label span').html($(this).attr('data-value'));
+                    $('.guests-label span').html($(this).attr('data-value') + ' Guests');
                     $('input[name=guests]').val($(this).attr('data-value'));
                 });
                 $('.select-property_type-name').click(function() {
