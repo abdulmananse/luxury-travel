@@ -910,10 +910,12 @@ class HomeController extends Controller
                 $downloadImageData = ['property_id' => $property->id, 'download_date' => date('Y-m-d')];
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
-                if (!$downloaded) {
-                    PropertyImagesLog::create($downloadImageData);
 
-                    $zipFileName = $property->property_id . '.zip';
+                $zipFileName = $property->property_id . '.zip';
+                if (!in_array($property->property_id, $skipProperties) &&
+                !file_exists(storage_path("app/public/{$zipFileName}")) &&
+                !$downloaded) {
+                    PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
                         if ($propertiesDownloaded == 0) {
                             CronJob::create(['command' => "Starting: import:images"]);
