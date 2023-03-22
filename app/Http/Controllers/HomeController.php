@@ -914,22 +914,23 @@ class HomeController extends Controller
 
                 $zipFileName = $property->property_id . '.zip';
                 if (!in_array($property->property_id, $skipProperties) &&
-                !file_exists(storage_path("app/public/{$zipFileName}")) &&
                 !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
-                        if ($propertiesDownloaded == 0) {
-                            CronJob::create(['command' => "Starting: import:images"]);
-                        }
-                        $propertiesDownloaded += 1;
                         $this->readImageProperty = $property;
                         $imageLink = explode('folders/', $property->images_folder_link);
                         $this->_readingDirectory = $imageLink;
                         if (isset($imageLink[1])) {
+                            if ($propertiesDownloaded == 0) {
+                                CronJob::create(['command' => "Starting: import:images"]);
+                            }
+                            $propertiesDownloaded += 1;
                             $imageDir = explode('?', $imageLink[1]);
                             $dir = $imageDir[0];
                             $contents = collect($disk->listContents($dir, false));
                             $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
+                            //var_dump($files);
+                            //echo '<br />';
                             //dd($files->toArray());
 
                             $property->clearMediaCollection('images');
@@ -982,7 +983,9 @@ class HomeController extends Controller
                             PropertyImagesLog::where($downloadImageData)->update(['status' => 1, 'response' => 'Successfully Download']);
 
                         } else {
-                            PropertyImagesLog::where($downloadImageData)->update(['status' => 2, 'response' => 'Image link not found']);
+                            //var_dump($property->images_folder_link);
+                            //echo '<br />';
+                            PropertyImagesLog::where($downloadImageData)->update(['status' => 2, 'response' => 'Image link not found ' . json_encode([$property->images_folder_link, $property->property_id])]);
                         }
 
                         if ($propertiesDownloaded >= 60) {
@@ -990,6 +993,12 @@ class HomeController extends Controller
                             break;
                         }
                     // }
+                }else{
+                    //var_dump(!in_array($property->property_id, $skipProperties));
+                   // var_dump(!file_exists(storage_path("app/public/{$zipFileName}")));
+                    //var_dump(!$downloaded);
+                    //var_dump(count($properties));
+                    //echo '<br />';
                 }
             }
         }
