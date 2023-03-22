@@ -148,27 +148,26 @@
                     @forelse($properties as $property)
                         <?php
                         $propertyModel = App\Models\Property::find($property->id);
+                        
+                        $totalPrice = 'N/A';
+                        $totalPriceWithVat = 0;
+                        $payout = 'N/A';
+                        if ($property->total_price > 0) {
+                            $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
+                            $totalPrice = $property->currency_symbol . number_format($totalPriceWithVat, 2);
+                        
+                            if ($contactPerson->commission != null) {
+                                $payout = $property->currency_symbol . number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2);
+                            }
+                        }
                         ?>
                         <div class="card-info">
-                            {{-- <div class="card-img">
-                                <div class="shadow-left"></div>
-                                @if ($propertyModel->images)
-                                    <img src="{{ $propertyModel->images[0] }}" />
-                                @else
-                                    <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
-                                @endif
-                                <div class="shadow-right"></div>
-                                <div class="properties-slide">
-                                    <img src="{{ asset('img') }}/sliderinvalid-name@3x.png" />
-                                </div>
-                            </div> --}}
-
                             <div class="card-img">
                                 <div class="shadow-left"></div>
 
                                 <div class="properties-slides">
-                                    @if ($propertyModel->images)
-                                        @foreach ($propertyModel->images as $image)
+                                    @if ($propertyModel->thumbs)
+                                        @foreach ($propertyModel->thumbs as $image)
                                             <img src="{{ $image }}" />
                                         @endforeach
                                     @else
@@ -186,10 +185,10 @@
                             </div>
 
                             <div class="card-content">
-                                @if($contactPerson->image)
-                                <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                @if ($contactPerson->image)
+                                    <img class="profile-picture" src="{{ $contactPerson->image }}" />
                                 @else
-                                <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                    <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
                                 @endif
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
@@ -221,21 +220,10 @@
                                         <p class="contact-card">Bathrooms:</p>
                                         <p>{{ $property->no_of_bathrooms }}</p>
                                     </div>
-                                    <?php
-                                    if ($property->total_price > 0) {
-                                        $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
-                                    } else {
-                                        $totalPriceWithVat = 0;
-                                    }
-                                    ?>
+
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Guest Total:</p>
-                                        @if ($property->total_price > 0)
-                                            <p>{!! $property->currency_symbol !!}{{ number_format($totalPriceWithVat, 2) }}
-                                            </p>
-                                        @else
-                                            <p>N/A</p>
-                                        @endif
+                                        <p>{{ $totalPrice }}</p>
                                     </div>
 
                                     <div class="publisher-contact d-flex">
@@ -245,14 +233,7 @@
 
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
-                                        <p>
-                                            @if ($property->total_price > 0 && $contactPerson->commission != null)
-                                                {!! $property->currency_symbol !!}
-                                                {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
-                                            @else
-                                                {{ 'N/A' }}
-                                            @endif
-                                        </p>
+                                        <p>{{ $payout }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -273,10 +254,10 @@
                                     @endif
                                 </div>
                                 <div class="card-content">
-                                    @if($contactPerson->image)
-                                    <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                    @if ($contactPerson->image)
+                                        <img class="profile-picture" src="{{ $contactPerson->image }}" />
                                     @else
-                                    <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                        <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
                                     @endif
                                     <h4>Download</h4>
                                     <div class="download-file">
@@ -316,10 +297,10 @@
                                     @endif
                                 </div>
                                 <div class="card-content">
-                                    @if($contactPerson->image)
-                                    <img class="profile-picture" src="{{ $contactPerson->image }}" />
+                                    @if ($contactPerson->image)
+                                        <img class="profile-picture" src="{{ $contactPerson->image }}" />
                                     @else
-                                    <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
+                                        <img class="profile-picture" src="{{ asset('img') }}/100k-ai-faces-6.jpg" />
                                     @endif
                                     <h4>Request to Book</h4>
                                     <div class="bedrooms">
@@ -347,14 +328,7 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
-                                                <p>
-                                                    @if ($property->total_price > 0 && $contactPerson->commission != null)
-                                                        {!! $property->currency_symbol !!}
-                                                        {{ number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2) }}
-                                                    @else
-                                                        {{ 'N/A' }}
-                                                    @endif
-                                                </p>
+                                                <p>{{ $payout }}</p>
                                                 <img class="info-i"
                                                     src="{{ asset('img') }}/infoinvalid-name@3x.png" />
                                             </div>
@@ -379,6 +353,14 @@
                                             <input type="hidden" name="user_id" value="{{ $contactPerson->id }}" />
                                             <input type="hidden" name="property_id" class="property-id"
                                                 value="{{ $property->id }}" />
+                                            <input type="hidden" name="total_price" value="{{ $totalPrice }}" />
+                                            <input type="hidden" name="commission" value="{{ $payout }}" />
+                                            <input type="hidden" name="nights"
+                                                value="{{ count($rangeDatesArray) }}" />
+                                            <input type="hidden" name="check_in"
+                                                value="{{ date('d/M/Y', strtotime($startDate)) }}" />
+                                            <input type="hidden" name="check_out"
+                                                value="{{ date('d/M/Y', strtotime($endDate)) }}" />
                                             <textarea rows="4" name="message" maxlength="50" class="request-textarea"></textarea>
                                         </form>
                                         <p class="request-info">
