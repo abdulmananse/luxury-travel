@@ -1068,7 +1068,7 @@ class HomeController extends Controller
         $property = Property::find($request->property_id);
         if ($property && $contactPerson) {
             $email = $contactPerson->email;
-            $email = 'abdulmanan4d@gmail.com';
+            //$email = 'abdulmanan4d@gmail.com';
             Notification::route('mail', $email)
                 ->notify(new RequestToBook([
                     'user' => Auth::user()->toArray(), 
