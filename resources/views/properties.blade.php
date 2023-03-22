@@ -149,7 +149,7 @@
                         </div>
                         <div class="d-flex drop-menu btn-filter">
                             <a href="{{ route('search') }}" class="search-btn clear">Clear</a>
-                            <button type="submit" class="search-btn applay">Applay</button>
+                            <button type="submit" class="search-btn applay">Apply</button>
                         </div>
                     </div>
                 </div>
@@ -166,16 +166,24 @@
                     @forelse($properties as $property)
                         <?php
                         $propertyModel = App\Models\Property::find($property->id);
+                        //dd($property);
 
                         $totalPrice = 'N/A';
                         $totalPriceWithVat = 0;
                         $payout = 'N/A';
+                        $houseFee = 0;
+                        $taxes = 0;
+                        $securityDeposit = (strtolower($property->security_deposit) === 'night') ? $property->average : $property->security_deposit;
+                        $gratuatyFee = ($property->gratuity_fee) ? (int) str_replace('%', '', $property->gratuity_fee) : 0;
+                        $occupacyFee = ($property->occupancy_fee) ? (int) str_replace('%', '', $property->occupancy_fee) : 0;
+                        $municipalFee = ($property->municipal_fee) ? (int) str_replace('%', '', $property->municipal_fee) : 0;
+                        $vatPercentage = ($property->vat_rate) ? (int) str_replace('%', '', $property->vat_rate) : 0;
                         if ($property->total_price > 0) {
-                            $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
-                            $totalPrice = $property->currency_symbol . number_format($totalPriceWithVat, 2);
-
+                            $taxes = (int) round(($property->total_price * $vatPercentage) / 100);
+                            $houseFee = (int) round(($property->total_price * $municipalFee) / 100);
+                            $totalPrice = (int) round($property->total_price + $taxes + $houseFee);
                             if ($contactPerson->commission != null) {
-                                $payout = $property->currency_symbol . number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2);
+                                $payout = round(($property->total_price * (int) str_replace('%', '', $contactPerson->commission)) / 100);
                             }
                         }
                         ?>
@@ -241,7 +249,12 @@
 
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Guest Total:</p>
-                                        <p>{{ $totalPrice }}</p>
+                                        <p>
+                                            @if($totalPrice !== 'N/A')
+                                                {!! $property->currency_symbol !!}
+                                            @endif
+                                            {{ number_format((float) $totalPrice, 2) }}
+                                        </p>
                                     </div>
 
                                     <div class="publisher-contact d-flex">
@@ -251,7 +264,12 @@
 
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
-                                        <p>{{ $payout }}</p>
+                                        <p>
+                                            @if($payout !== 'N/A')
+                                                {!! $property->currency_symbol !!}
+                                            @endif
+                                            {{ number_format((float) $payout, 2) }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -330,13 +348,70 @@
                                             <p class="contact-card">Guest Pays:</p>
                                             <div class="cost-info">
                                                 @if ($property->total_price > 0)
-                                                    <p>{!! $property->currency_symbol !!}{{ number_format($totalPriceWithVat, 2) }}
+                                                    <p>
+                                                        {!! $property->currency_symbol !!}{{ number_format((float) $totalPrice, 2) }}
                                                     </p>
                                                 @else
                                                     <p>N/A</p>
                                                 @endif
-                                                <img class="info-i"
-                                                    src="{{ asset('img') }}/infoinvalid-name@3x.png" />
+                                                <img class="info-i open-price-all" src="{{ asset('img') }}/infoinvalid-name@3x.png" />
+                                                <div class="all-price-one">
+                                                    <img class="close-price" src="./img/icons8-close-50.png">
+                                                    <div class="price-info">
+                                                        <div class="price-top">
+                                                            <div class="d-flex justify-content-between price-margin">
+                                                                <p>Accomodation</p>
+                                                                <p>
+                                                                    @if ($property->total_price > 0)
+                                                                        {!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                                                    @else
+                                                                        N/A
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between price-margin">
+                                                                <p>House Fee</p>
+                                                                <p>
+                                                                    @if ($houseFee)
+                                                                            {!! $property->currency_symbol !!}{{ number_format($houseFee, 2) }}
+                                                                    @else
+                                                                        N/A
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between price-margin">
+                                                                <p>Taxes</p>
+                                                                <p>
+                                                                    @if ($taxes)
+                                                                        {!! $property->currency_symbol !!}{{ number_format($taxes, 2) }}
+                                                                    @else
+                                                                        N/A
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between price-margin deposit">
+                                                                <p style="text-color: rgba(11, 56, 65, 0.5)">Sec. Deposit</p>
+                                                                <p style="text-color: rgba(11, 56, 65, 0.5)">
+                                                                    @if ($securityDeposit)
+                                                                        {!! $property->currency_symbol !!}{{ number_format($securityDeposit, 2) }}
+                                                                    @else
+                                                                        N/A
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="price-bottom">
+                                                            <p class="your-payout">Your Payout</p>
+                                                            <p class="price-green">
+                                                                @if ($property->total_price > 0)
+                                                                    {!! $property->currency_symbol !!}{{ number_format((float) $totalPrice, 2) }}
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="publisher-contact d-flex">
@@ -346,9 +421,43 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
-                                                <p>{{ $payout }}</p>
-                                                <img class="info-i"
-                                                    src="{{ asset('img') }}/infoinvalid-name@3x.png" />
+                                                <p>
+                                                    @if($payout !== 'N/A')
+                                                        {!! $property->currency_symbol !!}
+                                                    @endif
+                                                    {{ number_format((float) $payout, 2) }}
+                                                </p>
+                                                <img class="info-i open-price-all" src="./img/infoinvalid-name@3x.png" />
+                                                <div class="all-price-one">
+                                                    <img class="close-price" src="{{ asset('img') }}/icons8-close-50.png">
+                                                    <div class="price-info">
+                                                        <div class="price-top">
+                                                            <div class="d-flex justify-content-between price-margin">
+                                                                <p>Accomodation</p>
+                                                                <p>
+                                                                    @if ($property->total_price > 0)
+                                                                        {!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                                                    @else
+                                                                        N/A
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between price-margin">
+                                                                <p>Your Fee</p>
+                                                                <p>{{ $contactPerson->commission }}%</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="price-bottom">
+                                                            <p class="your-payout">Your Payout</p>
+                                                            <p class="price-green">
+                                                                @if($payout !== 'N/A')
+                                                                    {!! $property->currency_symbol !!}
+                                                                @endif
+                                                                {{ number_format((float) $payout, 2) }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="publisher-contact d-flex">
@@ -397,7 +506,7 @@
                 </div>
 
                 <div class="row justify-content-center float-end pt-3 pagina w-100">
-                    {!! $properties->appends($_GET)->links('pagination::bootstrap-4') !!}
+                    {!! $properties->onEachSide(1)->appends($_GET)->links('pagination::bootstrap-4') !!}
                 </div>
             </div>
         @else
@@ -423,7 +532,7 @@
 
     @push('scripts')
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <script type="text/javascript" src="{{ asset('js') }}/script.js{{ '?_v' . rand(1000, 999999) }}"></script>
+        <script type="text/javascript" src="{{ asset('js') }}/script.js{{ '?_v=' . rand(1000, 999999) }}"></script>
         <script>
             $(document).ready(function() {
 
@@ -566,6 +675,23 @@
                     newestOnTop: true
                 });
             }
+        </script>
+        <script>
+            window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
+            (function(d,t) {
+            var BASE_URL="https://app.chatwoot.com";
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=BASE_URL+"/packs/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            s.parentNode.insertBefore(g,s);
+            g.onload=function(){
+                window.chatwootSDK.run({
+                websiteToken: '128s8TU3ijo6dQecRJmFasCx',
+                baseUrl: BASE_URL
+                })
+            }
+            })(document,"script");
         </script>
     @endpush
 

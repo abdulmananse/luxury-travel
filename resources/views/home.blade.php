@@ -250,7 +250,7 @@
     @push('scripts')
         <script src="{{ asset('js') }}/swiper.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-        <script src="{{ asset('js') }}/home-script.js"></script>
+        <script src="{{ asset('js') }}/home-script.js{{ '?_v=' . rand(1000, 999999) }}"></script>
 
         <script>
             window.addEventListener("load", function() {

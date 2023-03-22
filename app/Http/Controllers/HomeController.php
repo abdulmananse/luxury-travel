@@ -168,9 +168,13 @@ class HomeController extends Controller
         }
 
         $rangeDatesArray = [];
-        while (strtotime($iterateStartDate) <= strtotime($endDate)) {
+        if($startDate === $endDate){
             $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
-            $iterateStartDate = date('Y-m-d', strtotime("+1 day", strtotime($iterateStartDate)));
+        }else{
+            while (strtotime($iterateStartDate) < strtotime($endDate)) {
+                $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
+                $iterateStartDate = date('Y-m-d', strtotime("+1 day", strtotime($iterateStartDate)));
+            }
         }
 
         $page = ($request->filled('page')) ? (int) $request->page : 1;
@@ -194,6 +198,11 @@ class HomeController extends Controller
                 properties.no_of_beds,
                 properties.no_of_bathrooms,
                 properties.no_of_bedrooms,
+                properties.gratuity_fee,
+                properties.occupancy_fee,
+                properties.municipal_fee,
+                properties.vat_rate,
+                properties.security_deposit,
                 properties.pdf_link,
                 properties.ical_link,
                 properties.images_folder_link,
@@ -222,8 +231,8 @@ class HomeController extends Controller
                     $properties[$key]->prices[$date] = 0.00;
                 }
             }
-            $properties[$key]->total_price = $totalPrice;
-            $properties[$key]->average = $totalPrice / count($rangeDatesArray);
+            $properties[$key]->total_price = round($totalPrice);
+            $properties[$key]->average = round($totalPrice / count($rangeDatesArray));
         }
 
         if ($request->filled('price')) {
@@ -251,7 +260,6 @@ class HomeController extends Controller
         $maxGuests = $propertyAttr->max_guests;
         $bathrooms = $propertyAttr->no_of_bathrooms;
         $contactPerson = User::role('Contact_Person')->first();
-        $vatPercentage = 16;
         $cities = Property::whereNotNull('destination')->groupBy('destination')->pluck('destination');
         $propertyTypes = Property::groupBy('property_type')->pluck('property_type');
 
@@ -1054,7 +1062,7 @@ class HomeController extends Controller
     public function sendRequest (Request $request) {
 
         $this->validate($request, [
-            'property_id' => 'required', 
+            'property_id' => 'required',
             'message' => 'required',
             'nights' => 'required',
             'check_in' => 'required',
@@ -1071,13 +1079,13 @@ class HomeController extends Controller
             //$email = 'abdulmanan4d@gmail.com';
             Notification::route('mail', $email)
                 ->notify(new RequestToBook([
-                    'user' => Auth::user()->toArray(), 
+                    'user' => Auth::user()->toArray(),
                     'requestData' => $requestData,
                     'contactPerson' => $contactPerson->toArray(),
                     'property' => $property->toArray()
                 ]));
         }
-        
+
         return ['success' => true, 'data' => $request->all()];
     }
 }

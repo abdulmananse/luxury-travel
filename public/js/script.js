@@ -187,9 +187,9 @@ priceSlider.addEventListener('click', function () {
 })
 
 priceSlider.addEventListener('mousemove', function() {
-  
+
   const position = (priceSlider.value - priceSlider.min) / (priceSlider.max - priceSlider.min);
-  const rangeWidth = priceSlider.offsetWidth - 14; 
+  const rangeWidth = priceSlider.offsetWidth - 14;
 
   const thumbPosition = position * rangeWidth;
   priceSlider.style.setProperty('--thumb-position', `${thumbPosition}px`);
@@ -204,7 +204,7 @@ priceSlider.addEventListener('mousemove', function() {
 
     priceRange.text(`$ ${maxRangeValue}+`);
     valueDrop.text(`$ ${maxRangeValue}+`);
-  
+
     //priceRange.textContent = `$ ${maxRangeValue}+`;
     //valueDrop.textContent = `$ ${maxRangeValue}+`;
 
@@ -219,37 +219,48 @@ priceSlider.addEventListener('mousemove', function() {
 
 
 const slides = document.querySelector('.properties-slides');
-const nextSlideButton = document.querySelector('#next');
+const nextSlideButton = document.querySelectorAll('.next');
 
-nextSlideButton.addEventListener('click', () => {
-  const currentScrollPosition = slides.scrollLeft;
-  const slideWidth = slides.clientWidth;
-  const numberOfSlides = slides.children.length;
+for(const slideNext of nextSlideButton){
 
-  let nextScrollPosition = currentScrollPosition + slideWidth;
+  slideNext.addEventListener('click', () => {
+    const shadowRight = slideNext.parentElement.previousElementSibling;
+    const slidesNext = shadowRight.previousElementSibling;
 
-  if (nextScrollPosition >= slideWidth * numberOfSlides) {
-    nextScrollPosition = 0;
-  }
+    const currentScrollPosition = slidesNext.scrollLeft;
+    const slideWidth = slidesNext.clientWidth;
+    const numberOfSlides = slidesNext.children.length;
 
-  slides.scrollTo({
-    left: nextScrollPosition,
-    behavior: 'smooth'
+    let nextScrollPosition = currentScrollPosition + slideWidth;
+
+    if (nextScrollPosition >= slideWidth * numberOfSlides) {
+      nextScrollPosition = 0;
+    }
+
+    slidesNext.scrollTo({
+      left: nextScrollPosition,
+      behavior: 'smooth'
+    });
   });
-});
+}
 
-window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
-(function(d,t) {
-  var BASE_URL="https://app.chatwoot.com";
-  var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-  g.src=BASE_URL+"/packs/js/sdk.js";
-  g.defer = true;
-  g.async = true;
-  s.parentNode.insertBefore(g,s);
-  g.onload=function(){
-    window.chatwootSDK.run({
-      websiteToken: '128s8TU3ijo6dQecRJmFasCx',
-      baseUrl: BASE_URL
-    })
-  }
-})(document,"script");
+
+const pricesOneDisplay = document.querySelectorAll('.all-price-one');
+const pricesTwoDisplay = document.querySelectorAll('.all-price-two');
+
+const openPrices = document.querySelectorAll('.open-price-all');
+
+const closePrices = document.querySelectorAll('.close-price');
+
+for(const gues of openPrices){
+  gues.addEventListener('click', function(){
+    gues.nextElementSibling.classList.add('open')
+  })
+}
+
+for(const closePrice of closePrices){
+  closePrice.addEventListener('click', function(){
+    closePrice.parentElement.classList.remove('open');
+  })
+}
+

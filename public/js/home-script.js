@@ -7,20 +7,20 @@ setTimeout(() => {
   }, 1000)
 
   function tableText() {
-    var pTag = document.querySelectorAll(".slice"); 
+    var pTag = document.querySelectorAll(".slice");
     if(pTag.length > 0){
       for (var i = 0; i < pTag.length; i++) {
-        if (pTag[i].innerHTML.length > 12) { 
-          var shorten = pTag[i].innerHTML.substring(0, 12) + "..."; 
-          pTag[i].innerHTML = shorten; 
+        if (pTag[i].innerHTML.length > 12) {
+          var shorten = pTag[i].innerHTML.substring(0, 12) + "...";
+          pTag[i].innerHTML = shorten;
         }
       }
     }
   }
 
   function shortenText() {
-    if (window.innerWidth < 575) { 
-      tableText(); 
+    if (window.innerWidth < 575) {
+      tableText();
     }
   }
   shortenText();
@@ -31,12 +31,12 @@ setTimeout(() => {
   const contactForm = document.querySelector('.contact');
 
   if(company != null){
-    
+
     company.addEventListener('click', () => {
       companyForm.style.display = 'flex';
       contactForm.style.display = 'none';
 
-      if (window.innerWidth < 768) { 
+      if (window.innerWidth < 768) {
         company.style.color = '#fff';
         contact.style.color = 'rgba(255, 255, 255, 0.5)';
       }else{
@@ -49,7 +49,7 @@ setTimeout(() => {
       companyForm.style.display = 'none';
       contactForm.style.display = 'flex';
 
-      if (window.innerWidth < 768) { 
+      if (window.innerWidth < 768) {
         contact.style.color = '#fff';
         company.style.color = 'rgba(255, 255, 255, 0.5)';
       }else{
@@ -61,12 +61,12 @@ setTimeout(() => {
     });
   }
 
-  // company dropdown 
+   // company dropdown
 
-  const comission = document.querySelector('.select-comission');
+  // const comission = document.querySelector('.select-comission');
 
-  comission.addEventListener('click', () => {
-    console.log(comission.nextElementSibling);
-    const comissionOpen = comission.nextElementSibling;
-    comissionOpen.classList.toggle('active');
-  })
+  // comission.addEventListener('click', () => {
+  //   console.log(comission.nextElementSibling);
+  //   const comissionOpen = comission.nextElementSibling;
+  //   comissionOpen.classList.toggle('active');
+  // })
