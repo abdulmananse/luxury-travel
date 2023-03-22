@@ -64,9 +64,7 @@
         </section>
     @endauth
 
-    <div>
-        {{ $slot }}
-    </div>
+    {{ $slot }}
 
     <footer style="border-top: 1px solid #0b3841">
         <div class="container footer-padding d-flex" style="flex-direction: column">

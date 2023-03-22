@@ -122,9 +122,9 @@ for(const download of downloads) {
   })
 }
 
-for(const requst of requests) {
-  requst.addEventListener('click', () => {
-    const firstElement = requst.parentElement.nextElementSibling;
+for(const request of requests) {
+  request.addEventListener('click', () => {
+    const firstElement = request.parentElement.nextElementSibling;
     secondElement = firstElement.nextElementSibling;
     secondElement.classList.add('active');
 
@@ -163,13 +163,86 @@ for(const select of selected){
     dropOpen.classList.toggle('active');
   })
 }
+// for(const dropdown of dropdowns){
+//   document.addEventListener('click', function(event) {
+//     if (dropdown.classList.contains('active')) {
+//       dropdown.classList.remove('active');
+//     }
+//   });
+// }
 for(const dropdown of dropdowns){
   document.addEventListener('click', function(event) {
+    const dropdownTrigger = dropdown.querySelector('.dropdown-trigger');
+    const selectDestResult = document.querySelector('.select-destionation');
+    const guestsApplay = document.querySelector('.guests-applay');
+    const budgetApplayButton = document.querySelector('.budget-applay-button');
+    
+
+    if (event.target === dropdown || dropdown.contains(event.target) || event.target === dropdownTrigger) {
+      // selectDestResult.textContent = `${event.target.textContent}`;
+      // if (dropdown.classList.contains('active')) {
+      //   console.log('zatvaranje dropdown-a na izbor elementa')
+      //   dropdown.classList.remove('active');
+      // }
+      return;
+    }
+
+    if(event.target === guestsApplay){
+      const parentGuest = event.target.parentElement;
+      parentGuest.parentElement.classList.remove('active');
+    }
+    if(event.target === budgetApplayButton){
+      const paretBudget = event.target.parentElement;
+      paretBudget.parentElement.classList.remove('active');
+    }
     if (dropdown.classList.contains('active')) {
       dropdown.classList.remove('active');
     }
   });
 }
+
+// $(document).on("click", function(event) {
+//   // If the clicked element is not a child of the dropdown, close the dropdown
+//   if (!$(event.target).closest(".dropdown-open").length) {
+//     $(".dropdown-open").hide();
+//   }
+// });
+
+// document.addEventListener('click', function () {
+//   let clientBudget = document.getElementById('budget');
+//   clientBudget.style.display = 'none';
+// })
+
+// let clientBudget = document.getElementsByClassName('budget')[0];
+// console.log(clientBudget)
+// let guests = document.getElementsByClassName('guests-open')[0];
+// console.log(guests)
+
+// function openBudget() {
+//   clientBudget.style.display = 'flex';
+// }
+
+// function closeBudget() {
+//   if (clientBudget.style.display === 'flex') {
+//     clientBudget.style.display = 'none';
+//     clientBudget.classList.remove('active');
+//   } else {
+//     clientBudget.classList.add('active');
+//   }
+// }
+
+// function openGuests() {
+//   guests.style.display = 'flex';
+// }
+
+// function closeGuests() {
+//   if (guests.style.display === 'flex') {
+//     guests.style.display = 'none';
+//     guests.classList.remove('active');
+//   } else {
+//     guests.classList.add('active');
+//   }
+// }
 
 const priceInput = document.getElementById('price');
 
@@ -177,5 +250,207 @@ priceInput.addEventListener('input', function() {
   const price = priceInput.value;
 });
 
+let profilePicture = document.getElementsByClassName('profile-picture')[0];
+let nextSiblingProfile = profilePicture.nextElementSibling;
+
+if (nextSiblingProfile.innerHTML.length >= 25) {
+  let substringInnerHTML = nextSiblingProfile.innerHTML.substring(0, 24);
+  nextSiblingProfile.innerHTML = substringInnerHTML + '...';
+}
 
 
+
+const copyButton = document.querySelectorAll('.ical-link button');
+const inputText = document.querySelectorAll('.ical-link input');
+
+
+for(const copy of copyButton){
+
+  copy.addEventListener('click', function() {
+
+    const prevElementInput = copy.previousElementSibling;
+
+      navigator.clipboard.writeText(prevElementInput.value) 
+      // .then(() => {
+      //   alert('Copied to clipboard!');  
+      // })
+      // .catch(err => {
+      //   console.error('Copy failed: ', err);  
+      // });
+
+  });
+
+}
+
+
+const destionationName = document.querySelectorAll('.destination span');
+
+for(const desName of destionationName){
+  desName.addEventListener('click', function(){
+    for(const desName of destionationName){
+      desName.classList.remove('active');
+    }
+    desName.classList.add('active');
+    const colorName = desName.parentElement.previousElementSibling;
+    const colors = colorName.childNodes;
+
+    colors[1].classList.add('color');
+  })
+}
+
+const filtersSpan= document.querySelectorAll('.filters span');
+
+for(const filter of filtersSpan) {
+  filter.addEventListener('click', function() {
+    for(const filter of filtersSpan) {
+      filter.classList.remove('active');
+    }
+    filter.classList.add('active');
+    
+  })
+}
+
+const propertyType = document.querySelectorAll('.property-type span');
+
+for(const type of propertyType){
+  type.addEventListener('click', function(){
+    for(const property of propertyType){
+      property.classList.remove('active');
+    }
+    type.classList.add('active');
+    const colorName = type.parentElement.previousElementSibling;
+    const color = colorName.childNodes;
+
+    color[1].classList.add('color');
+  })
+}
+
+const bathrooms = document.querySelectorAll('.bathrooms span');
+
+for(const bad of bathrooms){
+  bad.addEventListener('click', function(){
+    for(const badroom of bathrooms){
+      badroom.classList.remove('active');
+    }
+    bad.classList.add('active');
+    const colorName = bad.parentElement.previousElementSibling;
+    const color = colorName.childNodes;
+
+    color[1].classList.add('color');
+  })
+}
+
+const destinations = document.querySelectorAll('.destinations span');
+
+for(const destination of destinations) {
+  destination.addEventListener('click', function() {
+    for(const dest of destinations) {
+      dest.classList.remove('active');
+    }
+    destination.classList.add('active');
+    const colorName = destination.parentElement.previousElementSibling;
+    const color = colorName.childNodes;
+
+    color[1].classList.add('color');
+  })
+}
+
+/* function for guests */
+
+const guests = document.querySelectorAll('span.custom-option.select-guest-name');
+
+for (const guest of guests) {
+  guest.addEventListener('click', function() {
+    for (const g of guests) {
+      g.classList.remove('active');
+    }
+    guest.classList.add('active');
+    const colorName = document.parentElement.previousElementSibling;
+    const color = colorName.childNodes;
+
+    color[1].classList.add('color');
+  })
+}
+
+const priceRange = document.querySelector('.price-range');
+const valueDrop = document.querySelectorAll('.value-drop')[2];
+const priceSlider = document.querySelector('#price');
+
+priceSlider.addEventListener('click', function () {
+  valueDrop.classList.add('color');
+})
+
+priceSlider.addEventListener('mousemove', function() {
+  const position = (priceSlider.value - priceSlider.min) / (priceSlider.max - priceSlider.min);
+  const rangeWidth = priceSlider.offsetWidth - 14; 
+
+  const thumbPosition = position * rangeWidth;
+  priceSlider.style.setProperty('--thumb-position', `${thumbPosition}px`);
+
+  const maxValue = parseInt(priceSlider.max);
+  const currentValue = parseInt(priceSlider.value);
+  const step = parseInt(priceSlider.step);
+
+  const maxRangeValue = Math.min(maxValue, currentValue + step * 2);
+
+  if(maxRangeValue == '100000'){
+    console.log('vise');
+  
+    priceRange.textContent = `$ ${maxRangeValue}+`;
+    valueDrop.textContent = `$ ${maxRangeValue}+`;
+
+  }else{
+    priceRange.textContent = `$ ${maxRangeValue}`;
+    valueDrop.textContent = `$ ${maxRangeValue}`;
+  }
+
+
+
+
+
+});
+
+const datePicker = document.querySelector('#demo');
+console.log(datePicker)
+
+datePicker.addEventListener('click', function() {
+  datePicker.classList.add('color');
+})
+
+const slides = document.querySelector('.properties-slides');
+const nextSlideButton = document.querySelector('#next');
+
+nextSlideButton.addEventListener('click', () => {
+  const currentScrollPosition = slides.scrollLeft;
+  const slideWidth = slides.clientWidth;
+  const numberOfSlides = slides.children.length;
+
+  let nextScrollPosition = currentScrollPosition + slideWidth;
+
+  if (nextScrollPosition >= slideWidth * numberOfSlides) {
+    nextScrollPosition = 0;
+  }
+
+  slides.scrollTo({
+    left: nextScrollPosition,
+    behavior: 'smooth'
+  });
+});
+
+
+
+window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
+(function(d,t) {
+  var BASE_URL="https://app.chatwoot.com";
+  var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=BASE_URL+"/packs/js/sdk.js";
+  g.defer = true;
+  g.async = true;
+  s.parentNode.insertBefore(g,s);
+  g.onload=function(){
+    window.chatwootSDK.run({
+      websiteToken: '128s8TU3ijo6dQecRJmFasCx',
+      baseUrl: BASE_URL
+    })
+  }
+})(document,"script");

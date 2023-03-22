@@ -37,18 +37,18 @@
       <div class="container">
         <div class="property">
           <div class="d-flex drop-menu destination-drop">
-            <p class="select-search">DESTINATION</p>
+            <p class="select-search">Destination</p>
             <div class="select-destionation">
               <p class="value-drop">test</p>
               <img src="./img/downninvalid-name@3x.png" />
             </div>
-            <div class="dropdown-open">
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
-              <span>test</span>
+            <div class="dropdown-open destination">
+              <span>test1</span>
+              <span>test2</span>
+              <span>test3</span>
+              <span>test4</span>
+              <span>test5</span>
+              <span>test6</span>
             </div>
           </div>
           <div class="date-input">
@@ -56,8 +56,8 @@
               class="d-flex drop-menu"
               style="flex-direction: row; justify-content: space-between"
             >
-              <p class="select-search">ARRIVAL</p>
-              <p class="select-search">DEPARTURE</p>
+              <p class="select-search">Arrival</p>
+              <p class="select-search">Departure</p>
             </div>
             <input
               id="demo"
@@ -68,7 +68,7 @@
             />
           </div>
           <div class="d-flex drop-menu guests-border">
-            <p class="select-search">GUESTS</p>
+            <p class="select-search">Guests</p>
             <div class="select-destionation">
               <p class="value-drop">2 Guests</p>
               <img src="./img/downninvalid-name@3x.png" />
@@ -85,20 +85,21 @@
               </div>
             </div>
           </div>
+
           <div class="d-flex drop-menu guests-border">
-            <p class="select-search">CLIENT BUDGET</p>
-            <div class="select-destionation">
-              <p class="value-drop">test</p>
+            <p class="select-search">Client Budget</p>
+            <div id="select-budget" class="select-destionation">
+              <p class="value-drop">$ 10,000</p>
               <img src="./img/downninvalid-name@3x.png" />
             </div>
             <div class="dropdown-open guests-open budget">
-              <p>$ 10,000</p>
+              <p class="price-range">$ 10,000</p>
               <input
                 type="range"
-                min="0"
-                max="100"
+                min="100"
+                max="100000"
                 step="1"
-                value="50"
+                value="1000"
                 id="price"
               />
               <div class="budget-applay">
@@ -106,8 +107,9 @@
               </div>
             </div>
           </div>
+
           <div class="d-flex drop-menu">
-            <button class="search-btn">Search</button>
+            <button id="property-search" class="search-btn">Search</button>
           </div>
         </div>
       </div>
@@ -121,7 +123,7 @@
               <p>Sort by</p>
               <img src="./img/downninvalid-name@3x.png" />
             </div>
-            <div class="dropdown-open">
+            <div class="filters dropdown-open">
               <span>Price Low - High</span>
               <span>No of Bedrooms</span>
               <span>Community Name A-Z</span>
@@ -140,13 +142,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open property-type">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -155,13 +157,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open bathrooms">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -170,13 +172,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -185,13 +187,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -200,13 +202,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -215,13 +217,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -230,13 +232,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open filter-drop">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open filter-drop destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
               <div class="d-flex drop-menu">
@@ -245,13 +247,13 @@
                   <p class="value-drop">test</p>
                   <img src="./img/downninvalid-name@3x.png" />
                 </div>
-                <div class="dropdown-open">
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
-                  <span>test</span>
+                <div class="dropdown-open destinations">
+                  <span>test1</span>
+                  <span>test2</span>
+                  <span>test3</span>
+                  <span>test4</span>
+                  <span>test5</span>
+                  <span>test6</span>
                 </div>
               </div>
             </div>
@@ -264,7 +266,7 @@
       </div>
     </section>
 
-    <section class="background-color">
+    <section id="search-results" class="background-color">
       <div class="container availabile">
         <h3>Available Properties</h3>
 
@@ -272,6 +274,168 @@
           <div class="card-info">
             <div class="card-img">
               <div class="shadow-left"></div>
+
+              <div class="properties-slides">
+                <img src="./img/4sliderbitmap-copy-3@3x.png" />
+                <img src="./img/2slider1bitmap@3x.png" />
+                <img src="./img/4sliderbitmap-copy-3@3x.png" />
+                <img src="./img/2slider1bitmap@3x.png" />
+              </div>
+
+              <div class="shadow-right"></div>
+              <div class="properties-slide">
+                <img id="next" src="./img/slider--invalid-name@3x.png" />
+              </div>
+            </div>
+            <div class="card-content">
+              <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
+              <h4>Villa Isabellaaaaaaaaaaaaaaaaaaaaaaa</h4>
+              <div class="vila-info d-flex">
+                <div class="name-vila col-lg-5">
+                  <p>Punta de Mita,<br />Los Veneros</p>
+                </div>
+                <div class="col-lg-7">
+                  <div class="publisher-contact d-flex">
+                    <p class="publisher">Publisher:</p>
+                    <p>Tripwix</p>
+                  </div>
+                  <div class="publisher-contact d-flex">
+                    <p class="contact-card">Contact:</p>
+                    <p>Roberto Carneiro</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bedrooms">
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Bedrooms:</p>
+                  <p>2</p>
+                </div>
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Max Guests:</p>
+                  <p>6</p>
+                </div>
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Bathrooms:</p>
+                  <p>4</p>
+                </div>
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Guest Total:</p>
+                  <p>$19,567</p>
+                </div>
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Comission:</p>
+                  <p>10%</p>
+                </div>
+                <div class="publisher-contact d-flex">
+                  <p class="contact-card">Payout:</p>
+                  <p>$1,700</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-btn">
+              <button class="request">Request</button>
+              <button class="download">Download</button>
+            </div>
+            <div class="download-card-open">
+              <div class="arrow-back arrow-back-download">
+                <img src="./img/arrowinvalid-name@3x.png" />
+                <p>Back</p>
+              </div>
+              <div class="card-img download-card">
+                <img src="./img/4sliderbitmap-copy-3@3x.png" />
+              </div>
+              <div class="card-content">
+                <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
+                <h4>Download</h4>
+                <div class="download-file">
+                  <div>
+                    <p>PDF</p>
+                    <button class="download-btn">Download</button>
+                  </div>
+                  <div>
+                    <p>Rates</p>
+                    <button class="download-btn">Download</button>
+                  </div>
+                  <div>
+                    <p>HQ Photos</p>
+                    <button class="download-btn">Download</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-btn ical">
+                <p>iCal link:</p>
+                <div class="ical-link">
+                  <input
+                    value="https://balbalbalbdnl/%@&£/&^(hdhbdhkjs…."
+                    placeholder="https://balbalbalbdnl/%@&£/&^(hdhbdhkjs…."
+                  />
+                  <button>Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="download-card-request-open">
+              <div class="arrow-back arrow-back-request">
+                <img src="./img/arrowinvalid-name@3x.png" />
+                <p>Back</p>
+              </div>
+              <div class="card-img download-card">
+                <img src="./img/4sliderbitmap-copy-3@3x.png" />
+              </div>
+              <div class="card-content">
+                <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
+                <h4>Request to Book</h4>
+                <div id="bedrooms-request" class="bedrooms">
+                  <div class="publisher-contact d-flex">
+                    <p class="contact-card">Checkin:</p>
+                    <p>02 / Jan / 23</p>
+                  </div>
+                  <div class="publisher-contact d-flex icon-i">
+                    <p class="contact-card">Guest Pays:</p>
+                    <div class="cost-info">
+                      <p>$19,567</p>
+                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
+                    </div>
+                  </div>
+                  <div class="publisher-contact d-flex">
+                    <p class="contact-card">Checkout:</p>
+                    <p>06 / Jan / 23</p>
+                  </div>
+                  <div class="publisher-contact d-flex icon-i">
+                    <p class="contact-card">Your Payout:</p>
+                    <div class="cost-info">
+                      <p>$1,700</p>
+                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
+                    </div>
+                  </div>
+                  <div class="publisher-contact d-flex">
+                    <p class="contact-card">Nights:</p>
+                    <p>4</p>
+                  </div>
+                  <div class="publisher-contact d-flex icon-i">
+                    <p class="contact-card">Property:</p>
+                    <div class="cost-info">
+                      <p>Villa Isabella</p>
+                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
+                    </div>
+                  </div>
+                </div>
+                <div class="text-request">
+                  <p>Message for Roberto:</p>
+                  <textarea rows="4" maxlength="50"></textarea>
+                  <p class="request-info">
+                    Roberto Carneiro from Tripwix will reach out to you.
+                  </p>
+                </div>
+              </div>
+              <div class="card-btn-request">
+                <button class="request download">Submit request</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-info">
+            <div class="card-img">
+              <div class="shadow-left"></div>
               <img src="./img/4sliderbitmap-copy-3@3x.png" />
               <div class="shadow-right"></div>
               <div class="properties-slide">
@@ -341,15 +505,15 @@
                 <div class="download-file">
                   <div>
                     <p>PDF</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                   <div>
                     <p>Rates</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                   <div>
                     <p>HQ Photos</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                 </div>
               </div>
@@ -495,169 +659,15 @@
                 <div class="download-file">
                   <div>
                     <p>PDF</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                   <div>
                     <p>Rates</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                   <div>
                     <p>HQ Photos</p>
-                    <button>Download</button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-btn ical">
-                <p>iCal link:</p>
-                <div class="ical-link">
-                  <input
-                    placeholder="https://balbalbalbdnl/%@&£/&^(hdhbdhkjs…."
-                  />
-                  <button>Copy</button>
-                </div>
-              </div>
-            </div>
-            <div class="download-card-request-open">
-              <div class="arrow-back arrow-back-request">
-                <img src="./img/arrowinvalid-name@3x.png" />
-                <p>Back</p>
-              </div>
-              <div class="card-img download-card">
-                <img src="./img/4sliderbitmap-copy-3@3x.png" />
-              </div>
-              <div class="card-content">
-                <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
-                <h4>Request to Book</h4>
-                <div class="bedrooms">
-                  <div class="publisher-contact d-flex">
-                    <p class="contact-card">Checkin:</p>
-                    <p>02 / Jan / 23</p>
-                  </div>
-                  <div class="publisher-contact d-flex icon-i">
-                    <p class="contact-card">Guest Pays:</p>
-                    <div class="cost-info">
-                      <p>$19,567</p>
-                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
-                    </div>
-                  </div>
-                  <div class="publisher-contact d-flex">
-                    <p class="contact-card">Checkout:</p>
-                    <p>06 / Jan / 23</p>
-                  </div>
-                  <div class="publisher-contact d-flex icon-i">
-                    <p class="contact-card">Your Payout:</p>
-                    <div class="cost-info">
-                      <p>$1,700</p>
-                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
-                    </div>
-                  </div>
-                  <div class="publisher-contact d-flex">
-                    <p class="contact-card">Nights:</p>
-                    <p>4</p>
-                  </div>
-                  <div class="publisher-contact d-flex icon-i">
-                    <p class="contact-card">Property:</p>
-                    <div class="cost-info">
-                      <p>Villa Isabella</p>
-                      <img class="info-i" src="./img/infoinvalid-name@3x.png" />
-                    </div>
-                  </div>
-                </div>
-                <div class="text-request">
-                  <p>Message for Roberto:</p>
-                  <textarea rows="4" maxlength="50"></textarea>
-                  <p class="request-info">
-                    Roberto Carneiro from Tripwix will reach out to you.
-                  </p>
-                </div>
-              </div>
-              <div class="card-btn-request">
-                <button class="request download">Submit request</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-info">
-            <div class="card-img">
-              <div class="shadow-left"></div>
-              <img src="./img/4sliderbitmap-copy-3@3x.png" />
-              <div class="shadow-right"></div>
-              <div class="properties-slide">
-                <img src="./img/sliderinvalid-name@3x.png" />
-              </div>
-            </div>
-            <div class="card-content">
-              <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
-              <h4>Villa Isabella</h4>
-              <div class="vila-info d-flex">
-                <div class="name-vila col-lg-5">
-                  <p>Punta de Mita,<br />Los Veneros</p>
-                </div>
-                <div class="col-lg-7">
-                  <div class="publisher-contact d-flex">
-                    <p class="publisher">Publisher:</p>
-                    <p>Tripwix</p>
-                  </div>
-                  <div class="publisher-contact d-flex">
-                    <p class="contact-card">Contact:</p>
-                    <p>Roberto Carneiro</p>
-                  </div>
-                </div>
-              </div>
-              <div class="bedrooms">
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Bedrooms:</p>
-                  <p>2</p>
-                </div>
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Max Guests:</p>
-                  <p>6</p>
-                </div>
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Bathrooms:</p>
-                  <p>4</p>
-                </div>
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Guest Total:</p>
-                  <p>$19,567</p>
-                </div>
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Comission:</p>
-                  <p>10%</p>
-                </div>
-                <div class="publisher-contact d-flex">
-                  <p class="contact-card">Payout:</p>
-                  <p>$1,700</p>
-                </div>
-              </div>
-            </div>
-            <div class="card-btn">
-              <button class="request">Request</button>
-              <button class="download">Download</button>
-            </div>
-            <div class="download-card-open">
-              <div class="arrow-back arrow-back-download">
-                <img src="./img/arrowinvalid-name@3x.png" />
-                <p>Back</p>
-              </div>
-              <div class="card-img download-card">
-                <img src="./img/4sliderbitmap-copy-3@3x.png" />
-              </div>
-              <div class="card-content">
-                <img class="profile-picture" src="./img/100k-ai-faces-6.jpg" />
-                <h4>Download</h4>
-                <div class="download-file">
-                  <div>
-                    <p>PDF</p>
-                    <button>Download</button>
-                  </div>
-                  <div>
-                    <p>Rates</p>
-                    <button>Download</button>
-                  </div>
-                  <div>
-                    <p>HQ Photos</p>
-                    <button>Download</button>
+                    <button class="download-btn">Download</button>
                   </div>
                 </div>
               </div>
@@ -1542,29 +1552,255 @@
             </div>
           </div>
         </div>
+        <div
+          class="row justify-content-center float-end pt-3 pagina w-100"
+          style="margin: 0px !important"
+        >
+          <nav>
+            <ul class="pagination">
+              <li
+                class="page-item disabled"
+                aria-disabled="true"
+                aria-label="&laquo; Previous"
+              >
+                <span class="page-link" aria-hidden="true">&lsaquo;</span>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">1</span>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                  >2</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=3"
+                  >3</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=4"
+                  >4</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=5"
+                  >5</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=6"
+                  >6</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=7"
+                  >7</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=8"
+                  >8</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=9"
+                  >9</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                  rel="next"
+                  aria-label="Next &raquo;"
+                  >&rsaquo;</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- <div class="container">
+        <div class="row justify-content-center float-end pt-3 pagina w-100">
+          <nav>
+            <ul class="pagination">
+              <li
+                class="page-item disabled"
+                aria-disabled="true"
+                aria-label="&laquo; Previous"
+              >
+                <span class="page-link" aria-hidden="true">&lsaquo;</span>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">1</span>
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                  >2</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=3"
+                  >3</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=4"
+                  >4</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=5"
+                  >5</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=6"
+                  >6</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=7"
+                  >7</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=8"
+                  >8</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=9"
+                  >9</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                  rel="next"
+                  aria-label="Next &raquo;"
+                  >&rsaquo;</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
       <div class="row justify-content-center float-end pt-3 pagina w-100">
         <nav>
-            <ul class="pagination">
-                <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
-                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
-                </li>
-                <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2">2</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=3">3</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=4">4</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=5">5</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=6">6</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=7">7</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=8">8</a></li>
-                <li class="page-item"><a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=9">9</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
-                </li>
-            </ul>
+          <ul class="pagination">
+            <li
+              class="page-item disabled"
+              aria-disabled="true"
+              aria-label="&laquo; Previous"
+            >
+              <span class="page-link" aria-hidden="true">&lsaquo;</span>
+            </li>
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">1</span>
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                >2</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=3"
+                >3</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=4"
+                >4</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=5"
+                >5</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=6"
+                >6</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=7"
+                >7</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=8"
+                >8</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=9"
+                >9</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/search?city=&amp;daterange=03%2F16%2F2023%20-%2003%2F16%2F2023&amp;guests=&amp;sort_by=&amp;price=500&amp;property_type=&amp;bathrooms=&amp;page=2"
+                rel="next"
+                aria-label="Next &raquo;"
+                >&rsaquo;</a
+              >
+            </li>
+          </ul>
         </nav>
-
-    </div>
+      </div> -->
     </section>
 
     <footer>
@@ -1592,9 +1828,10 @@
             </div>
             <div class="col-lg-4">
               <h4>Contact Us</h4>
-              <p>Email Us</p>
+              <a href="mailto:contact@luxurytravelportal.com"
+                ><p>Email Us</p></a
+              >
               <p>+1 222 333-4444</p>
-              <p>Link</p>
             </div>
           </div>
           <div class="col-lg-5 footer-right">
@@ -1613,21 +1850,25 @@
             ><img src="./img/logo@3x.png" style="width: 152px; height: 58px"
           /></a>
           <div class="social-icon">
-            <a href="instagram.com/luxurytravelportal"
+            <img
+              src="./img/iconmonstr-linkedin-1@3x.png"
+              style="width: 29px; height: 29px"
+            />
+            <a
+              href=" https://www.instagram.com/luxurytravelportal/"
+              target="_blank"
               ><img
                 src="./img/iconmonstr-instagram-11@3x.png"
                 style="width: 29px; height: 28px"
             /></a>
             <img
-              src="./img/iconmonstr-linkedin-1@3x.png"
-              style="width: 29px; height: 29px"
-            />
-            <img
               src="./img/iconmonstr-youtube-6@3x.png"
               style="width: 30px; height: 26px"
             />
           </div>
-          <p>COPYRIGHT 2023, LTP SYSTEMS OÜ</p>
+          <p style="font-size: 12px !important">
+            COPYRIGHT 2023, LTP SYSTEMS OÜ
+          </p>
         </div>
       </div>
     </footer>
