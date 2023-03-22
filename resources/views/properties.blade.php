@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="d-flex drop-menu">
-                        <button class="search-btn">Search</button>
+                        <button class="search-btn" id="property-search">Search</button>
                     </div>
                 </div>
             </div>
@@ -265,8 +265,8 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if ($propertyModel->image)
-                                        <img src="{{ $propertyModel->image }}" />
+                                    @if ($propertyModel->thumb)
+                                        <img src="{{ $propertyModel->thumb }}" />
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
@@ -308,8 +308,8 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if ($propertyModel->images)
-                                        <img src="{{ $propertyModel->images[0] }}" />
+                                    @if ($propertyModel->thumb)
+                                        <img src="{{ $propertyModel->thumb }}" />
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
