@@ -173,7 +173,7 @@
                         $payout = 'N/A';
                         $houseFee = 0;
                         $taxes = 0;
-                        $securityDeposit = (strtolower($property->security_deposit) === 'night') ? $property->average : $property->security_deposit;
+                        $securityDeposit = (strpos(strtolower($property->security_deposit), 'Night') !== FALSE) ? $property->average : $property->security_deposit;
                         $gratuatyFee = ($property->gratuity_fee) ? (int) str_replace('%', '', $property->gratuity_fee) : 0;
                         $occupacyFee = ($property->occupancy_fee) ? (int) str_replace('%', '', $property->occupancy_fee) : 0;
                         $municipalFee = ($property->municipal_fee) ? (int) str_replace('%', '', $property->municipal_fee) : 0;
