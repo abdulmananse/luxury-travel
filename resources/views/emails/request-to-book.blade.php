@@ -330,7 +330,7 @@
                                     <td class="two-col" align="center" valign="top"
                                         style="padding-left: 33px; padding-right: 33px;">
                                         <div>
-                                            <a class="cta-button" href="#"
+                                            <a class="cta-button" href="{{ url('/') }}"
                                                 style="background-color:#0B3841;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:17px;font-weight:bold;line-height:64px;text-align:center;text-decoration:none;width:446px;-webkit-text-size-adjust:none;">
                                                 Answer Now
                                             </a>
