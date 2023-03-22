@@ -73,6 +73,16 @@ class Property extends Model implements HasMedia
         return $images;
     }
 
+    public function getThumbAttribute()
+    {
+        $media = $this->getMedia('images')->first();
+        unset($this->media);
+        if($media) {
+            return $media->preview_url;
+        }
+        return null;
+    }
+
     public function getShortDescriptionAttribute()
     {
         return Str::words($this->description, 50, '...');
@@ -91,6 +101,11 @@ class Property extends Model implements HasMedia
         'currency_symbol',
         'community',
         'commission',
+        'municipal_fee',
+        'occupancy_fee',
+        'gratuity_fee',
+        'security_deposit',
+        'vat_rate',
         'name',
         'account',
         'pis',

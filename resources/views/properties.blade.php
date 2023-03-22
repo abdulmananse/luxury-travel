@@ -4,6 +4,18 @@
         | Property Search
     @endsection
 
+    @push('styles')
+        <style>
+            #daterange.color {
+                color: #0b3841 !important;
+            }
+
+            #daterange {
+                cursor: pointer;
+            }
+        </style>
+    @endpush
+
     <form method="GET" action="{{ route('search') }}" class="row1 g-31 form-input1 search-form">
         <section class="backgroundColor">
             <div class="container">
@@ -11,12 +23,14 @@
                     <div class="d-flex drop-menu destination-drop">
                         <p class="select-search">DESTINATION</p>
                         <div class="select-destionation destination-label">
-                            <span>{{ @request()->city ? @request()->city : 'Destination' }}</span>
+                            <p class="value-drop {{ @request()->city ? 'color' : '' }}">
+                                {{ @request()->city ? @request()->city : 'Destination' }}</p>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
                             @foreach ($cities as $city)
-                                <span class="custom-option select-destination-name"
+                                <span
+                                    class="custom-option select-destination-name {{ @request()->city == $city ? 'active' : '' }}"
                                     data-value="{{ $city }}">{{ $city }}</span>
                             @endforeach
                             <input type="text" class="d-none" name="city" value="{{ @request()->city }}" />
@@ -27,12 +41,15 @@
                             <p class="select-search">ARRIVAL</p>
                             <p class="select-search">DEPARTURE</p>
                         </div>
-                        <input id="daterange" type="text" name="daterange" value="" inputmode="none" />
+                        <input id="daterange" type="text" name="daterange" class="{{ @$startDate ? 'color' : '' }}"
+                            inputmode="none" />
                     </div>
-                    <div class="d-flex drop-menu destination-drop ml-4">
+                    <div class="d-flex drop-menu destination-drop guests-drop ml-4">
                         <p class="select-search">GUESTS</p>
                         <div class="select-destionation guests-label">
-                            <span>{{ @request()->guests . ' Guests' }}</span>
+                            <p class="value-drop {{ @request()->guests ? 'color' : '' }}">
+                                {{ @request()->guests . ' Guests' }}</p>
+
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
@@ -48,7 +65,8 @@
                     <div class="d-flex drop-menu guests-border">
                         <p class="select-search">CLIENT BUDGET</p>
                         <div id="select-budget" class="select-destionation">
-                            <p class="budget-value-drop">{{ @request()->price ? '$' . @request()->price : 'Price' }}
+                            <p class="budget-value-drop {{ @request()->price ? 'color' : '' }}">
+                                {{ @request()->price ? '$' . @request()->price : 'Price' }}
                             </p>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
@@ -63,7 +81,7 @@
                         </div>
                     </div>
                     <div class="d-flex drop-menu">
-                        <button class="search-btn">Search</button>
+                        <button class="search-btn" id="property-search">Search</button>
                     </div>
                 </div>
             </div>
@@ -95,10 +113,10 @@
 
                     <div class="property-filter">
                         <div class="filter-menu">
-                            <div class="d-flex drop-menu">
+                            <div class="d-flex drop-menu property_type-drop">
                                 <p class="select-search">PROPERTY TYPE</p>
                                 <div class="select-destionation property_type-label">
-                                    <p class="value-drop">
+                                    <p class="value-drop {{ @request()->property_type ? 'color' : '' }}">
                                         {{ @request()->property_type ? @request()->property_type : 'PROPERTY TYPE' }}
                                     </p>
                                     <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
@@ -112,17 +130,17 @@
                                         value="{{ @request()->property_type }}" />
                                 </div>
                             </div>
-                            <div class="d-flex drop-menu">
+                            <div class="d-flex drop-menu bathrooms-drop">
                                 <p class="select-search">BATHROOMS</p>
                                 <div class="select-destionation bathrooms-label">
-                                    <p class="value-drop">
-                                        {{ @request()->bathrooms ? @request()->bathrooms : 'BATHROOMS' }}</p>
+                                    <p class="value-drop {{ @request()->bathrooms ? 'color' : '' }}">
+                                        {{ @request()->bathrooms . ' Bathrooms' }}</p>
                                     <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                                 </div>
                                 <div class="dropdown-open">
                                     @for ($i = 1; $i <= $bathrooms; $i++)
                                         <span class="custom-option select-bathroom-name"
-                                            data-value="{{ $i }}">{{ $i }}</span>
+                                            data-value="{{ $i }}">{{ $i }} Bathrooms</span>
                                     @endfor
                                     <input type="text" class="d-none" name="bathrooms"
                                         value="{{ @request()->bathrooms }}" />
@@ -247,8 +265,8 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if ($propertyModel->image)
-                                        <img src="{{ $propertyModel->image }}" />
+                                    @if ($propertyModel->thumb)
+                                        <img src="{{ $propertyModel->thumb }}" />
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
@@ -290,8 +308,8 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if ($propertyModel->images)
-                                        <img src="{{ $propertyModel->images[0] }}" />
+                                    @if ($propertyModel->thumb)
+                                        <img src="{{ $propertyModel->thumb }}" />
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif
@@ -410,20 +428,33 @@
             $(document).ready(function() {
 
                 $('.select-destination-name').click(function() {
-                    $('.destination-label span').html($(this).attr('data-value'));
+                    $('.destination-label p').html($(this).attr('data-value'));
+                    $('.destination-label p').addClass("color");
                     $('input[name=city]').val($(this).attr('data-value'));
+                    $(".destination-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
+                    $(".destination-drop").find(".dropdown-open").addClass("active");
                 });
                 $('.select-guest-name').click(function() {
-                    $('.guests-label span').html($(this).attr('data-value') + ' Guests');
+                    $('.guests-label p').html($(this).attr('data-value') + ' Guests');
+                    $('.guests-label p').addClass("color");
                     $('input[name=guests]').val($(this).attr('data-value'));
+                    $(".guests-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
                 $('.select-property_type-name').click(function() {
                     $('.property_type-label p').html($(this).attr('data-value'));
+                    $('.property_type-label p').addClass("color");
                     $('input[name=property_type]').val($(this).attr('data-value'));
+                    $(".property_type-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
                 $('.select-bathroom-name').click(function() {
-                    $('.bathrooms-label p').html($(this).attr('data-value'));
+                    $('.bathrooms-label p').html($(this).attr('data-value') + ' Bathrooms');
+                    $('.bathrooms-label p').addClass("color");
                     $('input[name=bathrooms]').val($(this).attr('data-value'));
+                    $(".bathrooms-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
 
                 $('.select-sortby').click(function() {
@@ -480,9 +511,13 @@
 
             });
 
+
+
             $("#daterange").daterangepicker({
                     autoApply: true,
                     opens: "center",
+                    startDate: '{{ @$startDate ? date('m/d/Y', strtotime($startDate)) : date('m/d/Y') }}',
+                    endDate: '{{ @$endDate ? date('m/d/Y', strtotime($endDate)) : date('m/d/Y') }}',
                 },
                 function(start, end, label) {
                     console.log(
@@ -494,6 +529,8 @@
                         label +
                         ")"
                     );
+
+                    $("#daterange").addClass('color');
                 }
             );
 
