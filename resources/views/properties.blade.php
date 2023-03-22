@@ -4,6 +4,18 @@
         | Property Search
     @endsection
 
+    @push('styles')
+        <style>
+            #daterange.color {
+                color: #0b3841 !important;
+            }
+
+            #daterange {
+                cursor: pointer;
+            }
+        </style>
+    @endpush
+
     <form method="GET" action="{{ route('search') }}" class="row1 g-31 form-input1 search-form">
         <section class="backgroundColor">
             <div class="container">
@@ -11,12 +23,14 @@
                     <div class="d-flex drop-menu destination-drop">
                         <p class="select-search">DESTINATION</p>
                         <div class="select-destionation destination-label">
-                            <span>{{ @request()->city ? @request()->city : 'Destination' }}</span>
+                            <p class="value-drop {{ @request()->city ? 'color' : '' }}">
+                                {{ @request()->city ? @request()->city : 'Destination' }}</p>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
                             @foreach ($cities as $city)
-                                <span class="custom-option select-destination-name"
+                                <span
+                                    class="custom-option select-destination-name {{ @request()->city == $city ? 'active' : '' }}"
                                     data-value="{{ $city }}">{{ $city }}</span>
                             @endforeach
                             <input type="text" class="d-none" name="city" value="{{ @request()->city }}" />
@@ -27,12 +41,15 @@
                             <p class="select-search">ARRIVAL</p>
                             <p class="select-search">DEPARTURE</p>
                         </div>
-                        <input id="daterange" type="text" name="daterange" value="" inputmode="none" />
+                        <input id="daterange" type="text" name="daterange" class="{{ @$startDate ? 'color' : '' }}"
+                            inputmode="none" />
                     </div>
-                    <div class="d-flex drop-menu destination-drop ml-4">
+                    <div class="d-flex drop-menu destination-drop guests-drop ml-4">
                         <p class="select-search">GUESTS</p>
                         <div class="select-destionation guests-label">
-                            <span>{{ @request()->guests . ' Guests' }}</span>
+                            <p class="value-drop {{ @request()->guests ? 'color' : '' }}">
+                                {{ @request()->guests . ' Guests' }}</p>
+
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                         <div class="dropdown-open">
@@ -48,7 +65,8 @@
                     <div class="d-flex drop-menu guests-border">
                         <p class="select-search">CLIENT BUDGET</p>
                         <div id="select-budget" class="select-destionation">
-                            <p class="budget-value-drop">{{ @request()->price ? '$' . @request()->price : 'Price' }}
+                            <p class="budget-value-drop {{ @request()->price ? 'color' : '' }}">
+                                {{ @request()->price ? '$' . @request()->price : 'Price' }}
                             </p>
                             <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
@@ -410,12 +428,19 @@
             $(document).ready(function() {
 
                 $('.select-destination-name').click(function() {
-                    $('.destination-label span').html($(this).attr('data-value'));
+                    $('.destination-label p').html($(this).attr('data-value'));
+                    $('.destination-label p').addClass("color");
                     $('input[name=city]').val($(this).attr('data-value'));
+                    $(".destination-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
+                    $(".destination-drop").find(".dropdown-open").addClass("active");
                 });
                 $('.select-guest-name').click(function() {
-                    $('.guests-label span').html($(this).attr('data-value') + ' Guests');
+                    $('.guests-label p').html($(this).attr('data-value') + ' Guests');
+                    $('.guests-label p').addClass("color");
                     $('input[name=guests]').val($(this).attr('data-value'));
+                    $(".guests-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
                 $('.select-property_type-name').click(function() {
                     $('.property_type-label p').html($(this).attr('data-value'));
@@ -480,9 +505,13 @@
 
             });
 
+
+
             $("#daterange").daterangepicker({
                     autoApply: true,
                     opens: "center",
+                    startDate: '{{ @$startDate ? date('m/d/Y', strtotime($startDate)) : date('m/d/Y') }}',
+                    endDate: '{{ @$endDate ? date('m/d/Y', strtotime($endDate)) : date('m/d/Y') }}',
                 },
                 function(start, end, label) {
                     console.log(
@@ -494,6 +523,8 @@
                         label +
                         ")"
                     );
+
+                    $("#daterange").addClass('color');
                 }
             );
 
