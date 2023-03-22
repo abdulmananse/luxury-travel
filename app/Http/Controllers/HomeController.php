@@ -913,7 +913,6 @@ class HomeController extends Controller
 
                 $zipFileName = $property->property_id . '.zip';
                 if (!in_array($property->property_id, $skipProperties) &&
-                !file_exists(storage_path("app/public/{$zipFileName}")) &&
                 !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
