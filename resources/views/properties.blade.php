@@ -113,10 +113,10 @@
 
                     <div class="property-filter">
                         <div class="filter-menu">
-                            <div class="d-flex drop-menu">
+                            <div class="d-flex drop-menu property_type-drop">
                                 <p class="select-search">PROPERTY TYPE</p>
                                 <div class="select-destionation property_type-label">
-                                    <p class="value-drop">
+                                    <p class="value-drop {{ @request()->property_type ? 'color' : '' }}">
                                         {{ @request()->property_type ? @request()->property_type : 'PROPERTY TYPE' }}
                                     </p>
                                     <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
@@ -130,17 +130,17 @@
                                         value="{{ @request()->property_type }}" />
                                 </div>
                             </div>
-                            <div class="d-flex drop-menu">
+                            <div class="d-flex drop-menu bathrooms-drop">
                                 <p class="select-search">BATHROOMS</p>
                                 <div class="select-destionation bathrooms-label">
-                                    <p class="value-drop">
-                                        {{ @request()->bathrooms ? @request()->bathrooms : 'BATHROOMS' }}</p>
+                                    <p class="value-drop {{ @request()->bathrooms ? 'color' : '' }}">
+                                        {{ @request()->bathrooms . ' Bathrooms' }}</p>
                                     <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                                 </div>
                                 <div class="dropdown-open">
                                     @for ($i = 1; $i <= $bathrooms; $i++)
                                         <span class="custom-option select-bathroom-name"
-                                            data-value="{{ $i }}">{{ $i }}</span>
+                                            data-value="{{ $i }}">{{ $i }} Bathrooms</span>
                                     @endfor
                                     <input type="text" class="d-none" name="bathrooms"
                                         value="{{ @request()->bathrooms }}" />
@@ -444,11 +444,17 @@
                 });
                 $('.select-property_type-name').click(function() {
                     $('.property_type-label p').html($(this).attr('data-value'));
+                    $('.property_type-label p').addClass("color");
                     $('input[name=property_type]').val($(this).attr('data-value'));
+                    $(".property_type-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
                 $('.select-bathroom-name').click(function() {
-                    $('.bathrooms-label p').html($(this).attr('data-value'));
+                    $('.bathrooms-label p').html($(this).attr('data-value') + ' Bathrooms');
+                    $('.bathrooms-label p').addClass("color");
                     $('input[name=bathrooms]').val($(this).attr('data-value'));
+                    $(".bathrooms-drop").find(".dropdown-open").find("span").removeClass("active");
+                    $(this).addClass("active");
                 });
 
                 $('.select-sortby').click(function() {
