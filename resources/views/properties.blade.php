@@ -198,7 +198,7 @@
 
                                 <div class="shadow-right"></div>
                                 <div class="properties-slide">
-                                    <img id="next" src="{{ asset('img') }}/slider--invalid-name@3x.png" />
+                                    <img class="next" src="{{ asset('img') }}/slider--invalid-name@3x.png" />
                                 </div>
                             </div>
 

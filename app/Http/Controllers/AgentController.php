@@ -17,10 +17,10 @@ class AgentController extends Controller
 {
     public function index (Request $request)
     {
-        
+
         $email = 'abdulmanan4d@gmail.com';
         $url = route('agents.register', base64_encode($email));
-        Notification::route('mail', $email)->notify(new InviteAgent(['name' => 'Abdul Manan', 'url' => $url]));
+        //Notification::route('mail', $email)->notify(new InviteAgent(['name' => 'Abdul Manan', 'url' => $url]));
 
         $agents = Invitation::orderBy('id', 'desc');
 
