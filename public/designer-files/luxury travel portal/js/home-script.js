@@ -63,10 +63,10 @@ setTimeout(() => {
 
   // company dropdown 
 
-  const comission = document.querySelector('.select-comission');
+  // const comission = document.querySelector('.select-comission');
 
-  comission.addEventListener('click', () => {
-    console.log(comission.nextElementSibling);
-    const comissionOpen = comission.nextElementSibling;
-    comissionOpen.classList.toggle('active');
-  })
+  // comission.addEventListener('click', () => {
+  //   console.log(comission.nextElementSibling);
+  //   const comissionOpen = comission.nextElementSibling;
+  //   comissionOpen.classList.toggle('active');
+  // })

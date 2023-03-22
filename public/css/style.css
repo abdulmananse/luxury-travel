@@ -72,7 +72,7 @@ body {
   margin: 0;
 }
 a:hover {
-  text-decoration: none;
+  text-decoration: none!important;
 }
 h1,
 p,
@@ -211,7 +211,7 @@ header img {
   border: solid 0.5px rgba(11, 56, 65, 0.75);
   background-color: rgba(11, 56, 65, 0.75);
 }
-.applay:hover {
+.applay:hover , .search-btn:hover{
   border: solid 0.5px rgba(11, 56, 65, 0.75);
   background-color: rgba(11, 56, 65, 0.75);
 }
@@ -1180,9 +1180,14 @@ input[type="range"]::-webkit-slider-thumb {
   color: rgba(11, 56, 65, 0.25);
   cursor: pointer;
 }
+.select-destionation span, .date-input input{
+  font-size: 21px!important;
+  font-family: 'playfair-display-regular'!important;
+}
 .select-destionation p {
-  font-size: 18px !important;
+  font-size: 21px !important;
   color: rgba(11, 56, 65, 0.25) !important;
+  text-transform: lowercase;
 }
 .destination-drop {
   justify-content: space-around;
@@ -1470,6 +1475,9 @@ select option:focus {
   border: solid 0.5px #0b3841;
   background-color: #f6f6f6;
 }
+.search-btn.clear:hover{
+  color: #0b3841;
+}
 .download {
   color: #fff;
   background-color: #0b3841;
@@ -1731,7 +1739,7 @@ select option:focus {
   /* position: relative; */
   position: absolute;
   top: 15px;
-  right: 0;
+  right: 10px;
   content: "Previous";
 }
 
@@ -1746,10 +1754,16 @@ select option:focus {
   visibility: visible;
   position: absolute;
   top: 15px;
-  left: 0;
+  left: 10px;
   content: "Next";
 }
-
+.pagination{
+  position: relative;
+}
+.pagina{
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+}
 .pagination-container {
   display: flex;
   justify-content: space-between;
@@ -2201,6 +2215,9 @@ button:focus {
   .search-btn {
     margin-right: 0px;
   }
+  .property .destination-drop{
+    margin-left: 0px!important;
+  }
   .date-input,
   .guests-border {
     padding-right: 0px;
@@ -2410,6 +2427,7 @@ button:focus {
     display: flex;
     width: 100%;
     gap: 10px;
+    flex-direction: column;
   }
   .add-agents {
     margin-left: 0px;
@@ -2494,16 +2512,22 @@ button:focus {
     bottom: 20px;
   }
   #bedrooms-request {
-    grid-template-columns: auto;
+    grid-template-columns: 1fr 1fr;
   }
   .save {
     font-size: 16px !important;
     padding: 11.5px 0;
   }
-  .agents-a,
-  .profile-a,
-  .logout {
-    font-size: 16px !important;
+    /*.agents-a,*/
+  /*.profile-a,*/
+  /*.logout {*/
+  /*  font-size: 16px !important;*/
+  /*}*/
+  .select-destionation span, .date-input input, .select-destionation p{
+    font-size: 18px!important;
+  }
+  .sort-filter .dropdown-open{
+    top: 42px;
   }
   .add-agents {
     font-size: 14px !important;
@@ -2557,6 +2581,9 @@ button:focus {
   .contact-form {
     margin-left: 10px;
   }
+  .bedrooms{
+    gap: 5px;
+  }
 }
 
 .company-form,
@@ -2582,8 +2609,13 @@ button:focus {
   text-align: center;
   color: #0b3841;
   display: flex;
+  place-content: center;
 }
-
+.download-file a:hover{
+  color: #0b3841!important;
+  border: solid 0.5px #0b3841;
+  background-color: #f6f6f6;
+}
 /* Disabled buttons */
 .disabled-blue {
   border: solid 0.5px rgba(11, 56, 65, 0.5);
@@ -2602,4 +2634,89 @@ button:focus {
 }
 .budget-value-drop.color {
   color: #0b3841 !important;
+}
+
+
+.cost-info{
+  position: relative;
+}
+.all-price-one, .all-price-two{
+  top: 25px;
+  right: 0;
+  display: none;
+}
+.all-price-one.open, .all-price-two.open{
+  display: block;
+}
+.all-price-one, .all-price-two{
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.15);
+  border: solid 0.5px #0b3841;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+  padding: 12px;
+}
+.all-price-one img, .all-price-two img{
+  width: 15px;
+  height: 15px;
+  margin-bottom: 24px;
+}
+.price-top p, .price-bottom p{
+  font-family: 'Inter-Regular'!important;
+  font-size: 14px!important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71!important;
+  letter-spacing: normal;
+  color: #0b3841;
+}
+
+.price-bottom{
+  display: flex;
+  justify-content: space-between;
+  border-top: solid 1px #0b3841;
+  padding-top: 6px;
+  margin-top: 12px;
+}
+.price-margin{
+  margin-bottom: 3px;
+  justify-content: space-between;
+  gap: 20px;
+}
+.your-payout{
+  font-family: 'Inter-Regular'!important;
+  font-size: 14px!important;
+  font-weight: 600!important;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71!important;
+  letter-spacing: normal;
+  color: #0b3841!important;
+}
+.price-green, .price-blue{
+  font-family: 'Inter-Regular'!important;
+  font-size: 14px!important;
+  font-weight: 600!important;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71!important;
+  letter-spacing: normal;
+}
+.price-green{
+  color: #0ac44a!important;
+}
+.deposit p{
+  color: rgba(11, 56, 65, 0.5)!important;
+}
+.deposit{
+  margin: 10px 0px;
+}
+.all-price-two .price-margin{
+  margin-bottom: 6px;
+}
+@media (max-width: 575px) {
+  .price-top p, .price-bottom p{
+    font-size: 12px!important;
+  }
 }
