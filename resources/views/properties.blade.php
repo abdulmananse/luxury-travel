@@ -166,14 +166,14 @@
                     @forelse($properties as $property)
                         <?php
                         $propertyModel = App\Models\Property::find($property->id);
-                        
+
                         $totalPrice = 'N/A';
                         $totalPriceWithVat = 0;
                         $payout = 'N/A';
                         if ($property->total_price > 0) {
                             $totalPriceWithVat = $property->total_price + ($property->total_price * $vatPercentage) / 100;
                             $totalPrice = $property->currency_symbol . number_format($totalPriceWithVat, 2);
-                        
+
                             if ($contactPerson->commission != null) {
                                 $payout = $property->currency_symbol . number_format(($property->total_price * str_replace('%', '', $contactPerson->commission)) / 100, 2);
                             }
@@ -423,7 +423,7 @@
 
     @push('scripts')
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <script type="text/javascript" src="{{ asset('js') }}/script.js"></script>
+        <script type="text/javascript" src="{{ asset('js') }}/script.js{{ '?_v' . rand(1000, 999999) }}"></script>
         <script>
             $(document).ready(function() {
 
