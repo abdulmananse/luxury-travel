@@ -65,9 +65,9 @@
 
     {{ $slot }}
 
-    <footer style="border-top: 1px solid #0b3841">
+    <footer>
         <div class="container footer-padding d-flex" style="flex-direction: column">
-            <div class="d-flex row footer-top" style="width: 100%">
+            <div class="d-flex row footer-top">
                 <div class="col-lg-7 d-flex footer-left">
                     <div class="col-lg-4">
                         <h4>Links</h4>
@@ -87,13 +87,14 @@
                     </div>
                     <div class="col-lg-4">
                         <h4>Contact Us</h4>
-                        <p>Email Us</p>
+                        <a href="mailto:contact@luxurytravelportal.com">
+                            <p>Email Us</p>
+                        </a>
                         <p>+1 222 333-4444</p>
-                        <p>Link</p>
                     </div>
                 </div>
                 <div class="col-lg-5 footer-right">
-                    <a href="{{ url('') }}"><img src="{{ asset('img/footerlogo@3x.png') }}" /></a>
+                    <a href="home-page.html"><img src="{{ asset('img') }}/footerlogo@3x.png" /></a>
                     <h5>
                         Blakely Tower - Jumeirah Beach Road - Dubai Marina - Dubai -
                         United Arab Emirates
@@ -102,16 +103,18 @@
             </div>
             <div class="d-flex justify-content-between footer-bottom align-items-center"
                 style="border-top: solid 1px #0b3841">
-                <a href="{{ url('') }}"><img src="{{ asset('img/logo@3x.png') }}"
+                <a href="home-page.html"><img src="{{ asset('img') }}/logo@3x.png"
                         style="width: 152px; height: 58px" /></a>
                 <div class="social-icon">
-                    <a href="instagram.com/luxurytravelportal"><img
-                            src="{{ asset('img/iconmonstr-instagram-11@3x.png') }}"
+                    <img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" />
+                    <a href=" https://www.instagram.com/luxurytravelportal/" target="_blank"><img
+                            src="{{ asset('img') }}/iconmonstr-instagram-11@3x.png"
                             style="width: 29px; height: 28px" /></a>
-                    <img src="{{ asset('img/iconmonstr-linkedin-1@3x.png') }}" style="width: 29px; height: 29px" />
-                    <img src="{{ asset('img/iconmonstr-youtube-6@3x.png') }}" style="width: 30px; height: 26px" />
+                    <img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" />
                 </div>
-                <p>COPYRIGHT 2023, LTP SYSTEMS OÜ</p>
+                <p style="font-size: 12px !important">
+                    COPYRIGHT 2023, LTP SYSTEMS OÜ
+                </p>
             </div>
         </div>
     </footer>
