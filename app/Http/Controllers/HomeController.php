@@ -7,7 +7,7 @@ use App\Models\DuplicateProperty;
 use App\Models\DuplicatePropertyPrice;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Facades\Notification;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 use Carbon\Carbon;
@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\PropertyPrice;
 use App\Models\PropertyRequest;
 use App\Models\User;
+use App\Notifications\RequestToBook;
 use DB;
 use Auth;
 
@@ -1051,10 +1052,32 @@ class HomeController extends Controller
     }
 
     public function sendRequest (Request $request) {
-        $this->validate($request, ['property_id' => 'required', 'message' => 'required']);
 
-        PropertyRequest::create($request->all());
+        $this->validate($request, [
+            'property_id' => 'required', 
+            'message' => 'required',
+            'nights' => 'required',
+            'check_in' => 'required',
+            'check_out' => 'required',
+        ]);
 
+        $requestData = $request->all();
+        PropertyRequest::create($requestData);
+
+        $contactPerson = User::role('Contact_Person')->first();
+        $property = Property::find($request->property_id);
+        if ($property && $contactPerson) {
+            $email = $contactPerson->email;
+            //$email = 'abdulmanan4d@gmail.com';
+            Notification::route('mail', $email)
+                ->notify(new RequestToBook([
+                    'user' => Auth::user()->toArray(), 
+                    'requestData' => $requestData,
+                    'contactPerson' => $contactPerson->toArray(),
+                    'property' => $property->toArray()
+                ]));
+        }
+        
         return ['success' => true, 'data' => $request->all()];
     }
 }

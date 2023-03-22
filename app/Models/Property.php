@@ -55,6 +55,24 @@ class Property extends Model implements HasMedia
         return $images;
     }
 
+    /**
+     * Get the images
+     *
+     * @return string
+     */
+    public function getThumbsAttribute()
+    {
+        $media = $this->getMedia('images');
+        unset($this->media);
+        $images = [];
+        if($media) {
+            foreach($media as $image){
+                $images[] = $image->preview_url;
+            }
+        }
+        return $images;
+    }
+
     public function getShortDescriptionAttribute()
     {
         return Str::words($this->description, 50, '...');

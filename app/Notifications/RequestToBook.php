@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class InviteAgent extends Notification
+class RequestToBook extends Notification
 {
     use Queueable;
 
@@ -44,7 +44,7 @@ class InviteAgent extends Notification
     {
         $emailData = $this->data;
 
-        return (new MailMessage)->view('emails.invite-agent', $emailData);
+        return (new MailMessage)->view('emails.request-to-book', $emailData);
     }
 
     /**

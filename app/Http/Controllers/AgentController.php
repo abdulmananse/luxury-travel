@@ -10,19 +10,17 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Illuminate\Support\Facades\Notification;
+use Log;
+use Auth;
 
 class AgentController extends Controller
 {
     public function index (Request $request)
     {
-
-        //Notification::route('mail', 'abdulmanan4d@gmail.com')->notify(new InviteAgent());
-        // try {
-        //     Notification::route('mail', $ddc->email)
-        //                 ->notify(new DPIApprove(['uuid' => $application->uuid]));
-        // } catch (\Exception $e) {
-        //     Log::error('Application ('. $application->id .') approved by DPI email Error: ' . $e->getMessage());
-        // }
+        
+        $email = 'abdulmanan4d@gmail.com';
+        $url = route('agents.register', base64_encode($email));
+        Notification::route('mail', $email)->notify(new InviteAgent(['name' => 'Abdul Manan', 'url' => $url]));
 
         $agents = Invitation::orderBy('id', 'desc');
 
@@ -56,6 +54,13 @@ class AgentController extends Controller
             $invitation = Invitation::where('email', $email)->first();
             if (!$invitation) {
                 Invitation::create(['email' => $email]);
+
+                try {
+                    $url = route('agents.register', base64_encode($email));
+                    Notification::route('mail', $email)->notify(new InviteAgent(['name' => Auth::user()->name, 'url' => $url]));
+                } catch (\Exception $e) {
+                    Log::error('Email not sent: ' . $e->getMessage());
+                }
             }
         }
 
