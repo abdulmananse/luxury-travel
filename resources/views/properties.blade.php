@@ -240,14 +240,6 @@
                                         <p class="contact-card">Bedrooms:</p>
                                         <p>{{ $property->no_of_bedrooms }}</p>
                                     </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Max Guests:</p>
-                                        <p>{{ $property->max_guests }}</p>
-                                    </div>
-                                    <div class="publisher-contact d-flex">
-                                        <p class="contact-card">Bathrooms:</p>
-                                        <p>{{ $property->no_of_bathrooms }}</p>
-                                    </div>
 
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Guest Total:</p>
@@ -258,10 +250,18 @@
                                             {{ number_format((float) $totalPrice, 2) }}
                                         </p>
                                     </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Max Guests:</p>
+                                        <p>{{ $property->max_guests }}</p>
+                                    </div>
 
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Commission:</p>
                                         <p>{{ $contactPerson->commission }}%</p>
+                                    </div>
+                                    <div class="publisher-contact d-flex">
+                                        <p class="contact-card">Bathrooms:</p>
+                                        <p>{{ $property->no_of_bathrooms }}</p>
                                     </div>
 
                                     <div class="publisher-contact d-flex">
@@ -365,7 +365,7 @@
                                                                 <p>Accomodation</p>
                                                                 <p>
                                                                     @if ($property->total_price > 0)
-                                                                        {!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                                                        {!! $property->currency_symbol !!}{{ number_format((float) $property->total_price, 2) }}
                                                                     @else
                                                                         N/A
                                                                     @endif
@@ -375,7 +375,7 @@
                                                                 <p>House Fee</p>
                                                                 <p>
                                                                     @if ($houseFee)
-                                                                            {!! $property->currency_symbol !!}{{ number_format($houseFee, 2) }}
+                                                                            {!! $property->currency_symbol !!}{{ number_format((float) $houseFee, 2) }}
                                                                     @else
                                                                         N/A
                                                                     @endif
@@ -385,7 +385,7 @@
                                                                 <p>Taxes</p>
                                                                 <p>
                                                                     @if ($taxes)
-                                                                        {!! $property->currency_symbol !!}{{ number_format($taxes, 2) }}
+                                                                        {!! $property->currency_symbol !!}{{ number_format((float) $taxes, 2) }}
                                                                     @else
                                                                         N/A
                                                                     @endif
@@ -395,7 +395,7 @@
                                                                 <p style="text-color: rgba(11, 56, 65, 0.5)">Sec. Deposit</p>
                                                                 <p style="text-color: rgba(11, 56, 65, 0.5)">
                                                                     @if ($securityDeposit)
-                                                                        {!! $property->currency_symbol !!}{{ number_format($securityDeposit, 2) }}
+                                                                        {!! $property->currency_symbol !!}{{ number_format((float) $securityDeposit, 2) }}
                                                                     @else
                                                                         N/A
                                                                     @endif
@@ -438,7 +438,7 @@
                                                                 <p>Accomodation</p>
                                                                 <p>
                                                                     @if ($property->total_price > 0)
-                                                                        {!! $property->currency_symbol !!}{{ number_format($property->total_price, 2) }}
+                                                                        {!! $property->currency_symbol !!}{{ number_format((float) $property->total_price, 2) }}
                                                                     @else
                                                                         N/A
                                                                     @endif
