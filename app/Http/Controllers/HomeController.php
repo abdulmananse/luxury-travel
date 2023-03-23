@@ -945,14 +945,15 @@ class HomeController extends Controller
                             mkdir($folder, 0777, true);
 
                             foreach ($files as $file) {
-                                $readStream = $disk->getDriver()->readStream($file['path']);
-                                $fileData = stream_get_contents($readStream);
-                                $filename = $file['filename'].'.'.$file['extension'];
+                                if ($file['extension'] != "") {
+                                    $readStream = $disk->getDriver()->readStream($file['path']);
+                                    $fileData = stream_get_contents($readStream);
+                                    $filename = $file['filename'].'.'.$file['extension'];
 
-                                $targetFile = "{$folder}/{$filename}";
-                                file_put_contents($targetFile, $fileData, FILE_APPEND);
+                                    $targetFile = "{$folder}/{$filename}";
+                                    file_put_contents($targetFile, $fileData, FILE_APPEND);
+                                }
                             }
-
 
                             $zip = new ZipArchive();
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
