@@ -957,7 +957,7 @@ class HomeController extends Controller
                             $zip = new ZipArchive();
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
                                 $files = File::files($folder);
-                                
+
                                 foreach ($files as $key => $value) {
                                     $relativeNameInZipFile = basename($value);
                                     $zip->addFile($value, $relativeNameInZipFile);
@@ -988,7 +988,7 @@ class HomeController extends Controller
                             PropertyImagesLog::where($downloadImageData)->update(['status' => 2, 'response' => 'Image link not found ' . json_encode([$property->images_folder_link, $property->property_id])]);
                         }
 
-                        if ($propertiesDownloaded >= 60) {
+                        if ($propertiesDownloaded >= 80) {
                             CronJob::create(['command' => "Completed: import:images"]);
                             break;
                         }

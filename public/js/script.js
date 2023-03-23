@@ -177,6 +177,48 @@ priceInput.addEventListener('input', function() {
   const price = priceInput.value;
 });
 
+const copyButton = document.querySelectorAll('.ical-link button');
+const inputText = document.querySelectorAll('.ical-link input');
+
+
+for(const copy of copyButton){
+
+  copy.addEventListener('click', function() {
+
+    const prevElementInput = copy.previousElementSibling;
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(prevElementInput.value)
+    }else{
+        // Use the 'out of viewport hidden text area' trick
+        const textArea = document.createElement("textarea");
+        textArea.value = prevElementInput.value;
+
+        // Move textarea out of the viewport so it's not visible
+        textArea.style.position = "absolute";
+        textArea.style.left = "-999999px";
+
+        document.body.prepend(textArea);
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            textArea.remove();
+        }
+    }
+    // .then(() => {
+    //   alert('Copied to clipboard!');
+    // })
+    // .catch(err => {
+    //   console.error('Copy failed: ', err);
+    // });
+
+  });
+
+}
+
 
 const priceRange = $('.price-range');
 const valueDrop = $('.budget-value-drop');

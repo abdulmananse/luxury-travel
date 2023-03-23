@@ -573,13 +573,6 @@
                     $('form.search-form').submit();
                 });
 
-
-                $('.ical-copy-btn').click(function() {
-                    var copyText = $(this).parents(".ical-link").find('input');
-                    copyText.select();
-                    navigator.clipboard.writeText(copyText.val());
-                });
-
                 $(".send-request").click(function(e) {
                     e.preventDefault();
                     const _self = $(this);
