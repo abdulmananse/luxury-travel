@@ -916,13 +916,13 @@ class HomeController extends Controller
             $properties = Property::select('id', 'property_id', 'images_folder_link')->get();
             $propertiesDownloaded = 0;
             foreach ($properties as $property) {
+                //echo 'ID: '.$property->id.' Property ID: '.$property->property_id.' <br/>';
                 $downloadImageData = ['property_id' => $property->id, 'download_date' => date('Y-m-d')];
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
 
                 $zipFileName = $property->property_id . '.zip';
-                if (!in_array($property->property_id, $skipProperties) &&
-                !$downloaded) {
+                 if (!in_array($property->property_id, $skipProperties) && !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
                         $this->readImageProperty = $property;
@@ -937,9 +937,6 @@ class HomeController extends Controller
                             $dir = $imageDir[0];
                             $contents = collect($disk->listContents($dir, false));
                             $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
-                            //var_dump($files);
-                            //echo '<br />';
-                            //dd($files->toArray());
 
                             $property->clearMediaCollection('images');
 
@@ -947,43 +944,38 @@ class HomeController extends Controller
                             $this->deleteDirectory($folder);
                             mkdir($folder, 0777, true);
 
-                            $i=1;
                             foreach ($files as $file) {
-                                //dd($file);
                                 $readStream = $disk->getDriver()->readStream($file['path']);
                                 $fileData = stream_get_contents($readStream);
                                 $filename = $file['filename'].'.'.$file['extension'];
 
                                 $targetFile = "{$folder}/{$filename}";
                                 file_put_contents($targetFile, $fileData, FILE_APPEND);
-
-                                if ($i<=4) {
-                                    $tempFolder = storage_path("app/public/temp");
-                                    if (!file_exists($tempFolder)) {
-                                        mkdir($tempFolder, 0777, true);
-                                    }
-
-                                    $tempTargetFile = "{$tempFolder}/{$filename}";
-                                    file_put_contents($tempTargetFile, $fileData, FILE_APPEND);
-                                    $property->addMedia($tempTargetFile)->toMediaCollection('images');
-                                }
-
-                                $i++;
-                                //exit;
                             }
 
 
                             $zip = new ZipArchive();
-
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
                                 $files = File::files($folder);
-
+                                
                                 foreach ($files as $key => $value) {
                                     $relativeNameInZipFile = basename($value);
                                     $zip->addFile($value, $relativeNameInZipFile);
                                 }
 
                                 $zip->close();
+
+                                $i=1;
+                                foreach ($files as $key => $value) {
+                                    if ($i>4) {
+                                        break;
+                                    }
+
+                                    $relativeNameInZipFile = basename($value);
+                                    $zipTargetFile = "{$folder}/{$relativeNameInZipFile}";
+                                    $property->addMedia($zipTargetFile)->toMediaCollection('images');
+                                    $i++;
+                                }
 
                                 $this->deleteDirectory($folder);
                             }
