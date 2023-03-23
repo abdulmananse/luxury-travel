@@ -945,7 +945,7 @@ class HomeController extends Controller
                             mkdir($folder, 0777, true);
 
                             foreach ($files as $file) {
-                                if ($file['extension'] != '') {
+                                if ($file['extension'] != "") {
                                     $readStream = $disk->getDriver()->readStream($file['path']);
                                     $fileData = stream_get_contents($readStream);
                                     $filename = $file['filename'].'.'.$file['extension'];
