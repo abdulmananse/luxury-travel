@@ -114,16 +114,16 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $properties = [];
-        $startDate = $endDate = '';
+        $startDate = $endDate = $queryStartDate = $queryEndDate = '';
 
         $where = ' WHERE 1 AND properties.ical_link IS NOT NULL ';
         if ($request->filled('city')) {
             $destination = $request->city;
             $where .= ' AND destination LIKE "%' . $destination . '%" ';
         }
-        if ($request->filled('guests')) {
+        if ($request->filled('guests') && $request->guests > 0) {
             $guests = (int) $request->guests;
-            $where .= ' AND max_guests = ' . $guests . ' ';
+            $where .= ' AND max_guests >= ' . $guests . ' ';
         }
         if ($request->filled('bedrooms')) {
             $bedrooms = (int) $request->bedrooms;
@@ -137,41 +137,48 @@ class HomeController extends Controller
             $where .= ' AND property_type = "' . $request->property_type . '" ';
         }
 
-        $orderBy = 'properties.name ASC';
+        $orderBy = 'properties.name';
         $sortBy = $request->sort_by;
         if ($sortBy) {
             switch ($sortBy) {
                 case 'Property Name A to Z':
-                    $orderBy = 'properties.name ASC';
+                    $orderBy = 'properties.name';
                     break;
                 case 'No. of Bedrooms':
-                    $orderBy = 'CAST(properties.no_of_bedrooms AS UNSIGNED) ASC';
+                    $orderBy = 'CAST(properties.no_of_bedrooms AS UNSIGNED)';
                     break;
                 case 'No. of Guests':
-                    $orderBy = 'CAST(properties.max_guests AS UNSIGNED) ASC';
+                    $orderBy = 'CAST(properties.max_guests AS UNSIGNED)';
                     break;
                 case 'Property Type':
-                    $orderBy = 'properties.property_type ASC';
+                    $orderBy = 'properties.property_type';
                     break;
                 case 'Community Ascending':
-                    $orderBy = 'properties.community ASC';
+                    $orderBy = 'properties.community';
                     break;
             }
         }
+
+        if ($request->filled('guests') && $request->guests > 0) {
+            $orderBy = $orderBy . ', CAST(properties.max_guests AS UNSIGNED)';
+        }
+
+        $orderBy = $orderBy . ' ASC';
+
         if($request->daterange){
             list($startDate, $endDate) = explode(' - ', $request->daterange);
-            $iterateStartDate = $startDate = Carbon::createFromFormat('m/d/Y', $startDate)->format('Y-m-d');
-            $endDate = Carbon::createFromFormat('m/d/Y', $endDate)->format('Y-m-d');
+            $iterateStartDate = $startDate = $queryStartDate = Carbon::createFromFormat('m/d/Y', $startDate)->format('Y-m-d');
+            $endDate = $queryEndDate = Carbon::createFromFormat('m/d/Y', $endDate)->format('Y-m-d');
         }else{
-            $iterateStartDate = $startDate = Carbon::now()->format('Y-m-d');
-            $endDate = Carbon::now()->format('Y-m-d');
+            $iterateStartDate = $queryStartDate = Carbon::now()->format('Y-m-d');
+            $queryEndDate = Carbon::now()->format('Y-m-d');
         }
 
         $rangeDatesArray = [];
-        if($startDate === $endDate){
+        if($queryStartDate === $queryEndDate){
             $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
         }else{
-            while (strtotime($iterateStartDate) < strtotime($endDate)) {
+            while (strtotime($iterateStartDate) < strtotime($queryEndDate)) {
                 $rangeDatesArray[date('Ymd', strtotime($iterateStartDate))] = $iterateStartDate;
                 $iterateStartDate = date('Y-m-d', strtotime("+1 day", strtotime($iterateStartDate)));
             }
@@ -208,7 +215,7 @@ class HomeController extends Controller
                 properties.images_folder_link,
                 properties.price_doc_link,
                 properties.price_pdf_link,
-                SUM(IF((CAST("' . $startDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $endDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
+                SUM(IF((CAST("' . $queryStartDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (CAST("' . $queryEndDate . '" AS DATE) BETWEEN DATE(events.start) and DATE_SUB(DATE(events.end), INTERVAL 1 DAY)) OR (DATE(events.start) > CAST("' . $startDate . '" AS DATE) AND DATE_SUB(DATE(events.end), INTERVAL 1 DAY) < CAST("' . $endDate . '" AS DATE)), 1, 0)) as total_bookings
             FROM properties
             LEFT JOIN `events` ON events.property_id = properties.id
             ' . $where . '
@@ -235,7 +242,7 @@ class HomeController extends Controller
             $properties[$key]->average = round($totalPrice / count($rangeDatesArray));
         }
 
-        if ($request->filled('price')) {
+        if ($request->filled('price') && $request->price > 0) {
             $properties = collect($properties)->where('total_price', '<=', $request->price)->toArray();
         }
 

@@ -106,7 +106,7 @@
                 </swiper-slide>
                 <swiper-slide class="slide d-flex">
                     <div class="slide-left col-lg-6">
-                        <img src="{{ asset('img') }}/sliderbitmap@3x.png" />
+                        <img src="{{ asset('img') }}/testimonial-2.jpg" />
                     </div>
                     <div class="slide-right col-lg-6">
                         <h2>
@@ -325,23 +325,28 @@
                 }
             });
         </script>
-    <script>
-        window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":"Chat with us"};
-        (function(d,t) {
-        var BASE_URL="https://app.chatwoot.com";
-        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=BASE_URL+"/packs/js/sdk.js";
-        g.defer = true;
-        g.async = true;
-        s.parentNode.insertBefore(g,s);
-        g.onload=function(){
-            window.chatwootSDK.run({
-            websiteToken: '128s8TU3ijo6dQecRJmFasCx',
-            baseUrl: BASE_URL
-            })
-        }
-        })(document,"script");
-    </script>
+        <script>
+            window.chatwootSettings = {
+                "position": "right",
+                "type": "standard",
+                "launcherTitle": "Chat with us"
+            };
+            (function(d, t) {
+                var BASE_URL = "https://app.chatwoot.com";
+                var g = d.createElement(t),
+                    s = d.getElementsByTagName(t)[0];
+                g.src = BASE_URL + "/packs/js/sdk.js";
+                g.defer = true;
+                g.async = true;
+                s.parentNode.insertBefore(g, s);
+                g.onload = function() {
+                    window.chatwootSDK.run({
+                        websiteToken: '128s8TU3ijo6dQecRJmFasCx',
+                        baseUrl: BASE_URL
+                    })
+                }
+            })(document, "script");
+        </script>
     @endpush
 
 </x-guest-layout>
