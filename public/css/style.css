@@ -1544,7 +1544,7 @@ select option:focus {
   border: none;
 }
 .ical-link button:hover {
-  border: solid 0.5px rgba(11, 56, 65, 0.75);
+  /*border: solid 0.5px rgba(11, 56, 65, 0.75);*/
   background-color: rgba(11, 56, 65, 0.75);
 }
 .ical-link {
@@ -1826,6 +1826,12 @@ button:focus {
   .text-request p {
     font-size: 12px !important;
     margin: 6px 0px;
+  }
+  .publisher-contact p{
+    font-size: 13px!important;
+  }
+  .bedrooms{
+    gap: 11px;
   }
 }
 
@@ -2583,6 +2589,15 @@ button:focus {
   }
   .bedrooms{
     gap: 5px;
+  }
+  .pagination .page-item:first-child:after, .pagination .page-item:last-child:after{
+    top: 31px;
+  }
+  .pagination .page-item:last-child:after{
+    left: 17px;
+  }
+  .pagination .page-item:first-child:after{
+    right: 23px;
   }
 }
 

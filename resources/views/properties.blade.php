@@ -470,8 +470,6 @@
                                             <p class="contact-card">Property:</p>
                                             <div class="cost-info">
                                                 <p>{{ $property->property_type }}</p>
-                                                <img class="info-i"
-                                                    src="{{ asset('img') }}/infoinvalid-name@3x.png" />
                                             </div>
                                         </div>
                                     </div>
