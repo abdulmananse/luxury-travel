@@ -635,12 +635,13 @@
 
 
             $("#daterange").daterangepicker({
-                    autoUpdateInput: false,
                     autoApply: true,
                     opens: "center",
                     @if ($startDate != '')
                         startDate: '{{ $startDate != '' ? date('m/d/Y', strtotime($startDate)) : '' }}',
                         endDate: '{{ $endDate != '' ? date('m/d/Y', strtotime($endDate)) : '' }}',
+                    @else
+                        autoUpdateInput: false,
                     @endif
                 },
                 function(start, end, label) {
