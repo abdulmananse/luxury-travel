@@ -143,10 +143,11 @@
                                 <p class="select-search">BATHROOMS</p>
                                 <div class="select-destionation bathrooms-label">
                                     <p class="value-drop {{ @request()->bathrooms ? 'color' : '' }}">
-                                        {{ @request()->bathrooms . ' Bathrooms' }}</p>
+                                        {{ @request()->bathrooms ? @request()->bathrooms . ' Bathrooms' : 'Any' }}</p>
                                     <img src="{{ asset('img') }}/downninvalid-name@3x.png" />
                                 </div>
                                 <div class="dropdown-open">
+                                    <span class="custom-option select-bathroom-name" data-value="">Any</span>
                                     @for ($i = 1; $i <= $bathrooms; $i++)
                                         <span class="custom-option select-bathroom-name"
                                             data-value="{{ $i }}">{{ $i }} Bathrooms</span>
@@ -553,7 +554,8 @@
             $(document).ready(function() {
 
                 $('.select-destination-name').click(function() {
-                    $('.destination-label p').html($(this).attr('data-value'));
+                    var value = $(this).attr('data-value');
+                    $('.destination-label p').html((value == '') ? 'Any' : value);
                     $('.destination-label p').addClass("color");
                     $('input[name=city]').val($(this).attr('data-value'));
                     $(".destination-drop").find(".dropdown-open").find("span").removeClass("active");
@@ -561,21 +563,24 @@
                     $(".destination-drop").find(".dropdown-open").addClass("active");
                 });
                 $('.select-guest-name').click(function() {
-                    $('.guests-label p').html($(this).attr('data-value') + ' Guests');
+                    var value = $(this).attr('data-value');
+                    $('.guests-label p').html((value == '') ? 'Any' : value + ' Guests');
                     $('.guests-label p').addClass("color");
                     $('input[name=guests]').val($(this).attr('data-value'));
                     $(".guests-drop").find(".dropdown-open").find("span").removeClass("active");
                     $(this).addClass("active");
                 });
                 $('.select-property_type-name').click(function() {
-                    $('.property_type-label p').html($(this).attr('data-value'));
+                    var value = $(this).attr('data-value');
+                    $('.property_type-label p').html((value == '') ? 'Any' : value);
                     $('.property_type-label p').addClass("color");
                     $('input[name=property_type]').val($(this).attr('data-value'));
                     $(".property_type-drop").find(".dropdown-open").find("span").removeClass("active");
                     $(this).addClass("active");
                 });
                 $('.select-bathroom-name').click(function() {
-                    $('.bathrooms-label p').html($(this).attr('data-value') + ' Bathrooms');
+                    var value = $(this).attr('data-value');
+                    $('.bathrooms-label p').html((value == '') ? 'Any' : value + ' Bathrooms');
                     $('.bathrooms-label p').addClass("color");
                     $('input[name=bathrooms]').val($(this).attr('data-value'));
                     $(".bathrooms-drop").find(".dropdown-open").find("span").removeClass("active");
@@ -632,6 +637,7 @@
 
 
             $("#daterange").daterangepicker({
+                    autoUpdateInput: false,
                     autoApply: true,
                     opens: "center",
                     @if ($startDate != '')
@@ -640,6 +646,7 @@
                     @endif
                 },
                 function(start, end, label) {
+                    $("#daterange").val(start.format("MM/DD/YYYY") + ' - ' + end.format("MM/DD/YYYY"));
                     console.log(
                         "New date range selected: " +
                         start.format("YYYY-MM-DD") +
