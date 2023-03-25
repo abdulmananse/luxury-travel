@@ -74,6 +74,7 @@ body {
 a:hover {
   text-decoration: none!important;
 }
+
 h1,
 p,
 h3,
@@ -395,6 +396,9 @@ footer p {
   margin-bottom: 8px;
   font-family: "Inter-Regular" !important;
   cursor: pointer;
+}
+.footer-top a, .footer-top p{
+  color: #0b3841!important;
 }
 footer p:hover {
   color: #a65a3f;
@@ -1034,6 +1038,9 @@ input:read-only {
   overflow: auto;
   display: none;
 }
+.destination-drop .dropdown-open{
+  max-height: 370px;
+}
 .dropdown-open.active {
   display: flex;
   z-index: 5;
@@ -1048,7 +1055,7 @@ input:read-only {
 }
 .dropdown-open span {
   text-align: left;
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 .guests-open {
   justify-content: space-between;
@@ -1187,7 +1194,7 @@ input[type="range"]::-webkit-slider-thumb {
 .select-destionation p {
   font-size: 21px !important;
   color: rgba(11, 56, 65, 0.25) !important;
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 .destination-drop {
   justify-content: space-around;
@@ -1728,6 +1735,9 @@ select option:focus {
 .page-link {
   padding: 3px 15px 10px 15px !important;
 }
+.page-link:hover{
+  color: rgba(11, 56, 65, 0.75)!important;
+}
 .pagination .page-item:first-child {
   visibility: hidden;
   position: absolute;
@@ -1936,10 +1946,14 @@ button:focus {
   }
   .property {
     gap: 24px;
+    padding: 18px;
   }
   .dropdown-open {
     top: 50px;
     width: 94%;
+  }
+  .property .destination-drop{
+    margin-left: 0px!important;
   }
   .filter-menu .drop-menu .dropdown-open {
     width: 90%;
@@ -2049,6 +2063,9 @@ button:focus {
   }
   .sort-filter .dropdown-open {
     width: 23%;
+  }
+  .destination-drop .dropdown-open {
+    max-height: 245px;
   }
 }
 @media (max-width: 768px) {
@@ -2252,6 +2269,20 @@ button:focus {
   }
   .firstSection-mobile {
     display: flex;
+  }
+  .pagination .page-link {
+    font-size: 18px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+  .pagination .page-item:first-child:after, .pagination .page-item:last-child:after{
+    top: 9px;
+  }
+  .pagination .page-item:last-child:after{
+    left: 17px;
+  }
+  .pagination .page-item:first-child:after{
+    right: 23px;
   }
 }
 
@@ -2497,11 +2528,11 @@ button:focus {
   .card-content h4 {
     font-size: 21px !important;
   }
-  .pagination .page-link {
-    font-size: 18px !important;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-  }
+  /*.pagination .page-link {*/
+  /*  font-size: 18px !important;*/
+  /*  padding-left: 5px !important;*/
+  /*  padding-right: 5px !important;*/
+  /*}*/
   .page-item {
     bottom: 25px;
     font-size: 12px !important;
@@ -2593,12 +2624,12 @@ button:focus {
   .pagination .page-item:first-child:after, .pagination .page-item:last-child:after{
     top: 31px;
   }
-  .pagination .page-item:last-child:after{
-    left: 17px;
-  }
-  .pagination .page-item:first-child:after{
-    right: 23px;
-  }
+  /*.pagination .page-item:last-child:after{*/
+  /*  left: 17px;*/
+  /*}*/
+  /*.pagination .page-item:first-child:after{*/
+  /*  right: 23px;*/
+  /*}*/
 }
 
 .company-form,

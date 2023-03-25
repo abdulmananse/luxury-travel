@@ -259,6 +259,36 @@ priceSlider.addEventListener('mousemove', function() {
   }
 });
 
+priceSlider.addEventListener('touchmove', function() {
+
+  const position = (priceSlider.value - priceSlider.min) / (priceSlider.max - priceSlider.min);
+  const rangeWidth = priceSlider.offsetWidth - 14;
+
+  const thumbPosition = position * rangeWidth;
+  priceSlider.style.setProperty('--thumb-position', `${thumbPosition}px`);
+
+  const maxValue = parseInt(priceSlider.max);
+  const currentValue = parseInt(priceSlider.value);
+  const step = parseInt(priceSlider.step);
+
+  const maxRangeValue = Math.min(maxValue, currentValue + step * 2);
+
+  if(maxRangeValue == '100000'){
+
+    priceRange.text(`$ ${maxRangeValue}+`);
+    valueDrop.text(`$ ${maxRangeValue}+`);
+
+    //priceRange.textContent = `$ ${maxRangeValue}+`;
+    //valueDrop.textContent = `$ ${maxRangeValue}+`;
+
+  }else{
+    priceRange.text(`$ ${maxRangeValue}`);
+    valueDrop.text(`$ ${maxRangeValue}`);
+
+    // priceRange.textContent = `$ ${maxRangeValue}`;
+    // valueDrop.textContent = `$ ${maxRangeValue}`;
+  }
+});
 
 const slides = document.querySelector('.properties-slides');
 const nextSlideButton = document.querySelectorAll('.next');
@@ -306,3 +336,12 @@ for(const closePrice of closePrices){
   })
 }
 
+const cardsTitle = document.querySelectorAll('.card-title');
+
+for(const cardTitle of cardsTitle){
+
+  if (cardTitle.innerHTML.length >= 25) {
+    let substringInnerHTML = cardTitle.innerHTML.substring(0, 24);
+    cardTitle.innerHTML = substringInnerHTML + '...';
+  }
+}
