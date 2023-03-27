@@ -160,7 +160,7 @@ class HomeController extends Controller
         }
 
         if ($request->filled('guests') && $request->guests > 0) {
-            $orderBy = $orderBy . ', CAST(properties.max_guests AS UNSIGNED)';
+            $orderBy = 'CAST(properties.max_guests AS UNSIGNED), ' . $orderBy;
         }
 
         $orderBy = $orderBy . ' ASC';
@@ -240,10 +240,21 @@ class HomeController extends Controller
             }
             $properties[$key]->total_price = round($totalPrice);
             $properties[$key]->average = round($totalPrice / count($rangeDatesArray));
+
+
+            $properties[$key]->guest_total = 0;
+            if ($totalPrice > 0) {
+                $municipalFee = $property->municipal_fee ? (int) str_replace('%', '', $property->municipal_fee) : 0;
+                $vatPercentage = $property->vat_rate ? (int) str_replace('%', '', $property->vat_rate) : 0;
+                $taxes = (int) round(($totalPrice * $vatPercentage) / 100);
+                $houseFee = (int) round(($totalPrice * $municipalFee) / 100);
+                $properties[$key]->guest_total = (int) round($totalPrice + $taxes + $houseFee);
+            }
+
         }
 
         if ($request->filled('price') && $request->price > 0) {
-            $properties = collect($properties)->where('total_price', '<=', $request->price)->toArray();
+            $properties = collect($properties)->where('guest_total', '>', 0)->where('guest_total', '<=', $request->price)->toArray();
         }
 
         $offset = ($page * $paginate) - $paginate;
@@ -928,7 +939,7 @@ class HomeController extends Controller
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
 
-                $zipFileName = $property->property_id . '.zip';
+                
                  if (!in_array($property->property_id, $skipProperties) && !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
@@ -962,6 +973,9 @@ class HomeController extends Controller
                                 }
                             }
 
+                            $zipFileName = $property->property_id . '.zip';
+                            $folder = storage_path("app/public/{$property->property_id}");
+                            
                             $zip = new ZipArchive();
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
                                 $files = File::files($folder);

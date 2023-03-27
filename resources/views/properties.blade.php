@@ -484,7 +484,7 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Property:</p>
                                             <div class="cost-info">
-                                                <p>{{ $property->property_type }}</p>
+                                                <p>{{ $property->property_id }}</p>
                                             </div>
                                         </div>
                                     </div>
