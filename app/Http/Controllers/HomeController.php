@@ -939,7 +939,7 @@ class HomeController extends Controller
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
 
-                $zipFileName = $property->property_id . '.zip';
+                
                  if (!in_array($property->property_id, $skipProperties) && !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
@@ -973,6 +973,9 @@ class HomeController extends Controller
                                 }
                             }
 
+                            $zipFileName = $property->property_id . '.zip';
+                            $folder = storage_path("app/public/{$property->property_id}");
+                            
                             $zip = new ZipArchive();
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
                                 $files = File::files($folder);
