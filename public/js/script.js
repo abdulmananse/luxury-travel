@@ -291,30 +291,76 @@ priceSlider.addEventListener('touchmove', function() {
 });
 
 const slides = document.querySelector('.properties-slides');
+const prevSlideButton = document.querySelectorAll('.prev');
 const nextSlideButton = document.querySelectorAll('.next');
+const slideWidth = slides.clientWidth;
+const numberOfSlides = slides.children.length;
 
-for(const slideNext of nextSlideButton){
+for(const prev of prevSlideButton){
+  prev.addEventListener('click', () => {
+    const arrowLeft = prev.parentElement;
+    const slide = arrowLeft.nextElementSibling;
 
-  slideNext.addEventListener('click', () => {
-    const shadowRight = slideNext.parentElement.previousElementSibling;
-    const slidesNext = shadowRight.previousElementSibling;
+    const currentScrollPosition = slide.scrollLeft;
+    const slideWidth = slide.clientWidth;
+    const numberOfSlides = slide.children.length;
 
-    const currentScrollPosition = slidesNext.scrollLeft;
-    const slideWidth = slidesNext.clientWidth;
-    const numberOfSlides = slidesNext.children.length;
+    let nextScrollPosition = currentScrollPosition - slideWidth;
+
+    if (nextScrollPosition < 0) {
+      const firstSlide = slide.children[0];
+      const firstSlideRect = firstSlide.getBoundingClientRect();
+      nextScrollPosition = slideWidth * (numberOfSlides - 1) + currentScrollPosition - firstSlideRect.left;
+      slide.scrollTo({
+        left: nextScrollPosition,
+        behavior: 'auto'
+      });
+      setTimeout(() => {
+        nextScrollPosition = slideWidth * (numberOfSlides - 1);
+        slide.scrollTo({
+          left: nextScrollPosition,
+          behavior: 'auto'
+        });
+      }, 0);
+    } else {
+      slide.scrollTo({
+        left: nextScrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
+}
+
+for(const next of nextSlideButton){
+
+  next.addEventListener('click', () => {
+    const arrowNext = next.parentElement;
+    const shadow = arrowNext.previousElementSibling;
+    const slide = shadow.previousElementSibling;
+
+    const currentScrollPosition = slide.scrollLeft;
+    const slideWidth = slide.clientWidth;
+    const numberOfSlides = slide.children.length;
 
     let nextScrollPosition = currentScrollPosition + slideWidth;
 
-    if (nextScrollPosition >= slideWidth * numberOfSlides) {
+    if (nextScrollPosition >= slideWidth * (numberOfSlides)) {
       nextScrollPosition = 0;
+      slide.scrollTo({ left: nextScrollPosition, behavior: 'auto' });
+      // setTimeout(() => {
+      //   slides.scrollTo({ left: slideWidth, behavior: 'smooth' });
+      // }, 0);
     }
 
-    slidesNext.scrollTo({
+    slide.scrollTo({
       left: nextScrollPosition,
       behavior: 'smooth'
     });
   });
 }
+
+
+
 
 
 const pricesOneDisplay = document.querySelectorAll('.all-price-one');
@@ -336,12 +382,14 @@ for(const closePrice of closePrices){
   })
 }
 
-const cardsTitle = document.querySelectorAll('.card-title');
+const cardsTitle = document.querySelectorAll('.card-content h4');
 
 for(const cardTitle of cardsTitle){
-
   if (cardTitle.innerHTML.length >= 25) {
     let substringInnerHTML = cardTitle.innerHTML.substring(0, 24);
     cardTitle.innerHTML = substringInnerHTML + '...';
   }
 }
+
+
+

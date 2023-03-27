@@ -114,7 +114,7 @@
                                 Guests</span>
                         </div>
                         <div class="select-drop show-filter">
-                            <p>Show filter</p>
+                            <p>Show filters</p>
                             <img class="arrow-filter" src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                     </div>
@@ -229,8 +229,8 @@
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
-                                        <p>{{ $property->destination }}<br />
-                                            {{ $property->community }}</p>
+                                        <p style="margin: 0px;">{{ $property->destination }},</p>
+                                        <p>{{ $property->community }}</p>
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="publisher-contact d-flex">
@@ -484,7 +484,7 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Property:</p>
                                             <div class="cost-info">
-                                                <p>{{ $property->property_id }}</p>
+                                                <p>{{ $property->property_type }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -503,7 +503,7 @@
                                                 value="{{ $startDate != '' ? date('d/M/Y', strtotime($startDate)) : '' }}" />
                                             <input type="hidden" name="check_out"
                                                 value="{{ $endDate != '' ? date('d/M/Y', strtotime($endDate)) : '' }}" />
-                                            <textarea rows="4" name="message" maxlength="50" class="request-textarea"></textarea>
+                                            <textarea rows="4" name="message" maxlength="250" class="request-textarea"></textarea>
                                         </form>
                                         <p class="request-info">
                                             {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will

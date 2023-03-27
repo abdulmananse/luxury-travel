@@ -37,9 +37,9 @@
                                 <label>Profile Photo</label>
                                 <div class="upload position-relative">
                                     <input class="custom-file-input" type="file" placeholder="Upload"
-                                        id="photoGallery" name="photo">
-                                    <div class="upload-style">Upload</div>
-                                    <img src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
+                                        id="photoGalleryAgent" name="photo">
+                                    <div id="upload-title-agent" class="upload-style">Upload</div>
+                                    <img class="upload-img-agent" src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                 </div>
                                 @if ($agent->image)
                                     <img width="70" height="70" src="{{ $agent->image }}" />

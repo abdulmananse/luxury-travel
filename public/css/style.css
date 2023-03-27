@@ -148,10 +148,10 @@ header img {
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(
-    to right,
-    #fff8f0 0%,
-    #083741 56%,
-    #fff8f0
+          to right,
+          #fff8f0 0%,
+          #083741 56%,
+          #fff8f0
   );
   border-image-slice: 1;
 }
@@ -173,6 +173,7 @@ header img {
 }
 .left-img {
   margin-top: 45px;
+  width: 50%;
 }
 .gallery-left {
   max-width: 364px;
@@ -242,8 +243,12 @@ header img {
 .global-padding {
   padding: 64px 0px;
 }
-.right-img img {
+.right-img img , .left-img img{
   width: 100%;
+}
+.right-img{
+  width: 50%;
+  margin-left: 8px;
 }
 
 /* second section  */
@@ -330,6 +335,7 @@ header img {
   text-align: -webkit-center;
   text-align: moz-center;
   margin: 36px 0px 59px 0px;
+  text-align: -moz-center;
 }
 .newsletter h2 {
   margin-bottom: 28px;
@@ -346,7 +352,7 @@ select {
 .newsletter-input input {
   font-family: "playfair-display-regular";
   font-weight: normal;
-  color: rgba(11, 56, 65, 0.5);
+  /*color: rgba(11, 56, 65, 0.5);*/
   font-size: 24px;
   font-weight: normal;
   font-stretch: normal;
@@ -491,10 +497,10 @@ select {
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(
-    to right,
-    #fff8f0 0%,
-    #083741 56%,
-    #fff8f0
+          to right,
+          #fff8f0 0%,
+          #083741 56%,
+          #fff8f0
   );
   border-image-slice: 1;
 }
@@ -719,6 +725,13 @@ textarea:-ms-input-placeholder {
   right: 15px;
   width: 13px;
   height: 16px;
+}
+.delete-img{
+  top: 14px!important;
+  right: 13px!important;
+  width: 18px!important;
+  height: 18px!important;
+  z-index: 999!important;
 }
 .upload input {
   width: 100%;
@@ -1034,12 +1047,9 @@ input:read-only {
   border: solid 0.5px #0b3841;
   top: 58px;
   left: 0;
-  max-height: 160px;
+  max-height: 334px;
   overflow: auto;
   display: none;
-}
-.destination-drop .dropdown-open{
-  max-height: 370px;
 }
 .dropdown-open.active {
   display: flex;
@@ -1405,9 +1415,9 @@ select option:focus {
   width: 56px;
   height: 100%;
   background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0) 100%
+          to right,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0) 100%
   );
 }
 .card-img:hover .shadow-right {
@@ -1417,9 +1427,9 @@ select option:focus {
   width: 56px;
   height: 100%;
   background-image: linear-gradient(
-    to left,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0) 100%
+          to left,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0) 100%
   );
 }
 /* .card-img:before{
@@ -1583,7 +1593,7 @@ select option:focus {
 }
 .text-request p {
   font-family: "Inter-Regular" !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   color: #0b3841;
 }
 .text-request {
@@ -1598,6 +1608,9 @@ select option:focus {
   font-size: 12px !important;
   color: rgba(11, 56, 65, 0.5) !important;
   text-transform: uppercase;
+  padding-bottom: 12px;
+  border-bottom: solid 0.5px #edd6bb;
+  margin-bottom: 9px!important;
 }
 .arrow-back {
   display: flex;
@@ -1702,10 +1715,10 @@ select option:focus {
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(
-    to right,
-    #fff8f0 0%,
-    #083741 56%,
-    #fff8f0
+          to right,
+          #fff8f0 0%,
+          #083741 56%,
+          #fff8f0
   );
   border-image-slice: 1;
   width: 100%;
@@ -1780,10 +1793,10 @@ select option:focus {
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(
-    to right,
-    #fff8f0 0%,
-    #083741 56%,
-    #fff8f0
+          to right,
+          #fff8f0 0%,
+          #083741 56%,
+          #fff8f0
   );
   border-image-slice: 1;
   padding: 11px 0px;
@@ -1798,7 +1811,22 @@ select option:focus {
 .pagina nav {
   width: 100%;
 }
-
+.properties-slide-left{
+  position: absolute;
+  left: 10px;
+  display: none;
+  transform: rotate(3.142rad);
+  top: 43%;
+  cursor: pointer;
+}
+.properties-slide-left img{
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+.card-img:hover .properties-slide-left{
+  display: block;
+}
 .properties-slides {
   display: flex;
   overflow-x: scroll;
@@ -1814,6 +1842,13 @@ select option:focus {
   width: 100%;
   min-width: 100%;
 }
+
+
+
+
+
+
+
 button:focus {
   outline: none !important;
 }
@@ -1823,10 +1858,6 @@ button:focus {
   }
   .swiper-button-prev {
     left: 80% !important;
-  }
-  .left-img img,
-  .right-img img {
-    width: 95%;
   }
   .guests-clear,
   .guests-applay,
@@ -1843,6 +1874,9 @@ button:focus {
   .bedrooms{
     gap: 11px;
   }
+  .publisher-contact p {
+    font-size: 12px!important;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -1857,10 +1891,6 @@ button:focus {
   }
   h2 {
     font-size: 36px !important;
-  }
-  .left-img img,
-  .right-img img {
-    width: 98%;
   }
   .signUp-btn {
     padding: 11px 60px 13px 60px;
@@ -1948,12 +1978,18 @@ button:focus {
     gap: 24px;
     padding: 18px;
   }
+  .property .destination-drop {
+    margin-left: 0px!important;
+  }
+  .date-input, .guests-border{
+    padding-right: 0px;
+  }
+  .property-filter{
+    padding: 18px;
+  }
   .dropdown-open {
     top: 50px;
     width: 94%;
-  }
-  .property .destination-drop{
-    margin-left: 0px!important;
   }
   .filter-menu .drop-menu .dropdown-open {
     width: 90%;
@@ -1962,7 +1998,7 @@ button:focus {
     width: 18%;
   }
   .text-request p {
-    margin: 20px 0px;
+    margin: 14px 0px;
   }
 }
 @media (max-width: 992px) {
@@ -2063,9 +2099,6 @@ button:focus {
   }
   .sort-filter .dropdown-open {
     width: 23%;
-  }
-  .destination-drop .dropdown-open {
-    max-height: 245px;
   }
 }
 @media (max-width: 768px) {
@@ -2256,7 +2289,7 @@ button:focus {
     width: 51%;
   }
   .text-request p {
-    margin: 11px 0px;
+    margin: 8px 0px;
   }
   .filter-menu .drop-menu .dropdown-open {
     width: 100%;
@@ -2555,7 +2588,7 @@ button:focus {
     font-size: 16px !important;
     padding: 11.5px 0;
   }
-    /*.agents-a,*/
+  /*.agents-a,*/
   /*.profile-a,*/
   /*.logout {*/
   /*  font-size: 16px !important;*/
@@ -2592,7 +2625,7 @@ button:focus {
     font-size: 12px !important;
   }
   .text-request p:last-child {
-    font-size: 8px !important;
+    font-size: 10px !important;
     margin-bottom: 40px;
   }
   .download-file button {
@@ -2716,6 +2749,7 @@ button:focus {
   line-height: 1.71!important;
   letter-spacing: normal;
   color: #0b3841;
+  white-space: nowrap;
 }
 
 .price-bottom{
