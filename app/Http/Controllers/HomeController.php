@@ -934,15 +934,16 @@ class HomeController extends Controller
             $properties = Property::select('id', 'property_id', 'images_folder_link')->get();
             $propertiesDownloaded = 0;
             foreach ($properties as $property) {
-                //echo 'ID: '.$property->id.' Property ID: '.$property->property_id.' <br/>';
+                $propertyId = $property->property_id;
+                //echo 'ID: '.$property->id.' Property ID: '.$propertyId.' <br/>';
                 $downloadImageData = ['property_id' => $property->id, 'download_date' => date('Y-m-d')];
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
 
 
-                 if (!in_array($property->property_id, $skipProperties) && !$downloaded) {
+                 if (!in_array($propertyId, $skipProperties) && !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
-                    //if (!in_array($property->property_id, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
+                    //if (!in_array($propertyId, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
                         $this->readImageProperty = $property;
                         $imageLink = explode('folders/', $property->images_folder_link);
                         $this->_readingDirectory = $imageLink;
@@ -958,49 +959,42 @@ class HomeController extends Controller
 
                             $property->clearMediaCollection('images');
 
-                            $folder = storage_path("app/public/{$property->property_id}");
+                            $folder = storage_path("app/public/{$propertyId}");
+
                             $this->deleteDirectory($folder);
                             mkdir($folder, 0777, true);
 
+                            $i = 1;
                             foreach ($files as $file) {
                                 if ($file['extension'] != "") {
                                     $readStream = $disk->getDriver()->readStream($file['path']);
                                     $fileData = stream_get_contents($readStream);
+
                                     $filename = $file['filename'].'.'.$file['extension'];
 
                                     $targetFile = "{$folder}/{$filename}";
                                     file_put_contents($targetFile, $fileData, FILE_APPEND);
+
+                                    if ($i<=4) {
+                                        $property->addMedia($targetFile)->preservingOriginal()->toMediaCollection('images');
+                                        $i++;
+                                    }
                                 }
                             }
 
-                            $zipFileName = $property->property_id . '.zip';
-                            $folder = storage_path("app/public/{$property->property_id}");
-
+                            $zipFileName = $propertyId . '.zip';
                             $zip = new ZipArchive();
                             if ($zip->open(storage_path("app/public/{$zipFileName}"), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
-                                $files = File::files($folder);
+                                $zipFiles = File::files($folder);
 
-                                foreach ($files as $key => $value) {
+                                foreach ($zipFiles as $key => $value) {
                                     $relativeNameInZipFile = basename($value);
                                     $zip->addFile($value, $relativeNameInZipFile);
                                 }
 
                                 $zip->close();
-
-                                $i=1;
-                                foreach ($files as $key => $value) {
-                                    if ($i>4) {
-                                        break;
-                                    }
-
-                                    $relativeNameInZipFile = basename($value);
-                                    $zipTargetFile = "{$folder}/{$relativeNameInZipFile}";
-                                    $property->addMedia($zipTargetFile)->toMediaCollection('images');
-                                    $i++;
-                                }
-
-                                $this->deleteDirectory($folder);
                             }
+                            $this->deleteDirectory($folder);
 
                             PropertyImagesLog::where($downloadImageData)->update(['status' => 1, 'response' => 'Successfully Download']);
 
@@ -1010,7 +1004,7 @@ class HomeController extends Controller
                             PropertyImagesLog::where($downloadImageData)->update(['status' => 2, 'response' => 'Image link not found ' . json_encode([$property->images_folder_link, $property->property_id])]);
                         }
 
-                        if ($propertiesDownloaded >= 150) {
+                        if ($propertiesDownloaded >= 80) {
                             CronJob::create(['command' => "Completed: import:images"]);
                             break;
                         }
@@ -1023,6 +1017,7 @@ class HomeController extends Controller
                     //echo '<br />';
                 }
             }
+            CronJob::create(['command' => "Completed: import:images"]);
         }
         catch (\Exception $e) {
             $error = $this->parseException($e);
