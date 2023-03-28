@@ -114,7 +114,7 @@
                                 Guests</span>
                         </div>
                         <div class="select-drop show-filter">
-                            <p>Show filter</p>
+                            <p>Show filters</p>
                             <img class="arrow-filter" src="{{ asset('img') }}/downninvalid-name@3x.png" />
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                         <?php
                         $propertyModel = App\Models\Property::find($property->id);
                         //dd($property);
-                        
+
                         $totalPrice = 'On Request';
                         $totalPriceWithVat = 0;
                         $payout = 'On Request';
@@ -189,7 +189,7 @@
                         $municipalFee = $property->municipal_fee ? (int) str_replace('%', '', $property->municipal_fee) : 0;
                         $vatPercentage = $property->vat_rate ? (int) str_replace('%', '', $property->vat_rate) : 0;
                         if ($property->total_price > 0) {
-                            $taxes = (int) round(($property->total_price * $vatPercentage) / 100);
+                            $taxes = (($vatPercentage > 0) ? ((int) round(($property->total_price * $vatPercentage) / 100)) : 0);
                             $houseFee = (int) round(($property->total_price * $municipalFee) / 100);
                             $totalPrice = (int) round($property->total_price + $taxes + $houseFee);
                             if ($contactPerson->commission != null) {
@@ -229,8 +229,8 @@
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
                                     <div class="name-vila col-lg-5">
-                                        <p>{{ $property->destination }}<br />
-                                            {{ $property->community }}</p>
+                                        <p style="margin: 0px;">{{ $property->destination }},</p>
+                                        <p>{{ $property->community }}</p>
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="publisher-contact d-flex">
@@ -252,7 +252,7 @@
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Guest Total:</p>
                                         <p>
-                                            @if ($totalPrice > 0)
+                                            @if ($property->total_price > 0)
                                                 {!! $property->currency_symbol !!}{{ number_format((float) $totalPrice) }}
                                             @else
                                                 On Request
@@ -276,7 +276,7 @@
                                     <div class="publisher-contact d-flex">
                                         <p class="contact-card">Payout:</p>
                                         <p>
-                                            @if ($payout > 0)
+                                            @if ($payout > 0 && $payout !== 'On Request' && $property->total_price > 0)
                                                 {!! $property->currency_symbol !!}{{ number_format((float) $payout) }}
                                             @else
                                                 On Request
@@ -395,7 +395,7 @@
                                                             <div class="d-flex justify-content-between price-margin">
                                                                 <p>Taxes</p>
                                                                 <p>
-                                                                    @if ($taxes)
+                                                                    @if ($taxes && $vatPercentage > 0 && $property->total_price > 0)
                                                                         {!! $property->currency_symbol !!}{{ number_format((float) $taxes) }}
                                                                     @else
                                                                         On Request
@@ -414,7 +414,7 @@
                                                             @endif
                                                         </div>
                                                         <div class="price-bottom">
-                                                            <p class="your-payout">Your Payout</p>
+                                                            <p class="your-payout">Guest Pays</p>
                                                             <p class="price-green">
                                                                 @if ($property->total_price > 0)
                                                                     {!! $property->currency_symbol !!}{{ number_format((float) $totalPrice) }}
@@ -435,7 +435,7 @@
                                             <p class="contact-card">Your Payout:</p>
                                             <div class="cost-info">
                                                 <p>
-                                                    @if ($payout > 0)
+                                                    @if ($payout > 0 && $payout !== 'On Request' && $property->total_price > 0)
                                                         {!! $property->currency_symbol !!}{{ number_format((float) $payout) }}
                                                     @else
                                                         On Request
@@ -466,7 +466,7 @@
                                                         <div class="price-bottom">
                                                             <p class="your-payout">Your Payout</p>
                                                             <p class="price-green">
-                                                                @if ($payout > 0)
+                                                                @if ($payout > 0 && $payout !== 'On Request' && $property->total_price > 0)
                                                                     {!! $property->currency_symbol !!}{{ number_format((float) $payout) }}
                                                                 @else
                                                                     On Request
@@ -484,7 +484,7 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Property:</p>
                                             <div class="cost-info">
-                                                <p>{{ $property->property_id }}</p>
+                                                <p>{{ $property->property_type }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -503,7 +503,7 @@
                                                 value="{{ $startDate != '' ? date('d/M/Y', strtotime($startDate)) : '' }}" />
                                             <input type="hidden" name="check_out"
                                                 value="{{ $endDate != '' ? date('d/M/Y', strtotime($endDate)) : '' }}" />
-                                            <textarea rows="4" name="message" maxlength="50" class="request-textarea"></textarea>
+                                            <textarea rows="4" name="message" maxlength="250" class="request-textarea"></textarea>
                                         </form>
                                         <p class="request-info">
                                             {{ $contactPerson->name }} from {{ $contactPerson->company_name }} will

@@ -67,9 +67,9 @@
                                 <label>Company Logo</label>
                                 <div class="upload position-relative">
                                     <input class="custom-file-input" type="file" placeholder="Upload"
-                                        id="photoGallery" name="company_logo">
-                                    <div class="upload-style">Upload</div>
-                                    <img src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
+                                        id="photoGalleryCompany" name="company_logo">
+                                    <div id="upload-title-company" class="upload-style">Upload</div>
+                                    <img class="upload-img-company" src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                 </div>
 
                                 @if ($company->company_logo)
@@ -108,9 +108,9 @@
                                     <label>Profile Photo</label>
                                     <div class="upload position-relative">
                                         <input class="custom-file-input" type="file" placeholder="Upload"
-                                            id="photoGallery" name="photo">
-                                        <div class="upload-style">Upload</div>
-                                        <img src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
+                                            id="photoGalleryContact" name="photo">
+                                        <div id="upload-title-contact" class="upload-style">Upload</div>
+                                        <img class="upload-img-contact" src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                     </div>
 
                                     @if ($company->image)

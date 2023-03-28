@@ -20,13 +20,13 @@
                 </div>
                 <div class="col-xl-6 img-galerry">
                     <div class="left-img">
-                        <img class="mb-2 mr-2" src="{{ asset('img') }}/bitmap.png" />
-                        <img src="{{ asset('img') }}/bitmap3.png" />
+                        <img class="mb-2 mr-2" src="{{ asset('img') }}/home1bitmap@2x.png" />
+                        <img src="{{ asset('img') }}/home1bitmap2@2x.png" />
                     </div>
                     <div class="right-img">
-                        <img class="mb-2" src="{{ asset('img') }}/bitmap1.png" />
-                        <img class="mb-2" src="{{ asset('img') }}/rectangle2.png" />
-                        <img src="{{ asset('img') }}/bitmap4.png" />
+                        <img class="mb-2" src="{{ asset('img') }}/home1bitmap3@2x.png" />
+                        <img class="mb-2" src="{{ asset('img') }}/home1rectangle4@2x.png" />
+                        <img src="{{ asset('img') }}/home1bitmap5@2x.png" />
                     </div>
                 </div>
                 <div class="col-xl-6 position-relative firstSection-mobile" style="width: 100%; margin-bottom: 80px">
@@ -64,7 +64,7 @@
 
     <section class="backgroundColor">
         <div class="container global-padding">
-            <img src="{{ asset('img') }}/bitmap5.png" style="width: 100%" />
+            <img src="{{ asset('img') }}/exclusivebitmap@2x.png" style="width: 100%" />
             <div class="d-flex thirdSection">
                 <div class="col-lg-6 thirdBorder">
                     <h3>Exclusive Homes</h3>
@@ -92,7 +92,7 @@
             <swiper-container class="mySwiper" navigation="true">
                 <swiper-slide class="slide d-flex">
                     <div class="slide-left col-lg-6">
-                        <img src="{{ asset('img') }}/sliderbitmap@3x.png" />
+                        <img src="{{ asset('img') }}/slider1bitmap@2x.png" />
                     </div>
                     <div class="slide-right col-lg-6">
                         <h2>
@@ -114,24 +114,11 @@
                             5,000+ travel agents. With the help of this platform, agents can
                             quickly search for their ideal homes.
                         </h2>
-                        <p class="slide-text-right">EILEEN, C.</p>
-                        <p class="mini-text">Publisher, SINGAPORE, JAN 2023</p>
+                        <p class="slide-text-right">TONY, S.</p>
+                        <p class="mini-text">Publisher, London, DEC 2022</p>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="slide d-flex">
-                    <div class="slide-left col-lg-6">
-                        <img src="{{ asset('img') }}/sliderbitmap@3x.png" />
-                    </div>
-                    <div class="slide-right col-lg-6">
-                        <h2>
-                            We rely on Luxury Travel Portal to connect our inventory with
-                            5,000+ travel agents. With the help of this platform, agents can
-                            quickly search for their ideal homes.
-                        </h2>
-                        <p class="slide-text-right">EILEEN, C.</p>
-                        <p class="mini-text">Publisher, SINGAPORE, JAN 2023</p>
-                    </div>
-                </swiper-slide>
+
             </swiper-container>
         </div>
         <div class="slider-border" style="border-bottom: solid 0.5px #0b3841"></div>
@@ -146,35 +133,35 @@
             <div class="swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/2slider1bitmap@3x.png" />
+                        <img src="{{ asset('img') }}/bitmap1@2x.png" />
                         <p>PUNTA DE MITA</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/2sliderbitmap-copy@3x.png" />
+                        <img src="{{ asset('img') }}/bitmap-copy@2x.png" />
                         <p>SWISS ALPS</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/3sliderbitmap-copy-2@3x.png" />
+                        <img src="{{ asset('img') }}/slider2bitmap-copy-23@2x.png" />
                         <p>UTAH</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                        <img src="{{ asset('img') }}/slider2bitmap-copy-34@2x.png" />
                         <p>ALGARVE</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/2slider1bitmap@3x.png" />
+                        <img src="{{ asset('img') }}/bitmap1@2x.png" />
                         <p>PUNTA DE MITA</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/2sliderbitmap-copy@3x.png" />
+                        <img src="{{ asset('img') }}/bitmap-copy@2x.png" />
                         <p>SWISS ALPS</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/3sliderbitmap-copy-2@3x.png" />
+                        <img src="{{ asset('img') }}/slider2bitmap-copy-23@2x.png" />
                         <p>UTAH</p>
                     </div>
                     <div class="swiper-slide">
-                        <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
+                        <img src="{{ asset('img') }}/slider2bitmap-copy-34@2x.png" />
                         <p>ALGARVE</p>
                     </div>
                 </div>

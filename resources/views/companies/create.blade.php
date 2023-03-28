@@ -89,8 +89,8 @@
                                     <div class="upload position-relative">
                                         <input class="custom-file-input" type="file" placeholder="Upload"
                                             id="photoGallery" name="photo">
-                                        <div class="upload-style">Upload</div>
-                                        <img src="./img/invalid-arrowtop@3x.png" />
+                                        <div id="upload-img-contact" class="upload-style">Upload</div>
+                                        <img id="upload-img-contact" src="./img/invalid-arrowtop@3x.png" />
                                     </div>
                                 </div>
                             </div>

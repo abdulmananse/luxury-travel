@@ -106,11 +106,11 @@
                 <a href="home-page.html"><img src="{{ asset('img') }}/logo@3x.png"
                         style="width: 152px; height: 58px" /></a>
                 <div class="social-icon">
-                    <img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" />
+                    <a href="https://www.linkedin.com/company/luxury-travel-portal/"><img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" /></a>
                     <a href=" https://www.instagram.com/luxurytravelportal/" target="_blank"><img
                             src="{{ asset('img') }}/iconmonstr-instagram-11@3x.png"
                             style="width: 29px; height: 28px" /></a>
-                    <img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" />
+                    <a href="https://www.youtube.com/channel/UC9hwyZ4Ufa0W82KQsxIPPwQ"><img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" /></a>
                 </div>
                 <p style="font-size: 12px !important">
                     COPYRIGHT 2023, LTP SYSTEMS OÜ

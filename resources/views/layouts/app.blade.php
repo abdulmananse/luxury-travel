@@ -107,11 +107,11 @@
                 <a href="home-page.html"><img src="{{ asset('img') }}/logo@3x.png"
                         style="width: 152px; height: 58px" /></a>
                 <div class="social-icon">
-                    <img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" />
+                    <a href="https://www.linkedin.com/company/luxury-travel-portal/"><img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" /></a>
                     <a href=" https://www.instagram.com/luxurytravelportal/" target="_blank"><img
                             src="{{ asset('img') }}/iconmonstr-instagram-11@3x.png"
                             style="width: 29px; height: 28px" /></a>
-                    <img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" />
+                    <a href="https://www.youtube.com/channel/UC9hwyZ4Ufa0W82KQsxIPPwQ"><img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" /></a>
                 </div>
                 <p style="font-size: 12px !important">
                     COPYRIGHT 2023, LTP SYSTEMS OÜ
@@ -142,6 +142,83 @@
     @stack('scripts')
 
     @include('layouts.notification')
+
+    <script>
+        // uploade photo company
+        const photoGallery = document.querySelector("#photoGalleryCompany");
+        const uploadStyle = document.querySelector("#upload-title-company");
+        const uploadImg = document.querySelector('.upload-img-company');
+        if(photoGallery != null){
+            photoGallery.addEventListener("change", function () {
+                const fileName = this.files[0].name;
+                if (fileName.length >= 28) {
+                    const titleImg = fileName.substring(0, 27) + '...';
+                    uploadStyle.textContent = titleImg;
+                } else {
+                    uploadStyle.textContent = fileName;
+                }
+                uploadStyle.innerHTML += '<img class="delete-img" src="./img/icons8-close-50.png"/>';
+                uploadImg.style.display = 'none';
+
+                document.querySelector('.delete-img').addEventListener("click", function () {
+                    photoGallery.value = null;
+                    uploadStyle.textContent = 'Upload';
+                    uploadImg.style.display = 'block';
+                });
+            });
+        }
+
+        // uploade photo contact
+        const photoGalleryContact = document.querySelector("#photoGalleryContact");
+        const uploadStyleContact = document.querySelector("#upload-title-contact");
+        const uploadImgContact = document.querySelector('.upload-img-contact');
+
+        if(photoGalleryContact != null){
+            photoGalleryContact.addEventListener("change", function () {
+                const fileName = this.files[0].name;
+                if (fileName.length >= 28) {
+                    const titleImg = fileName.substring(0, 27) + '...';
+                    uploadStyleContact.textContent = titleImg;
+                } else {
+                    uploadStyleContact.textContent = fileName;
+                }
+                uploadStyleContact.innerHTML += '<img class="delete-img" src="./img/icons8-close-50.png"/>';
+                uploadImgContact.style.display = 'none';
+
+                document.querySelector('.delete-img').addEventListener("click", function () {
+                    photoGalleryContact.value = null;
+                    uploadStyleContact.textContent = 'Upload';
+                    uploadImgContact.style.display = 'block';
+                });
+            });
+        }
+
+        // uploade photo agent
+        const photoGalleryAgent = document.querySelector("#photoGalleryAgent");
+        const uploadStyleAgent = document.querySelector("#upload-title-agent");
+        const uploadImgAgent = document.querySelector('.upload-img-agent');
+
+        if(photoGalleryAgent != null){
+            photoGalleryAgent.addEventListener("change", function () {
+                const fileName = this.files[0].name;
+                if (fileName.length >= 28) {
+                    const titleImg = fileName.substring(0, 27) + '...';
+                    uploadStyleAgent.textContent = titleImg;
+                } else {
+                    uploadStyleAgent.textContent = fileName;
+                }
+                uploadStyleAgent.innerHTML += '<img class="delete-img" src="./img/icons8-close-50.png"/>';
+                uploadImgAgent.style.display = 'none';
+
+                document.querySelector('.delete-img').addEventListener("click", function () {
+                    photoGalleryAgent.value = null;
+                    uploadStyleAgent.textContent = 'Upload';
+                    uploadImgAgent.style.display = 'block';
+                });
+            });
+        }
+
+    </script>
 </body>
 
 </html>
