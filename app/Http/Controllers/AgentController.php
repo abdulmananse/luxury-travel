@@ -42,17 +42,24 @@ class AgentController extends Controller
         $this->validate($request, [
             'emails' => 'required'
         ]);
-
-        $emails = explode(',', $request->emails);
-        if (count($emails) == 1) {
-            $emails = explode(PHP_EOL, $emails[0]);
-        }
-
+        $emailArr = [];
+        
+        $emails = explode(PHP_EOL, $request->emails);
         foreach($emails as $email) {
-            $email = str_replace(' ', '', $email);
+            $emails1 = explode(',', $email);
+            foreach($emails1 as $email1) {
+                $emails2 = explode(' ', $email1);
+                foreach($emails2 as $email2) {
+                    $emailArr[] = $email2;
+                }
+            }
+        }
+        
+        foreach($emailArr as $email) {
 
             $invitation = Invitation::where('email', $email)->first();
             if (!$invitation) {
+                Invitation::where('email', $email)->delete();
                 Invitation::create(['email' => $email]);
 
                 try {
@@ -149,6 +156,7 @@ class AgentController extends Controller
         }
 
         $userData = $request->all();
+        $userData['name'] = $request->first_name . ' ' . $request->last_name;
         unset($userData['email']);
         unset($userData['username']);
 
@@ -156,5 +164,16 @@ class AgentController extends Controller
 
         Session::flash('success', 'Profile successfully updated');
         return redirect()->route('profile');
+    }
+
+    public function destroy ($id) {
+        $agent = Invitation::findOrFail($id);
+        if ($agent) {
+            User::where('email', $agent->email)->delete();
+            $agent->delete();
+        }
+
+        Session::flash('success', 'Agent delete successfully');
+        return redirect()->route('agents.index');
     }
 }

@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('agents/invite', [AgentController::class, 'sendInvitation'])->name('agents.sendInvitation')->middleware('permission:Manage Agents');
 
     Route::post('agents/update', [AgentController::class, 'update'])->name('agents.update');
+    Route::get('delete-agent/{id}', [AgentController::class, 'destroy'])->name('agents.destroy');
 
     Route::post('create-task', [HomeController::class, 'createTask']);
     Route::get('detail/{id}', [HomeController::class, 'show']);
