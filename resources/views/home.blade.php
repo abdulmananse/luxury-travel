@@ -6,7 +6,7 @@
 
     <section class="backgroundColor">
         <div class="container d-flex global-padding align-items-center">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="firstSection-left col-xl-6">
                     <a>Invite only</a>
                     <h1>Where the worlds leading travel agents find luxury homes.</h1>

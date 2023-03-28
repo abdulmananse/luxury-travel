@@ -228,11 +228,11 @@
                                 @endif
                                 <h4>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</h4>
                                 <div class="vila-info d-flex">
-                                    <div class="name-vila col-lg-5">
+                                    <div class="name-vila col-lg-6">
                                         <p style="margin: 0px;">{{ $property->destination }},</p>
                                         <p>{{ $property->community }}</p>
                                     </div>
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-6">
                                         <div class="publisher-contact d-flex">
                                             <p class="publisher">Publisher:</p>
                                             <p>{{ $contactPerson->company_name }}</p>

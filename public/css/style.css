@@ -88,14 +88,14 @@ h2 {
 }
 h1 {
   font-size: 60px !important;
-  font-weight: 600;
-  line-height: 1.37;
+  font-weight: 500!important;
+  line-height: 1.37!important;
   font-family: "playfair-display-medium";
 }
 h2 {
   font-size: 48px !important;
   font-weight: 600 !important;
-  font-family: "playfair-display-regular";
+  font-family: "playfair-display-semiBold";
   line-height: 1.33 !important;
 }
 p {
@@ -428,6 +428,17 @@ footer a:hover {
 }
 .footer-top {
   margin-bottom: 61px;
+}
+.info-company{
+  width: 359px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.44;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0b3841!important;
+  margin-right: 8px;
 }
 .social-icon {
   gap: 30px;
@@ -1587,6 +1598,11 @@ select option:focus {
   left: 0;
   padding: 12px;
 }
+.download-card-request-open.active{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .text-request textarea {
   width: 100%;
   background-color: #f9f9f9;
@@ -1644,7 +1660,7 @@ select option:focus {
   border-bottom: solid 0.5px #edd6bb;
 }
 .vila-info > div {
-  padding-left: 0px !important;
+  padding-left: 6px !important;
   padding-right: 0px !important;
 }
 .card-content h4 {
@@ -2048,7 +2064,7 @@ button:focus {
   .newsletter button {
     padding: 5.4px 22px 5.4px 22px;
     right: 6px;
-    top: 6px;
+    top: 5px;
   }
   .footer-top {
     flex-direction: column-reverse;
@@ -2099,6 +2115,10 @@ button:focus {
   }
   .sort-filter .dropdown-open {
     width: 23%;
+  }
+  .info-company{
+    width: 100%;
+    margin-right: 0px;
   }
 }
 @media (max-width: 768px) {
@@ -2320,6 +2340,10 @@ button:focus {
 }
 
 @media (max-width: 575px) {
+  h2{
+    font-family: "playfair-display-medium"!important;
+    font-weight: 500!important;
+  }
   #add-agents-p {
     font-size: 21px !important;
   }
@@ -2524,6 +2548,7 @@ button:focus {
   .publisher-contact p {
     margin: 0;
     font-size: 12px !important;
+    text-align: right;
   }
   .download-file button {
     font-size: 15px;

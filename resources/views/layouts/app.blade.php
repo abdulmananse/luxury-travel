@@ -91,14 +91,15 @@
                         <a href="mailto:contact@luxurytravelportal.com">
                             <p>Email Us</p>
                         </a>
-                        <p>+1 222 333-4444</p>
+                        <a href="tel:+16506201059"><p>+1 650 620 1059</p></a>
                     </div>
                 </div>
                 <div class="col-lg-5 footer-right">
                     <a href="home-page.html"><img src="{{ asset('img') }}/footerlogo@3x.png" /></a>
-                    <h5>
-                        Blakely Tower - Jumeirah Beach Road - Dubai Marina - Dubai -
-                        United Arab Emirates
+                    <h5 class="info-company">
+                        Veskiposti tn 2- 1002, Harju maakond<br>
+                        Talinn 10138 - Estonia.<br>
+                        ID: 16696009
                     </h5>
                 </div>
             </div>
@@ -114,7 +115,7 @@
                     <a href="https://www.youtube.com/channel/UC9hwyZ4Ufa0W82KQsxIPPwQ"><img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" /></a>
                 </div>
                 <p style="font-size: 12px !important">
-                    COPYRIGHT 2023, LTP SYSTEMS OÜ
+                    Copyright 2023, LUXTRAPOR OÜ
                 </p>
             </div>
         </div>
