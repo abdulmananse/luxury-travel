@@ -175,9 +175,9 @@
                 <div class="properties-card">
                     @forelse($properties as $property)
                         <?php
-                        $propertyModel = App\Models\Property::find($property->id);
+                        $propertyModel = App\Models\Property::with('images')->find($property->id);
                         //dd($property);
-
+                        
                         $totalPrice = 'On Request';
                         $totalPriceWithVat = 0;
                         $payout = 'On Request';
@@ -189,7 +189,7 @@
                         $municipalFee = $property->municipal_fee ? (int) str_replace('%', '', $property->municipal_fee) : 0;
                         $vatPercentage = $property->vat_rate ? (int) str_replace('%', '', $property->vat_rate) : 0;
                         if ($property->total_price > 0) {
-                            $taxes = (($vatPercentage > 0) ? ((int) round(($property->total_price * $vatPercentage) / 100)) : 0);
+                            $taxes = $vatPercentage > 0 ? ((int) round(($property->total_price * $vatPercentage) / 100)) : 0;
                             $houseFee = (int) round(($property->total_price * $municipalFee) / 100);
                             $totalPrice = (int) round($property->total_price + $taxes + $houseFee);
                             if ($contactPerson->commission != null) {
@@ -202,9 +202,9 @@
                                 <div class="shadow-left"></div>
 
                                 <div class="properties-slides">
-                                    @if ($propertyModel->thumbs)
-                                        @foreach ($propertyModel->thumbs as $image)
-                                            <img src="{{ $image }}" />
+                                    @if (count($propertyModel->images) > 0)
+                                        @foreach ($propertyModel->images as $image)
+                                            <img src="{{ asset('storage/' . $image->name) }}" />
                                         @endforeach
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
@@ -295,8 +295,8 @@
                                     <p>Back</p>
                                 </div>
                                 <div class="card-img download-card">
-                                    @if ($propertyModel->thumb)
-                                        <img src="{{ $propertyModel->thumb }}" />
+                                    @if (count($propertyModel->images) > 0)
+                                        <img src="{{ asset('storage/' . @$propertyModel->images[0]->name) }}" />
                                     @else
                                         <img src="{{ asset('img') }}/4sliderbitmap-copy-3@3x.png" />
                                     @endif

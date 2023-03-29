@@ -42,18 +42,18 @@ class Property extends Model implements HasMedia
      *
      * @return string
      */
-    public function getImagesAttribute()
-    {
-        $media = $this->getMedia('images');
-        unset($this->media);
-        $images = [];
-        if($media) {
-            foreach($media as $image){
-                $images[] = $image->getUrl();
-            }
-        }
-        return $images;
-    }
+    // public function getImagesAttribute()
+    // {
+    //     $media = $this->getMedia('images');
+    //     unset($this->media);
+    //     $images = [];
+    //     if($media) {
+    //         foreach($media as $image){
+    //             $images[] = $image->getUrl();
+    //         }
+    //     }
+    //     return $images;
+    // }
 
     /**
      * Get the images
@@ -170,4 +170,8 @@ class Property extends Model implements HasMedia
         return $this->hasMany(Event::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(PropertyImage::class, 'property_id', 'property_id');
+    }
 }
