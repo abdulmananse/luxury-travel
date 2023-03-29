@@ -163,9 +163,16 @@ for(const select of selected){
     dropOpen.classList.toggle('active');
   })
 }
+
+const guestsOpen = document.querySelector('.guests-open');
+
+guestsOpen.addEventListener('click', function(event) {
+  event.stopPropagation();
+});
+
 for(const dropdown of dropdowns){
   document.addEventListener('click', function(event) {
-    if (dropdown.classList.contains('active')) {
+    if (!guestsOpen.contains(event.target) && dropdown.classList.contains('active')) {
       dropdown.classList.remove('active');
     }
   });
@@ -177,9 +184,10 @@ priceInput.addEventListener('input', function() {
   const price = priceInput.value;
 });
 
+
+
 const copyButton = document.querySelectorAll('.ical-link button');
 const inputText = document.querySelectorAll('.ical-link input');
-
 
 for(const copy of copyButton){
 

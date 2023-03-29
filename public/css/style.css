@@ -94,8 +94,8 @@ h1 {
 }
 h2 {
   font-size: 48px !important;
-  font-weight: 600 !important;
-  font-family: "playfair-display-semiBold";
+  font-weight: 500 !important;
+  font-family: "playfair-display-medium";
   line-height: 1.33 !important;
 }
 p {
@@ -172,8 +172,8 @@ header img {
   margin-bottom: 36px;
 }
 .left-img {
-  margin-top: 45px;
-  width: 50%;
+  margin-top: 55px;
+  width: 58%;
 }
 .gallery-left {
   max-width: 364px;
@@ -246,8 +246,14 @@ header img {
 .right-img img , .left-img img{
   width: 100%;
 }
+.left-img img{
+  margin: 0px 6px 12px 0px!important;
+}
+.right-img img{
+  margin: 0px 0px 12px 6px!important;;
+}
 .right-img{
-  width: 50%;
+  width: 42%;
   margin-left: 8px;
 }
 
@@ -521,6 +527,27 @@ select {
 .logout {
   position: absolute;
   right: 0;
+}
+.wrapper-table .profile-img{
+  padding: 9.5px 15px;
+}
+.wrapper-table .active-column{
+  text-align: right;
+}
+.agents-link{
+  padding: 9.5px 15px;
+}
+.agents-link a{
+  color: #083741!important;
+  border-bottom: 1px solid #083741;
+  opacity: 0.5;
+}
+.name-column{
+  text-align: left;
+}
+.slice{
+  text-align: left;
+  padding-left: 10px;
 }
 .logout:hover {
   color: #a65a3f;

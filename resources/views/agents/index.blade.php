@@ -33,7 +33,7 @@
                                 <td class="active-column">
                                     {{ $agent->status == 1 ? 'Approved' : 'Pending' }}
                                 </td>
-                                <td>
+                                <td class="agents-link">
                                     @if (!$agent->status)
                                         <a href="{{ route('agents.register', base64_encode($agent->email)) }}">Link</a>
                                     @else

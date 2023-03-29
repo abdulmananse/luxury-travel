@@ -177,7 +177,7 @@
                         <?php
                         $propertyModel = App\Models\Property::with('images')->find($property->id);
                         //dd($property);
-                        
+
                         $totalPrice = 'On Request';
                         $totalPriceWithVat = 0;
                         $payout = 'On Request';
@@ -484,7 +484,7 @@
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Property:</p>
                                             <div class="cost-info">
-                                                <p>{{ $property->property_type }}</p>
+                                                <p>{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -118,7 +118,7 @@ class HomeController extends Controller
         $properties = [];
         $startDate = $endDate = $queryStartDate = $queryEndDate = '';
 
-        $where = ' WHERE 1 AND properties.ical_link IS NOT NULL ';
+        $where = ' WHERE 1 AND properties.name NOT LIKE "%#REF!%" AND properties.ical_link IS NOT NULL ';
         if ($request->filled('city')) {
             $destination = $request->city;
             $where .= ' AND destination LIKE "%' . $destination . '%" ';
@@ -1024,7 +1024,8 @@ class HomeController extends Controller
 
                 //exit('insert one property images');
             }
-            CronJob::create(['command' => "Completed: import:images"]);
+            if ($propertiesDownloaded == 0)
+                CronJob::create(['command' => "Completed: import:images"]);
         }
         catch (\Exception $e) {
             $error = $this->parseException($e);
