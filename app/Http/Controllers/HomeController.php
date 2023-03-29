@@ -18,6 +18,7 @@ use App\Models\Sheet;
 use App\Models\Property;
 use App\Models\CronJob;
 use App\Models\Log as ModelsLog;
+use App\Models\PropertyImage;
 use App\Models\PropertyImagesLog;
 use Illuminate\Support\Facades\Storage;
 use App\Models\PropertyPrice;
@@ -29,6 +30,7 @@ use Auth;
 
 use ZipArchive;
 use File;
+use Image;
 
 class HomeController extends Controller
 {
@@ -939,8 +941,6 @@ class HomeController extends Controller
                 $downloadImageData = ['property_id' => $property->id, 'download_date' => date('Y-m-d')];
                 $downloaded = PropertyImagesLog::where($downloadImageData)->where('status', 1)->first();
 
-
-
                  if (!in_array($propertyId, $skipProperties) && !$downloaded) {
                     PropertyImagesLog::create($downloadImageData);
                     //if (!in_array($propertyId, $skipProperties) && !file_exists(storage_path("app/public/{$zipFileName}"))) {
@@ -957,7 +957,8 @@ class HomeController extends Controller
                             $contents = collect($disk->listContents($dir, false));
                             $files = $contents->where('type', '=', 'file')->sortBy('filename')->take(20);
 
-                            $property->clearMediaCollection('images');
+                            //$property->clearMediaCollection('images');
+                            PropertyImage::where('property_id', $propertyId)->delete();
 
                             $folder = storage_path("app/public/{$propertyId}");
 
@@ -976,7 +977,11 @@ class HomeController extends Controller
                                     file_put_contents($targetFile, $fileData, FILE_APPEND);
 
                                     if ($i<=4) {
-                                        $property->addMedia($targetFile)->preservingOriginal()->toMediaCollection('images');
+                                        PropertyImage::create(['property_id' => $propertyId, 'name' => $filename]);
+                                        Image::make("storage/{$propertyId}/{$filename}")
+                                                ->resize(500, 300)
+                                                ->save("storage/{$filename}");
+                                        //$property->addMedia($targetFile)->preservingOriginal()->toMediaCollection('images');
                                         $i++;
                                     }
                                 }
@@ -1016,6 +1021,8 @@ class HomeController extends Controller
                     //var_dump(count($properties));
                     //echo '<br />';
                 }
+
+                //exit('insert one property images');
             }
             CronJob::create(['command' => "Completed: import:images"]);
         }
