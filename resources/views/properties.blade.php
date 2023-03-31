@@ -494,7 +494,7 @@
                                             <p>Message for {{ $contactPerson->first_name }}:</p>
                                             <input type="hidden" name="user_id" value="{{ $contactPerson->id }}" />
                                             <input type="hidden" name="property_id" class="property-id"
-                                                value="{{ $property->id }}" />
+                                                value="{{ hasRole('Contact_Person') ? $property->name : $property->property_id }}" />
                                             <input type="hidden" name="total_price" value="{{ $totalPrice }}" />
                                             <input type="hidden" name="commission" value="{{ $payout }}" />
                                             <input type="hidden" name="nights"
@@ -675,6 +675,27 @@
                     progressBar: true,
                     newestOnTop: true
                 });
+            }
+
+
+            /**
+             * Show Ajax Error Message
+             * @param response
+             */
+            function showAjaxErrorMessage(response, form = false) {
+                const responseJson = JSON.parse(response.responseText);
+                const errors = responseJson.errors;
+
+                if (errors !== undefined) {
+                    Object.keys(errors).forEach(function(item) {
+                        for (let value of errors[item]) {
+                            errorMessage(value);
+                        }
+                    });
+                } else if (responseJson.message !== undefined) {
+                    errorMessage(responseJson.message);
+                }
+
             }
 
             /**

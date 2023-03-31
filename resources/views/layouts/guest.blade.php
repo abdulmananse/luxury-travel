@@ -143,6 +143,32 @@
     @stack('scripts')
 
     @include('layouts.notification')
+    <script>
+        // uploade photo agent
+        const photoGalleryAgent = document.querySelector("#photoGalleryAgent");
+        const uploadStyleAgent = document.querySelector("#upload-title-agent");
+        const uploadImgAgent = document.querySelector('.upload-img-agent');
+
+        if(photoGalleryAgent != null){
+            photoGalleryAgent.addEventListener("change", function () {
+                const fileName = this.files[0].name;
+                if (fileName.length >= 28) {
+                    const titleImg = fileName.substring(0, 27) + '...';
+                    uploadStyleAgent.textContent = titleImg;
+                } else {
+                    uploadStyleAgent.textContent = fileName;
+                }
+                uploadStyleAgent.innerHTML += '<img class="delete-img" src="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/img/icons8-close-50.png"/>';
+                uploadImgAgent.style.display = 'none';
+
+                document.querySelector('.delete-img').addEventListener("click", function () {
+                    photoGalleryAgent.value = null;
+                    uploadStyleAgent.textContent = 'Upload';
+                    uploadImgAgent.style.display = 'block';
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
