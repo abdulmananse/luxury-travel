@@ -35,7 +35,7 @@
                                 </td>
                                 <td class="agents-link">
                                     @if (!$agent->status)
-                                        <a href="{{ route('agents.register', base64_encode($agent->email)) }}">Link</a>
+                                        <!-- <a href="{{ route('agents.register', base64_encode($agent->email)) }}">Link</a> -->
                                     @else
                                         <a style="color:red;" href="{{ route('agents.destroy', $agent->id) }}">
                                             Remove Access

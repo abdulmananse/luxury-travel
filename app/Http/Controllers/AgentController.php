@@ -18,8 +18,8 @@ class AgentController extends Controller
     public function index (Request $request)
     {
 
-        $email = 'abdulmanan4d@gmail.com';
-        $url = route('agents.register', base64_encode($email));
+        //$email = 'abdulmanan4d@gmail.com';
+        //$url = route('agents.register', base64_encode($email));
         //Notification::route('mail', $email)->notify(new InviteAgent(['name' => 'Abdul Manan', 'url' => $url]));
 
         $agents = Invitation::orderBy('id', 'desc');
@@ -43,7 +43,7 @@ class AgentController extends Controller
             'emails' => 'required'
         ]);
         $emailArr = [];
-        
+
         $emails = explode(PHP_EOL, $request->emails);
         foreach($emails as $email) {
             $emails1 = explode(',', $email);
@@ -54,17 +54,18 @@ class AgentController extends Controller
                 }
             }
         }
-        
+
         foreach($emailArr as $email) {
 
             $invitation = Invitation::where('email', $email)->first();
+            $contactPerson = User::role('Contact_Person')->first();
             if (!$invitation) {
                 Invitation::where('email', $email)->delete();
                 Invitation::create(['email' => $email]);
 
                 try {
                     $url = route('agents.register', base64_encode($email));
-                    Notification::route('mail', $email)->notify(new InviteAgent(['name' => Auth::user()->name, 'url' => $url]));
+                    Notification::route('mail', $email)->notify(new InviteAgent(['name' => $contactPerson->name, 'url' => $url]));
                 } catch (\Exception $e) {
                     Log::error('Email not sent: ' . $e->getMessage());
                 }

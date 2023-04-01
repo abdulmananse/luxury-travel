@@ -1084,6 +1084,9 @@ class HomeController extends Controller
             'nights' => 'required',
             'check_in' => 'required',
             'check_out' => 'required',
+        ], [
+            'check_in' => 'Please add dates to send request.',
+            'check_out' => 'Please add dates to send request.',
         ]);
 
         $requestData = $request->all();

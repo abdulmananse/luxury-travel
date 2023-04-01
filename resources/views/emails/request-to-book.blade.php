@@ -282,7 +282,7 @@
                                 <tr>
                                     <td class="two-col heading" align="center" valign="top"
                                         style="padding-left: 33px; padding-right: 33px; font-size: 32px; font-family: Georgia, serif; color:#0B3841; text-align:left; font-weight:bold; letter-spacing: -0.6px;">
-                                        {{ $user['name'] }} sent you a new request.
+                                        {{ $contactPerson['name'] }} sent you a new request.
                                     </td>
                                 </tr>
                             </table>
@@ -330,7 +330,7 @@
                                     <td class="two-col" align="center" valign="top"
                                         style="padding-left: 33px; padding-right: 33px;">
                                         <div>
-                                            <a class="cta-button" href="{{ url('/') }}"
+                                            <a class="cta-button" href="mailto:{{ $contactPerson['email'] }}"
                                                 style="background-color:#0B3841;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:17px;font-weight:bold;line-height:64px;text-align:center;text-decoration:none;width:446px;-webkit-text-size-adjust:none;">
                                                 Answer Now
                                             </a>
