@@ -14,6 +14,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "mailersend/laravel-driver": "^1.1",
         "nao-pon/flysystem-google-drive": "^1.1",
         "revolution/laravel-google-sheets": "^5.8",
         "spatie/laravel-medialibrary": "^9.0.0",
