@@ -479,7 +479,7 @@
                                         </div>
                                         <div class="publisher-contact d-flex">
                                             <p class="contact-card">Nights:</p>
-                                            <p>{{ count($rangeDatesArray) }}</p>
+                                            <p>{{ ($startDate != '' ? count($rangeDatesArray) : '-') }}</p>
                                         </div>
                                         <div class="publisher-contact d-flex icon-i">
                                             <p class="contact-card">Property:</p>

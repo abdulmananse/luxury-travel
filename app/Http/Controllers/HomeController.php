@@ -1085,8 +1085,11 @@ class HomeController extends Controller
             'check_in' => 'required',
             'check_out' => 'required',
         ], [
-            'check_in' => 'Please add dates to send request.',
-            'check_out' => 'Please add dates to send request.',
+            'property_id.required' => 'Property id is required',
+            'message.required' => 'Please write few details for this request.',
+            'nights.required' => 'Please add dates to send this request',
+            'check_in.required' => 'Please add dates to send this request',
+            'check_out.required' => 'Please add dates to send this request',
         ]);
 
         $requestData = $request->all();

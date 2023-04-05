@@ -310,8 +310,11 @@
                                         Agency Comission: <span
                                             style="color:#A65A3F;">{{ $requestData['commission'] }}</span><br />
                                         Agent name: <span style="color:#A65A3F;">{{ $user['name'] }}</span><br />
+                                        Agent email: <span style="color:#A65A3F;">{{ $user['email'] }}</span><br />
                                         Agency name: <span
                                             style="color:#A65A3F;">{{ $user['company_name'] }}</span><br />
+                                        Message: <span
+                                        style="color:#A65A3F;">{{ $requestData['message'] }}</span><br />
                                     </td>
                                 </tr>
                             </table>
@@ -330,7 +333,7 @@
                                     <td class="two-col" align="center" valign="top"
                                         style="padding-left: 33px; padding-right: 33px;">
                                         <div>
-                                            <a class="cta-button" href="mailto:{{ $contactPerson['email'] }}"
+                                            <a class="cta-button" href="mailto:{{ $user['email'] }}"
                                                 style="background-color:#0B3841;border-radius:4px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:17px;font-weight:bold;line-height:64px;text-align:center;text-decoration:none;width:446px;-webkit-text-size-adjust:none;">
                                                 Answer Now
                                             </a>
