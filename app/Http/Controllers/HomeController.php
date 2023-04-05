@@ -1091,12 +1091,10 @@ class HomeController extends Controller
 
         $requestData = $request->all();
         PropertyRequest::create($requestData);
-
         $contactPerson = User::role('Contact_Person')->first();
-        $property = Property::find($request->property_id);
+        $property = Property::where('property_id', $request->property_id)->first();
         if ($property && $contactPerson) {
             $email = $contactPerson->email;
-            //$email = 'abdulmanan4d@gmail.com';
             Notification::route('mail', $email)
                 ->notify(new RequestToBook([
                     'user' => Auth::user()->toArray(),
