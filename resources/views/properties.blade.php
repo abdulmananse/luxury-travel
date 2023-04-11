@@ -201,6 +201,10 @@
                             <div class="card-img">
                                 <div class="shadow-left"></div>
 
+                                <div class="properties-slide-left">
+                                    <img class="prev" src="{{ asset('img') }}/slider--invalid-name@3x.png" />
+                                </div>
+
                                 <div class="properties-slides">
                                     @if (count($propertyModel->images) > 0)
                                         @foreach ($propertyModel->images as $image)
@@ -215,6 +219,7 @@
                                 </div>
 
                                 <div class="shadow-right"></div>
+
                                 <div class="properties-slide">
                                     <img class="next" src="{{ asset('img') }}/slider--invalid-name@3x.png" />
                                 </div>

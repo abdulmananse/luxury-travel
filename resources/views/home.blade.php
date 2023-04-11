@@ -110,9 +110,8 @@
                     </div>
                     <div class="slide-right col-lg-6">
                         <h2>
-                            We rely on Luxury Travel Portal to connect our inventory with
-                            5,000+ travel agents. With the help of this platform, agents can
-                            quickly search for their ideal homes.
+                            Our inventory is linked to our preferred travel agents, enabling them to find their preferred accommodations.
+                            We have generated thousands of $ through Luxury Travel Portal.
                         </h2>
                         <p class="slide-text-right">TONY, S.</p>
                         <p class="mini-text">Publisher, London, DEC 2022</p>
