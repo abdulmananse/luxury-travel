@@ -282,7 +282,7 @@
                                 <tr>
                                     <td class="two-col heading" align="center" valign="top"
                                         style="padding-left: 33px; padding-right: 33px; font-size: 32px; font-family: Georgia, serif; color:#0B3841; text-align:left; font-weight:bold; letter-spacing: -0.6px;">
-                                        {{ $contactPerson['name'] }} sent you a new request.
+                                        {{ $user['name'] }} sent you a new request.
                                     </td>
                                 </tr>
                             </table>

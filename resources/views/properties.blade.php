@@ -608,7 +608,7 @@
 
                     $.ajax({
                         type: 'post',
-                        url: '{{ url('send-request') }}',
+                        url: 'https://luxurytravelportal.com/send-request',
                         processData: false,
                         dataType: 'json',
                         data: formData,

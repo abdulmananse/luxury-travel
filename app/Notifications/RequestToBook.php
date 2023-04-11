@@ -44,7 +44,9 @@ class RequestToBook extends Notification
     {
         $emailData = $this->data;
 
-        return (new MailMessage)->view('emails.request-to-book', $emailData);
+        return (new MailMessage)
+                ->view('emails.request-to-book', $emailData)
+                ->subject('New Booking Request from ' . $emailData['user']['name']);
     }
 
     /**

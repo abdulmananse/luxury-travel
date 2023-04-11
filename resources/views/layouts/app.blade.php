@@ -158,7 +158,7 @@
                 } else {
                     uploadStyle.textContent = fileName;
                 }
-                uploadStyle.innerHTML += '<img class="delete-img" src="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/img/icons8-close-50.png"/>';
+                uploadStyle.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImg.style.display = 'none';
 
                 document.querySelector('.delete-img').addEventListener("click", function () {
@@ -183,7 +183,7 @@
                 } else {
                     uploadStyleContact.textContent = fileName;
                 }
-                uploadStyleContact.innerHTML += '<img class="delete-img" src="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/img/icons8-close-50.png"/>';
+                uploadStyleContact.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImgContact.style.display = 'none';
 
                 document.querySelector('.delete-img').addEventListener("click", function () {
@@ -208,7 +208,7 @@
                 } else {
                     uploadStyleAgent.textContent = fileName;
                 }
-                uploadStyleAgent.innerHTML += '<img class="delete-img" src="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/img/icons8-close-50.png"/>';
+                uploadStyleAgent.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImgAgent.style.display = 'none';
 
                 document.querySelector('.delete-img').addEventListener("click", function () {

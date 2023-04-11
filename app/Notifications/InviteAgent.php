@@ -44,7 +44,8 @@ class InviteAgent extends Notification
     {
         $emailData = $this->data;
 
-        return (new MailMessage)->view('emails.invite-agent', $emailData);
+        return (new MailMessage)->view('emails.invite-agent', $emailData)
+                ->subject($emailData['name'] . ' has Invited you to join ');
     }
 
     /**

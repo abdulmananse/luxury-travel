@@ -28,8 +28,8 @@
                                     <img src="{{ asset('img') }}/default-avatar.png" />
                                 </td>
                                 <td class="slice">{{ $agent->email }}</td>
-                                <td class="name-column">Jane Smith</td>
-                                <td class="slice">Example Company</td>
+                                <td class="name-column">{{ $agent->name }}</td>
+                                <td class="slice">{{ $agent->company }}</td>
                                 <td class="active-column">
                                     {{ $agent->status == 1 ? 'Approved' : 'Pending' }}
                                 </td>

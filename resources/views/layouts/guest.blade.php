@@ -158,7 +158,7 @@
                 } else {
                     uploadStyleAgent.textContent = fileName;
                 }
-                uploadStyleAgent.innerHTML += '<img class="delete-img" src="http://ec2-13-38-62-220.eu-west-3.compute.amazonaws.com/img/icons8-close-50.png"/>';
+                uploadStyleAgent.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImgAgent.style.display = 'none';
 
                 document.querySelector('.delete-img').addEventListener("click", function () {
