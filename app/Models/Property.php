@@ -96,6 +96,7 @@ class Property extends Model implements HasMedia
     protected $fillable = [
         'clickup_id',
         'sheet_id',
+        'company_id',
         'property_id',
         'currency',
         'currency_symbol',

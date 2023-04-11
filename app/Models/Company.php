@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Invitation extends Model
+class Company extends Model
 {
 
     /**
@@ -13,9 +13,10 @@ class Invitation extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'name',
         'email',
-        'company_id',
-        'status'
+        'phone',
+        'website',
     ];
 
 }

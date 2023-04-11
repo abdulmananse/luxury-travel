@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -12,7 +13,7 @@ class CompanyController extends Controller
 {
     public function index (Request $request)
     {
-        $companies = User::role('Company')->orderBy('id', 'desc');
+        $companies = Company::orderBy('id', 'desc');
 
         if ($request->filled('name')) {
             $companies->where('name', $request->name)->orWhere('email', $request->name);
@@ -42,32 +43,60 @@ class CompanyController extends Controller
             $userData['username'] = $request->email;
             $userData['email'] = $request->email;
             $userData['phone'] = $request->phone;
+            $userData['company_id'] = $request->company_id;
+            $userData['password'] = Hash::make($request->email);
 
-            $user = User::find($request->id);
-            $user->update($userData);
+            if ($request->filled('id')) {
+                $user = User::find($request->id);
+                $user->update($userData);
+            } else {
+                $user = User::create($userData);
+            }
+            $user->syncRoles(['Contact_Person']);
+
+            if ($request->hasFile('photo')) {
+                $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
+            }
 
             Session::flash('success', 'Company profile successfully updated');
             return redirect()->route('companies.index');
         } else {
             $this->validate($request, [
-                'company_name' => 'required',
-                'company_email' => 'required|email|unique:users,company_email',
-                'company_phone' => 'required',
-                'company_website' => 'nullable',
+                'name' => 'required',
+                'email' => 'required|email|unique:companies,email,' . $request->company_id,
+                'phone' => 'required',
+                'website' => 'nullable',
             ]);
 
-            $userData = $request->all();
-            $userData['name'] = $request->company_name;
-            $userData['username'] = $request->company_email;
-            $userData['email'] = $request->company_email;
-            $userData['password'] = Hash::make($request->company_email);
+            if ($request->filled('company_id')) {
+                $companyData = $request->only('name', 'email', 'phone', 'website');
+                $company = Company::where('id', $request->company_id)->first();
+                $company->update($companyData);
+            } else {
+                $companyData = $request->all();
+                $company = Company::create($companyData);
+            }
+            
+            if ($company) {
+                $userData['name'] = $company->name;
+                $userData['username'] = $company->email;
+                $userData['email'] = $company->email;
+                $userData['password'] = Hash::make($request->email);
+                $userData['company_id'] = $company->id;
+    
+                $user = User::where('company_id', $company->id)->role('Company')->first();
+                if ($user) {
+                    $user->update($userData);
+                } else {
+                    $user = User::create($userData);
+                }
 
-            $user = User::create($userData);
-            if ($user) {
-                $role = Role::where('name', 'Company')->first();
-                $user->syncRoles($role);
-
-                return redirect()->route('companies.show', [$user->id, 'tab' => 'contact']);
+                if ($user) {
+                    $role = Role::where('name', 'Company')->first();
+                    $user->syncRoles($role);
+    
+                    return redirect()->route('companies.show', [$company->id, 'tab' => 'contact']);
+                }
             }
 
             return back()->withErrors(['error' => 'Something wrong']);
@@ -77,8 +106,8 @@ class CompanyController extends Controller
     public function show ($id, Request $request)
     {
         $tab = @$request->tab;
-        $company = User::find($id);
-
+        $company = Company::find($id);
+        $contactPerson = User::where('company_id', $id)->role('Contact_Person')->first();
         return view('companies.create', get_defined_vars());
     }
 

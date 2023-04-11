@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <?php
-    $name = explode(' ', @$company->name);
+    $name = explode(' ', @$contactPerson->name);
     $firstName = $name[0];
     $lastName = @$name[1];
     ?>
@@ -16,23 +16,28 @@
                 <div class="col-md-8 d-flex profile-form" style="flex-direction: column">
                     <form method="POST" action="{{ route('companies.store') }}" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="company_id" value="{{ @$company->id }}" />
                         <div class="company" style="display: {{ @$tab != 'contact' ? 'flex' : 'none' }};">
                             <div class="col-lg-6 left-input">
                                 <label>Company Name</label>
-                                <input type="text" name="company_name" placeholder="Company Name" />
-                                {!! $errors->first('company_name', '<label class="error">:message</label>') !!}
+                                <input type="text" name="name" placeholder="Company Name"
+                                    value="{{ old('name', @$company->name) }}" />
+                                {!! $errors->first('name', '<label class="error">:message</label>') !!}
 
                                 <label>Company Email</label>
-                                <input type="text" name="company_email" placeholder="Company Email" />
-                                {!! $errors->first('company_email', '<label class="error">:message</label>') !!}
+                                <input type="email" name="email" placeholder="Company Email"
+                                    value="{{ old('email', @$company->email) }}" />
+                                {!! $errors->first('email', '<label class="error">:message</label>') !!}
 
                                 <label>Company Phone</label>
-                                <input type="text" name="company_phone" placeholder="Company Phone" />
-                                {!! $errors->first('company_phone', '<label class="error">:message</label>') !!}
+                                <input type="text" name="phone" placeholder="Company Phone"
+                                    value="{{ old('phone', @$company->phone) }}" />
+                                {!! $errors->first('phone', '<label class="error">:message</label>') !!}
 
                                 <label>Company Website</label>
-                                <input type="text" name="company_website" placeholder="Company Website" />
-                                {!! $errors->first('company_website', '<label class="error">:message</label>') !!}
+                                <input type="text" name="website" value="{{ old('website', @$company->website) }}"
+                                    placeholder="Company Website" />
+                                {!! $errors->first('website', '<label class="error">:message</label>') !!}
 
                             </div>
                             {{-- <div class="col-lg-6 right-input">
@@ -58,9 +63,9 @@
                                 </div>  
                             </div> --}}
                         </div>
-                        @if (@$company)
+                        @if (@$tab == 'contact')
                             <input type="hidden" name="tab" value="contact" />
-                            <input type="hidden" name="id" value="{{ $company->id }}" />
+                            <input type="hidden" name="id" value="{{ @$contactPerson->id }}" />
                             <div class="contact" style="display: {{ @$tab == 'contact' ? 'flex' : 'none' }};">
                                 <div class="col-lg-6 left-input">
                                     <label>First Name</label>
@@ -75,14 +80,14 @@
 
                                     <label>Contact Email</label>
                                     <input type="email" name="email" placeholder="Email"
-                                        value="{{ $company->email }}" />
+                                        value="{{ @$contactPerson->email }}" />
                                     {!! $errors->first('email', '<label class="error">:message</label>') !!}
 
                                 </div>
                                 <div class="col-lg-6 right-input">
                                     <label>Your Phone</label>
                                     <input type="tel" name="phone" placeholder="Phone"
-                                        value="{{ $company->phone }}" />
+                                        value="{{ @$contactPerson->phone }}" />
                                     {!! $errors->first('phone', '<label class="error">:message</label>') !!}
 
                                     <label>Profile Photo</label>
@@ -92,6 +97,10 @@
                                         <div id="upload-img-contact" class="upload-style">Upload</div>
                                         <img id="upload-img-contact" src="./img/invalid-arrowtop@3x.png" />
                                     </div>
+
+                                    @if (@$contactPerson->image)
+                                        <img width="70" height="70" src="{{ $contactPerson->image }}" />
+                                    @endif
                                 </div>
                             </div>
                         @endif

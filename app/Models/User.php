@@ -66,6 +66,7 @@ class User extends Authenticatable implements HasMedia
         'username',
         'email',
         'phone',
+        'company_id',
         'company_name',
         'company_phone',
         'company_email',

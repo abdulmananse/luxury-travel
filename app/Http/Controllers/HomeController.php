@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyAgent;
 use App\Models\DuplicateEvent;
 use App\Models\DuplicateProperty;
 use App\Models\DuplicatePropertyPrice;
@@ -138,6 +139,9 @@ class HomeController extends Controller
         if ($request->filled('property_type')) {
             $where .= ' AND property_type = "' . $request->property_type . '" ';
         }
+
+        $companyIds = CompanyAgent::where('user_id', Auth::id())->pluck('id');
+        $where .= ' AND company_id in ("' . $companyIds->implode(',') . '") ';
 
         $orderBy = 'properties.name';
         $sortBy = $request->sort_by;
@@ -444,6 +448,7 @@ class HomeController extends Controller
 
                             $propertyData = [
                                 'clickup_id' => @$property['Clickup ID'], //'Clickup ID'
+                                'company_id' => 1, //'Clickup ID'
                                 'name' => @$property['Property Name'],
                                 'account' => @$property['Account'],
                                 'pis' => @$property['PIS'],

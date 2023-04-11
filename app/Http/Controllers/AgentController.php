@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\CompanyAgent;
 use App\Models\User;
 use App\Models\Invitation;
 use App\Notifications\InviteAgent;
@@ -55,16 +57,18 @@ class AgentController extends Controller
             }
         }
 
+        $authId = Auth::id();
         foreach($emailArr as $email) {
-
-            $invitation = Invitation::where('email', $email)->first();
-            $contactPerson = User::role('Contact_Person')->first();
+            $companyId = Auth::user()->company_id;
+            $invitation = Invitation::where('email', $email)->where('company_id', $companyId)->first();
+            $contactPerson = User::role('Contact_Person')->where('company_id', $companyId)->first();
             if (!$invitation) {
-                Invitation::where('email', $email)->delete();
-                Invitation::create(['email' => $email]);
+                Invitation::where('email', $email)->where('company_id', $companyId)->delete();
+                Invitation::create(['email' => $email, 'company_id' => $companyId]);
 
                 try {
-                    $url = route('agents.register', base64_encode($email));
+                    $url = route('agents.register', base64_encode($companyId.'|'.$email));
+                    // dd($url);
                     Notification::route('mail', $email)->notify(new InviteAgent(['name' => $contactPerson->name, 'url' => $url]));
                 } catch (\Exception $e) {
                     Log::error('Email not sent: ' . $e->getMessage());
@@ -79,9 +83,25 @@ class AgentController extends Controller
     public function register ($email)
     {
         $email = base64_decode($email);
-        $invitation = Invitation::where('email', $email)->first();
+        $data = explode('|', $email);
+        $companyId = @$data[0];
+        $email = @$data[1];
+
+        $invitation = Invitation::where('email', $email)->where('company_id', $companyId)->first();
         if ($invitation) {
             if(!$invitation->status) {
+                $company = Company::find($companyId);
+
+                $user = User::where('email', $email)->first();
+                if ($user) {
+                    $invitation->status = 1;
+                    $invitation->save();
+                    CompanyAgent::updateOrCreate(['user_id'=>$user->id, 'company_id' => $companyId]);
+
+                    Session::flash('success', 'Account successfully created');
+                    return redirect()->route('login');
+                }
+
                 return view('agents.register', get_defined_vars());
             } else {
                 Session::flash('error', 'You have already account');
@@ -105,11 +125,17 @@ class AgentController extends Controller
             'invited' => ['nullable', 'string', 'max:30'],
         ]);
 
-        $invitation = Invitation::where('email', $email)->first();
+        $companyId = $request->company_id;
+        $invitation = Invitation::where('email', $email)->where('company_id', $companyId)->first();
         if ($invitation && !$invitation->status) {
             $user = User::where('email', $email)->first();
             if ($user) {
-                return back()->withErrors(['name' => 'User already exists']);
+                $invitation->status = 1;
+                $invitation->save();
+                CompanyAgent::updateOrCreate(['user_id'=>$user->id, 'company_id' => $companyId]);
+
+                Session::flash('success', 'Account successfully created');
+                return redirect()->route('login');
             }
             $user = User::create([
                 'name' => $request->first_name . ' ' . $request->last_name,
@@ -121,6 +147,8 @@ class AgentController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             if ($user) {
+
+                CompanyAgent::updateOrCreate(['user_id'=>$user->id, 'company_id' => $companyId]);
 
                 $user->syncRoles('Agent');
 
@@ -170,11 +198,14 @@ class AgentController extends Controller
     public function destroy ($id) {
         $agent = Invitation::findOrFail($id);
         if ($agent) {
-            User::where('email', $agent->email)->delete();
+            $user = User::where('email', $agent->email)->first();
+            if ($user) {
+                CompanyAgent::where('user_id', $user->id)->where('company_id', $agent->company_id)->delete();
+            }
             $agent->delete();
         }
 
-        Session::flash('success', 'Agent delete successfully');
+        Session::flash('success', 'Agent access removed');
         return redirect()->route('agents.index');
     }
 }

@@ -45,10 +45,10 @@
         <section class="backgroundColor">
             <div class="container">
                 <div class="agents-menu">
-                    {{-- @can('Manage Companies')
+                    @can('Company')
                         <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
                             href="{{ route('companies.index') }}">Companies</a>
-                    @endcan --}}
+                    @endcan
                     @can('Manage Agents')
                         <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
                             href="{{ route('agents.index') }}">Agents</a>
@@ -57,7 +57,9 @@
                         <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
                             href="{{ route('search') }}">Property Search</a>
                     @endcan
-                    <a class="profile-a" href="{{ route('profile') }}">Profile</a>
+                    @hasanyrole(['Company', 'Contact_Person'])
+                        <a class="profile-a" href="{{ route('profile') }}">Profile</a>
+                    @endhasanyrole
                     <a class="logout" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>
@@ -91,7 +93,9 @@
                         <a href="mailto:contact@luxurytravelportal.com">
                             <p>Email Us</p>
                         </a>
-                        <a href="tel:+16506201059"><p>+1 650 620 1059</p></a>
+                        <a href="tel:+16506201059">
+                            <p>+1 650 620 1059</p>
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-5 footer-right">
@@ -108,11 +112,15 @@
                 <a href="home-page.html"><img src="{{ asset('img') }}/logo@3x.png"
                         style="width: 152px; height: 58px" /></a>
                 <div class="social-icon">
-                    <a href="https://www.linkedin.com/company/luxury-travel-portal/"><img src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png" style="width: 29px; height: 29px" /></a>
+                    <a href="https://www.linkedin.com/company/luxury-travel-portal/"><img
+                            src="{{ asset('img') }}/iconmonstr-linkedin-1@3x.png"
+                            style="width: 29px; height: 29px" /></a>
                     <a href=" https://www.instagram.com/luxurytravelportal/" target="_blank"><img
                             src="{{ asset('img') }}/iconmonstr-instagram-11@3x.png"
                             style="width: 29px; height: 28px" /></a>
-                    <a href="https://www.youtube.com/channel/UC9hwyZ4Ufa0W82KQsxIPPwQ"><img src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png" style="width: 30px; height: 26px" /></a>
+                    <a href="https://www.youtube.com/channel/UC9hwyZ4Ufa0W82KQsxIPPwQ"><img
+                            src="{{ asset('img') }}/iconmonstr-youtube-6@3x.png"
+                            style="width: 30px; height: 26px" /></a>
                 </div>
                 <p style="font-size: 12px !important">
                     Copyright 2023, LUXTRAPOR OÜ
@@ -149,8 +157,8 @@
         const photoGallery = document.querySelector("#photoGalleryCompany");
         const uploadStyle = document.querySelector("#upload-title-company");
         const uploadImg = document.querySelector('.upload-img-company');
-        if(photoGallery != null){
-            photoGallery.addEventListener("change", function () {
+        if (photoGallery != null) {
+            photoGallery.addEventListener("change", function() {
                 const fileName = this.files[0].name;
                 if (fileName.length >= 28) {
                     const titleImg = fileName.substring(0, 27) + '...';
@@ -158,10 +166,11 @@
                 } else {
                     uploadStyle.textContent = fileName;
                 }
-                uploadStyle.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
+                uploadStyle.innerHTML +=
+                    '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImg.style.display = 'none';
 
-                document.querySelector('.delete-img').addEventListener("click", function () {
+                document.querySelector('.delete-img').addEventListener("click", function() {
                     photoGallery.value = null;
                     uploadStyle.textContent = 'Upload';
                     uploadImg.style.display = 'block';
@@ -174,8 +183,8 @@
         const uploadStyleContact = document.querySelector("#upload-title-contact");
         const uploadImgContact = document.querySelector('.upload-img-contact');
 
-        if(photoGalleryContact != null){
-            photoGalleryContact.addEventListener("change", function () {
+        if (photoGalleryContact != null) {
+            photoGalleryContact.addEventListener("change", function() {
                 const fileName = this.files[0].name;
                 if (fileName.length >= 28) {
                     const titleImg = fileName.substring(0, 27) + '...';
@@ -183,10 +192,11 @@
                 } else {
                     uploadStyleContact.textContent = fileName;
                 }
-                uploadStyleContact.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
+                uploadStyleContact.innerHTML +=
+                    '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImgContact.style.display = 'none';
 
-                document.querySelector('.delete-img').addEventListener("click", function () {
+                document.querySelector('.delete-img').addEventListener("click", function() {
                     photoGalleryContact.value = null;
                     uploadStyleContact.textContent = 'Upload';
                     uploadImgContact.style.display = 'block';
@@ -199,8 +209,8 @@
         const uploadStyleAgent = document.querySelector("#upload-title-agent");
         const uploadImgAgent = document.querySelector('.upload-img-agent');
 
-        if(photoGalleryAgent != null){
-            photoGalleryAgent.addEventListener("change", function () {
+        if (photoGalleryAgent != null) {
+            photoGalleryAgent.addEventListener("change", function() {
                 const fileName = this.files[0].name;
                 if (fileName.length >= 28) {
                     const titleImg = fileName.substring(0, 27) + '...';
@@ -208,17 +218,17 @@
                 } else {
                     uploadStyleAgent.textContent = fileName;
                 }
-                uploadStyleAgent.innerHTML += '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
+                uploadStyleAgent.innerHTML +=
+                    '<img class="delete-img" src="https://luxurytravelportal.com/img/icons8-close-50.png"/>';
                 uploadImgAgent.style.display = 'none';
 
-                document.querySelector('.delete-img').addEventListener("click", function () {
+                document.querySelector('.delete-img').addEventListener("click", function() {
                     photoGalleryAgent.value = null;
                     uploadStyleAgent.textContent = 'Upload';
                     uploadImgAgent.style.display = 'block';
                 });
             });
         }
-
     </script>
 </body>
 

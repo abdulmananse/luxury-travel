@@ -38,6 +38,9 @@ class AuthenticatedSessionController extends Controller
         if ($role == 'Agent') {
             $redirect = RouteServiceProvider::SEARCH;
         }
+        if ($role == 'Admin') {
+            $redirect = RouteServiceProvider::HOME;
+        }
 
         return redirect()->intended($redirect);
     }

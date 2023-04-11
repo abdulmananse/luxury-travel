@@ -31,10 +31,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 
-    Route::get('companies', [CompanyController::class, 'index'])->name('companies.index');
-    Route::get('companies/create', [CompanyController::class, 'create'])->name('companies.create');
+    Route::get('companies', [CompanyController::class, 'index'])->name('companies.index')->middleware('permission:Company');
+    Route::get('companies/create', [CompanyController::class, 'create'])->name('companies.create')->middleware('permission:Company');
     Route::post('companies', [CompanyController::class, 'store'])->name('companies.store');
-    Route::get('companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
+    Route::get('companies/{id}', [CompanyController::class, 'show'])->name('companies.show')->middleware('permission:Company');
     Route::post('companies/update', [CompanyController::class, 'update'])->name('companies.update');
 
     Route::get('agents', [AgentController::class, 'index'])->name('agents.index')->middleware('permission:Manage Agents');

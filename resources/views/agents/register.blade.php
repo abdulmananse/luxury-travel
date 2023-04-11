@@ -9,10 +9,11 @@
                 <div class="col-md-8 d-flex profile-form" style="flex-direction: column">
                     <form method="POST" action="{{ route('agents.createAgent', $email) }}">
                         @csrf
+                        <input type="hidden" name="company_id" value="{{ @$companyId }}" />
                         <div class="d-flex form-input">
 
                             <div class="col-lg-6 left-input">
-                                <label class="mt-4">Invited by: Tripwix</label>
+                                <label class="mt-4">Invited by: {{ @$company->name }}</label>
                                 <hr />
                                 <label>Your Agency</label>
                                 <input placeholder="Company Name" type="text" name="company_name"

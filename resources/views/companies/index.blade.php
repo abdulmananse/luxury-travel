@@ -27,11 +27,10 @@
                                 <td class="slice">{{ $company->email }}</td>
                                 <td class="name-column">{{ $company->name }}</td>
                                 <td class="name-column">{{ $company->phone }}</td>
-                                <td class="slice">{{ $company->company_name }}</td>
+                                <td class="slice">{{ $company->website }}</td>
                                 <td class="active-column">
-                                    {{ $company->status == 1 ? 'Approved' : 'Pending' }}
+                                    <a href="{{ url('companies/' . $company->id) }}">Edit</a>
                                 </td>
-                                <td>Remove Access</td>
 
                             </tr>
                         @empty
