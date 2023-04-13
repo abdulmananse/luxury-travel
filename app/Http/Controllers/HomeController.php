@@ -1114,4 +1114,19 @@ class HomeController extends Controller
 
         return ['success' => true, 'data' => $request->all()];
     }
+
+    public function aboutUs()
+    {
+        return view('about-us');
+    }
+
+    public function contactUs()
+    {
+        return view('contact-us');
+    }
+    
+    public function termConditions()
+    {
+        return view('terms');
+    }
 }

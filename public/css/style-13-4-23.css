@@ -432,9 +432,6 @@ footer a:hover {
   width: 359px;
   height: 137px;
 }
-.footer-left{
-  padding: 0px!important;
-}
 .footer-top {
   margin-bottom: 61px;
 }
@@ -1892,159 +1889,15 @@ select option:focus {
 }
 
 
+
+
+
+
+
 button:focus {
   outline: none !important;
 }
-
-
-/* other page  */
-.about-us{
-  padding: 65px 0px;
-}
-.about-us-content{
-  padding: 65px 0px 195px 0px;
-}
-.terms{
-  padding: 65px 0px 98px 0px;
-}
-.contactUs{
-  padding: 65px 0px 0px 0px;
-}
-.contact-content{
-  margin: 24px 0px;
-}
-.about-us-content p, .terms p, .contactUs p{
-  font-family: 'Inter-Regular'!important;
-  font-size: 18px!important;
-}
-.about-us-content h3{
-  margin-bottom: 16.5px;
-}
-.padding-about-right{
-  padding-right: 150px!important;
-}
-.padding-about-left{
-  padding-left: 150px!important;
-}
-.terms h3{
-  margin-bottom: 24px;
-}
-.padding-terms-right p{
-  padding-right: 100px;
-}
-.padding-terms-left p{
-  padding-left: 100px;
-}
-.padding-contact-right p{
-  padding-right: 50px;
-}
-.contactluxur a{
-  color: #a65a3f;
-}
-.contactluxur{
-  margin-bottom: 0;
-}
-.description-img{
-  margin-top: 24px;
-  border-left: solid 0.5px #0b3841;
-  padding-bottom: 180px;
-}
-.text-under-img{
-  margin-top: 24px;
-}
-.contact-form-side{
-  background-color: #0b3841;
-}
-.container-contact-form{
-  margin: 23% 14% 20% 20%;
-  background-color: white;
-  padding: 48px;
-}
-#contact input[type="text"],
-#contact input[type="email"],
-#contact input[type="tel"],
-#contact button[type="submit"] {
-  font-family: 'Inter-Regular', sans-serif;
-  font-size: 14px;
-  /* color: rgba(11, 56, 65, 0.25); */
-}
-.signUp-left h3{
-  font-size: 48px!important;
-  margin: 24px 0px;
-}
-.signUp-left p, .contactluxur a{
-  font-size: 18px!important;
-  font-family: "Inter-Regular"!important;
-}
-.signUp-left{
-  padding-right: 120px!important;
-  padding-left: 100px!important;
-}
-.contactluxur{
-  margin-top: 36px;
-}
-.form-group label{
-  font-family: "Inter-Regular"!important;
-  font-size: 14px!important;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.71;
-  letter-spacing: normal;
-  color: #0b3841!important;
-  margin-bottom: 12px;
-}
-.form-group input{
-  border: solid 1px #0b3841;
-  padding: 12px;
-  width: 100%;
-}
-.form-group{
-  margin-bottom: 0px!important;
-}
-.contact-form-side h4{
-  margin-bottom: 24px;
-}
-.first-input{
-  margin-bottom: 24px;
-  padding: 0px!important;
-}
-.firstName{
-  padding-right: 6px!important;
-}
-.lastName{
-  padding-left: 6px!important;
-}
-#contact-submit{
-  font-family: 'playfair-display-regular'!important;
-  padding: 9.5px 0 10.5px;
-  border: solid 0.5px #0b3841;
-  background-color: #0b3841;
-  color: white!important;
-  width: 100%;
-  font-size: 20px!important;
-  line-height: 1.4!important;
-}
-.submitSignUp{
-  width: 100%;
-  margin-top: 12px;
-}
-.container-contact-form .row{
-  margin-left: 0px!important;
-  margin-right: 0px!important;
-}
-.signUp{
-  display: grid;
-  grid-template-columns: 47% 53%;
-}
-
 @media (max-width: 1400px) {
-  .signUp-left{
-    padding-right: 70px!important;
-  }
-  .container-contact-form{
-    margin: 18% 12% 18% 12%;
-  }
   .second-info {
     width: 45%;
   }
@@ -2069,15 +1922,6 @@ button:focus {
   .publisher-contact p {
     font-size: 12px!important;
   }
-  .padding-about-right, .padding-terms-right p {
-    padding-right: 80px;
-  }
-  .padding-about-left, .padding-terms-left p{
-    padding-left: 80px;
-  }
-  .about-us-content{
-    padding: 0px 0px 65px 0px;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -2092,18 +1936,6 @@ button:focus {
   }
   h2 {
     font-size: 36px !important;
-  }
-  .signUp-left h3{
-    font-size: 35px!important;
-  }
-  .signUp-left p, .contactluxur a{
-    font-size: 15px!important;
-  }
-  .signUp-left {
-    padding-right: 30px!important;
-  }
-  .container-contact-form {
-    margin: 15% 9% 15% 8%;
   }
   .signUp-btn {
     padding: 11px 60px 13px 60px;
@@ -2213,12 +2045,6 @@ button:focus {
   .text-request p {
     margin: 14px 0px;
   }
-  .padding-terms-right p{
-    padding-right: 30px;
-  }
-  .padding-terms-left p{
-    padding-left: 30px;
-  }
 }
 @media (max-width: 992px) {
   .secondSection .global-padding {
@@ -2253,32 +2079,6 @@ button:focus {
   }
   h2 {
     font-size: 27px !important;
-  }
-  .signUp{
-    grid-template-columns: 100%;
-  }
-  .contactUsImage, .contactluxur, .contact-form-side h4{
-    display: none;
-  }
-  .container-contact-form {
-    margin: 0%;
-  }
-  .lastName {
-    padding-left: 0px!important;
-  }
-  .firstName {
-    padding-right: 0px!important;
-  }
-  .signUp-left{
-    padding-left: 15px!important;
-    padding-right: 15px!important;
-    text-align: center;
-  }
-  .signUp-left h3{
-    margin: 36px 0px 24px 0px;
-  }
-  .signUp-left p{
-    margin-bottom: 36px;
   }
   .pricing p {
     margin-top: 20px;
@@ -2348,19 +2148,6 @@ button:focus {
   .info-company{
     width: 100%;
     margin-right: 0px;
-  }
-  .padding-about-left {
-    padding-left: 15px!important;
-  }
-  .padding-about-right {
-    padding-right: 15px!important;
-  }
-  .padding-terms-left p, .padding-terms-right p{
-    padding: 0px!important;
-  }
-  .description-img{
-    border: none;
-    padding-bottom: 65px;
   }
 }
 @media (max-width: 768px) {
@@ -2585,24 +2372,6 @@ button:focus {
   h2{
     font-family: "playfair-display-medium"!important;
     font-weight: 500!important;
-  }
-  .about-us-content p, .terms p, .contactUs p{
-    font-size: 15px!important;
-  }
-  .signUp-left {
-    text-align: left;
-}
-.container-contact-form{
-  padding: 24px;
-}
-  .contactUs{
-    padding: 40px 0px 0px 0px;
-  }
-  .about-us , .terms{
-    padding: 40px 0px;
-  }
-  .description-img{
-    padding-bottom: 40px;
   }
   #add-agents-p {
     font-size: 21px !important;
@@ -3080,7 +2849,6 @@ button:focus {
 .all-price-two .price-margin{
   margin-bottom: 6px;
 }
-
 @media (max-width: 575px) {
   .price-top p, .price-bottom p{
     font-size: 12px!important;

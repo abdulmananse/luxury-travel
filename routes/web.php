@@ -18,6 +18,10 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
+Route::get('about-us', [HomeController::class, 'aboutUs'])->name('aboutUs');
+Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contactUs');
+Route::get('terms-conditions', [HomeController::class, 'termConditions'])->name('termConditions');
+
 Route::get('agents/register/{email}', [AgentController::class, 'register'])->name('agents.register');
 Route::post('agents/register/{email}', [AgentController::class, 'createAgent'])->name('agents.createAgent');
 Route::get('import-images', [HomeController::class, 'importGoogleDriveImages']);
