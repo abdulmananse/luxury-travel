@@ -74,6 +74,7 @@ class User extends Authenticatable implements HasMedia
         'commission',
         'invited',
         'password',
+        'is_active',
     ];
 
     /**

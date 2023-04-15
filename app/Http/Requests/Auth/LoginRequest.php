@@ -47,19 +47,32 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
         
         $user = User::where('username', $this->email)->orWhere('email', $this->email)->first();
-        $creds = [
-            'email' => @$user->email,
-            'password' => $this->password
-        ];
-        if (! Auth::attempt($creds, $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-
+        if ($user) {
+            if ($user->is_active == 1) {
+                $creds = [
+                    'email' => @$user->email,
+                    'password' => $this->password
+                ];
+                if (! Auth::attempt($creds, $this->boolean('remember'))) {
+                    RateLimiter::hit($this->throttleKey());
+        
+                    throw ValidationException::withMessages([
+                        'email' => trans('auth.failed'),
+                    ]);
+                }
+        
+                RateLimiter::clear($this->throttleKey());
+            } else {
+                throw ValidationException::withMessages([
+                    'email' => 'Your account is not active',
+                ]);
+            }
+            
+        } else {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
-
-        RateLimiter::clear($this->throttleKey());
     }
 
     /**
