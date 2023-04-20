@@ -57,7 +57,7 @@
                         <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
                             href="{{ route('search') }}">Property Search</a>
                     @endcan
-                    @hasanyrole(['Company', 'Contact_Person'])
+                    @hasanyrole(['Company', 'Contact_Person', 'Admin'])
                         <a class="profile-a" href="{{ route('profile') }}">Profile</a>
                     @endhasanyrole
                     <a class="logout" href="{{ route('logout') }}">Logout</a>
