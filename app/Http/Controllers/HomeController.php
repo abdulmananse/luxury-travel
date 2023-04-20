@@ -922,10 +922,34 @@ class HomeController extends Controller
             return view('agents.profile', get_defined_vars());
         }
 
-        $company = Auth::user();
-        $name = explode(' ', $company->name);
-        $company->first_name = $name[0];
-        $company->last_name = @$name[1];
+        $user = Auth::user();
+        
+        
+
+        if ($role == 'Company') {
+            $user = User::with('company')->findOrFail($user->id);
+            $company = $user;
+            $com = $user->company;
+            $company->company_name = $com->name;
+            $company->company_email = $com->email;
+            $company->company_phone = $com->phone;
+            $company->company_website = $com->website;
+
+            $name = explode(' ', $com->name);
+            $company->first_name = $name[0];
+            $company->last_name = @$name[1];
+
+            $contact = User::role('Contact_Person')->where('company_id', $user->company_id)->first();
+        } else {
+            $contact = User::role('Contact_Person')->findOrFail($user->id);
+            $company = User::with('company')->role('Company')->where('company_id', $contact->company_id)->first();
+            $com = $user->company;
+            $company->company_name = $com->name;
+            $company->company_email = $com->email;
+            $company->company_phone = $com->phone;
+            $company->company_website = $com->website;
+        }
+        // dd($contact->toArray());
 
         return view('companies.profile', get_defined_vars());
     }
