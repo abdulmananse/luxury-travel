@@ -60,6 +60,7 @@
                     @hasanyrole(['Company', 'Contact_Person'])
                         <a class="profile-a" href="{{ route('profile') }}">Profile</a>
                     @endhasanyrole
+                    <a class="profile-a" href="{{ route('profile') }}">Profile</a>
                     <a class="logout" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>

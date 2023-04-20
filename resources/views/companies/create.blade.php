@@ -10,8 +10,19 @@
         <div class="container profile">
             <div class="d-flex row profile-company">
                 <div class="col-md-4 profile-left">
-                    <h4 class="company-form {{ @$tab != 'contact' ? 'active' : '' }}">Company</h4>
-                    <h4 class="contact-form {{ @$tab == 'contact' ? 'active' : '' }}">Contact</h4>
+
+                    @if (@$company)
+                        <a href="{{ url('companies/' . $company->id) }}">
+                            <h4 class="contact-form {{ !isset($tab) ? 'active' : '' }}">Company</h4>
+                        </a>
+                        <a href="{{ url('companies/' . $company->id . '?tab=contact') }}">
+                            <h4 class="contact-form {{ @$tab == 'contact' ? 'active' : '' }}">Contact</h4>
+                        </a>
+                    @else
+                        <h4 class="company-form {{ @$tab != 'contact' ? 'active' : '' }}">Company</h4>
+                        <h4 class="contact-form {{ @$tab == 'contact' ? 'active' : '' }}">Contact</h4>
+                    @endif
+
                 </div>
                 <div class="col-md-8 d-flex profile-form" style="flex-direction: column">
                     <form method="POST" action="{{ route('companies.store') }}" enctype="multipart/form-data">
@@ -28,7 +39,8 @@
                                 <input type="email" name="email" placeholder="Company Email"
                                     value="{{ old('email', @$company->email) }}" />
                                 {!! $errors->first('email', '<label class="error">:message</label>') !!}
-
+                            </div>
+                            <div class="col-lg-6 right-input">
                                 <label>Company Phone</label>
                                 <input type="text" name="phone" placeholder="Company Phone"
                                     value="{{ old('phone', @$company->phone) }}" />
