@@ -12,7 +12,7 @@
                 <div class="row d-flex">
 
                     <div class="col-lg-5 padding-contact-right">
-                        <h3>Contact Us</h3>
+                        <h3>About Us</h3>
                         <div class="contact-content">
                             <p>Our multilingual partnerships team is always available to help you. Wether you are a
                                 travel-agent or a listing publisher, our priority is to help you anytime.</p>

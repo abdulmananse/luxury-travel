@@ -26,7 +26,8 @@
                         receive another invite.
                     </p>
                     <div class="agents-button">
-                        <button class="cancel">Cancel</button>
+                        <button type="button" class="cancel"
+                            onclick="window.location.href='{{ route('agents.index') }}'">Cancel</button>
                         <button type="submit" class="invites">Send Invites</button>
                     </div>
                 </div>

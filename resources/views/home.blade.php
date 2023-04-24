@@ -15,7 +15,8 @@
                         targeted leads.
                     </p>
                     @if (!Auth::user())
-                        <button class="signUp-btn">Sign up</button>
+                        <button class="signUp-btn" onclick="window.location.href='{{ route('register') }}'">Sign
+                            up</button>
                     @endif
                 </div>
                 <div class="col-xl-6 img-galerry">
@@ -110,7 +111,8 @@
                     </div>
                     <div class="slide-right col-lg-6">
                         <h2>
-                            Our inventory is linked to our preferred travel agents, enabling them to find their preferred accommodations.
+                            Our inventory is linked to our preferred travel agents, enabling them to find their
+                            preferred accommodations.
                             We have generated thousands of $ through Luxury Travel Portal.
                         </h2>
                         <p class="slide-text-right">TONY, S.</p>

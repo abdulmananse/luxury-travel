@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
             ]);
             $user->syncRoles($agentRole);
 
-            for($i = 1; $i < 15000; $i++){
+            for ($i = 1; $i < 5; $i++) {
                 $user = User::updateOrCreate([
                     'username' => 'agent_' . $i,
                     'name' => 'Agent ' . $i,
