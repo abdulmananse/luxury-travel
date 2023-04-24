@@ -44,10 +44,10 @@
         <section class="backgroundColor">
             <div class="container">
                 <div class="agents-menu">
-                    {{-- @can('Manage Companies')
+                    @can('Company')
                         <a class="agents-a {{ Route::current()->uri == 'companies' ? 'active' : '' }}"
                             href="{{ route('companies.index') }}">Companies</a>
-                    @endcan --}}
+                    @endcan
                     @can('Manage Agents')
                         <a class="agents-a {{ Route::current()->uri == 'agents' ? 'active' : '' }}"
                             href="{{ route('agents.index') }}">Agents</a>
@@ -56,7 +56,9 @@
                         <a class="agents-a {{ Route::current()->uri == 'search' ? 'active' : '' }}"
                             href="{{ route('search') }}">Property Search</a>
                     @endcan
-                    <a class="profile-a" href="{{ route('profile') }}">Profile</a>
+                    @hasanyrole(['Company', 'Contact_Person'])
+                        <a class="profile-a" href="{{ route('profile') }}">Profile</a>
+                    @endcan
                     <a class="logout" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>

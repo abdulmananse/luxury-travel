@@ -62,8 +62,8 @@
                                 <div class="col-lg-12 first-input">
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
-                                        <input placeholder="+1 222 333-4444" type="tel" tabindex="5"
-                                            name="phone" value="{{ old('phone') }}" required>
+                                        <input placeholder="+12223334444" type="tel" tabindex="5" name="phone"
+                                            value="{{ old('phone') }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group submitSignUp">

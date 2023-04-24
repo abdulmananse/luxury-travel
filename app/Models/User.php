@@ -78,6 +78,15 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
+     * Get the company that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

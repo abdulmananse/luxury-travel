@@ -92,8 +92,7 @@ class CompanyController extends Controller
                 }
 
                 if ($user) {
-                    $role = Role::where('name', 'Company')->first();
-                    $user->syncRoles($role);
+                    $user->syncRoles(['Company']);
     
                     return redirect()->route('companies.show', [$company->id, 'tab' => 'contact']);
                 }
@@ -113,41 +112,64 @@ class CompanyController extends Controller
 
     public function update (Request $request)
     {
+        
         $this->validate($request, [
-            'company_name' => 'nullable',
-            'company_email' => 'nullable|email|unique:users,company_email,' . $request->id,
-            'company_phone' => 'nullable',
+            'company_name' => 'required',
+            'company_email' => 'required|email|unique:users,email,' . $request->id,
+            'email' => 'required|email|unique:users,email,' . $request->contact_id,
+            'company_phone' => 'required',
             'company_website' => 'nullable',
-            'first_name' => 'nullable',
+            'first_name' => 'required',
             'last_name' => 'nullable',
-            'phone' => 'nullable',
-            'company_logo' => 'nullable|image',
-            'photo' => 'nullable|image',
+            'phone' => 'required',
         ]);
+        
+        $companyData = [
+            'name' => $request->company_name,
+            'email' => $request->company_email,
+            'phone' => $request->company_phone,
+            'website' => $request->company_website
+        ];
+        $company = Company::where('id', $request->company_id)->first();
+        $company->update($companyData);
 
-        $userData = $request->all();
         $userData['name'] = $request->first_name . ' ' . $request->last_name;
-        $userData['username'] = $request->email;
+        $userData['username'] = $request->company_email;
+        $userData['email'] = $request->company_email;
         $userData['commission'] = @$request->commission;
+        $userData['phone'] = @$request->phone;
+        $userData['company_name'] = @$request->company_name;
+        $userData['company_phone'] = @$request->company_phone;
+        $userData['company_email'] = @$request->company_email;
+        $userData['company_website'] = @$request->company_website;
 
-        unset($userData['email']);
-        unset($userData['username']);
-
-
-        $user = User::find($request->id);
+        $companyUser = User::find($request->id);
 
         if ($request->hasFile('photo')) {
-            $user->clearMediaCollection('avatar');
-            $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
+            $companyUser->clearMediaCollection('avatar');
+            $companyUser->addMediaFromRequest('photo')->toMediaCollection('avatar');
         }
 
         if ($request->hasFile('company_logo')) {
-            $user->clearMediaCollection('company_logo');
-            $user->addMediaFromRequest('company_logo')->toMediaCollection('company_logo');
+            $companyUser->clearMediaCollection('company_logo');
+            $companyUser->addMediaFromRequest('company_logo')->toMediaCollection('company_logo');
         }
-        $user->update($userData);
 
-        Session::flash('success', 'Company profile successfully updated');
+        $companyUser->update($userData);
+
+        $contactData['name'] = $request->first_name . ' ' . $request->last_name;
+        $contactData['username'] = $request->email;
+        $contactData['email'] = $request->email;
+        $contactData['phone'] = $request->phone;
+        $contactData['company_name'] = @$request->company_name;
+        $contactData['company_phone'] = @$request->company_phone;
+        $contactData['company_email'] = @$request->company_email;
+        $contactData['company_website'] = @$request->company_website;
+
+        $contactUser = User::find($request->contact_id);
+        $contactUser->update($contactData);
+
+        Session::flash('success', 'Profile successfully updated');
         return redirect()->route('profile');
     }
 }

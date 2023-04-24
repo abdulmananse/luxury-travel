@@ -23,6 +23,8 @@
 
                         <input type="hidden" name="tab" value="company" />
                         <input type="hidden" name="id" value="{{ $company->id }}" />
+                        <input type="hidden" name="contact_id" value="{{ $contact->id }}" />
+                        <input type="hidden" name="company_id" value="{{ $company->company_id }}" />
 
                         <div class="company" style="display: {{ @$tab != 'contact' ? 'flex' : 'none' }};">
                             <div class="col-lg-6 left-input">
@@ -52,7 +54,8 @@
                                 <label>Commission Amount</label>
 
                                 <select name="commission">
-                                    <option value="5" {{ $company->commission == 5 ? 'selected' : '' }}>5%</option>
+                                    <option value="5" {{ $company->commission == 5 ? 'selected' : '' }}>5%
+                                    </option>
                                     <option value="10" {{ $company->commission == 10 ? 'selected' : '' }}>10%
                                     </option>
                                     <option value="15" {{ $company->commission == 15 ? 'selected' : '' }}>15%
@@ -69,7 +72,8 @@
                                     <input class="custom-file-input" type="file" placeholder="Upload"
                                         id="photoGalleryCompany" name="company_logo">
                                     <div id="upload-title-company" class="upload-style">Upload</div>
-                                    <img class="upload-img-company" src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
+                                    <img class="upload-img-company"
+                                        src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
                                 </div>
 
                                 @if ($company->company_logo)
@@ -79,46 +83,45 @@
 
                             </div>
                         </div>
-                        @if (@$company)
 
-                            <div class="contact" style="display: {{ @$tab == 'contact' ? 'flex' : 'none' }};">
-                                <div class="col-lg-6 left-input">
-                                    <label>First Name</label>
-                                    <input type="text" name="first_name" placeholder="First Name"
-                                        value="{{ old('first_name', $company->first_name) }}" />
-                                    {!! $errors->first('first_name', '<label class="error">:message</label>') !!}
+                        <div class="contact">
+                            <div class="col-lg-6 left-input">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" placeholder="First Name"
+                                    value="{{ old('first_name', $contact->first_name) }}" />
+                                {!! $errors->first('first_name', '<label class="error">:message</label>') !!}
 
-                                    <label>Last Name</label>
-                                    <input type="text" name="last_name" placeholder="Last Name"
-                                        value="{{ old('last_name', $company->last_name) }}" />
-                                    {!! $errors->first('last_name', '<label class="error">:message</label>') !!}
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" placeholder="Last Name"
+                                    value="{{ old('last_name', $contact->last_name) }}" />
+                                {!! $errors->first('last_name', '<label class="error">:message</label>') !!}
 
-                                    <label>Contact Email</label>
-                                    <input type="email" disabled name="email" placeholder="Email"
-                                        value="{{ old('email', $company->email) }}" />
-                                    {!! $errors->first('email', '<label class="error">:message</label>') !!}
+                                <label>Contact Email</label>
+                                <input type="email" name="email" placeholder="Email"
+                                    value="{{ old('email', $contact->email) }}" />
+                                {!! $errors->first('email', '<label class="error">:message</label>') !!}
 
-                                </div>
-                                <div class="col-lg-6 right-input">
-                                    <label>Your Phone</label>
-                                    <input type="tel" name="phone" placeholder="Phone"
-                                        value="{{ old('phone', $company->phone) }}" />
-                                    {!! $errors->first('phone', '<label class="error">:message</label>') !!}
-
-                                    <label>Profile Photo</label>
-                                    <div class="upload position-relative">
-                                        <input class="custom-file-input" type="file" placeholder="Upload"
-                                            id="photoGalleryContact" name="photo">
-                                        <div id="upload-title-contact" class="upload-style">Upload</div>
-                                        <img class="upload-img-contact" src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
-                                    </div>
-
-                                    @if ($company->image)
-                                        <img width="70" height="70" src="{{ $company->image }}" />
-                                    @endif
-                                </div>
                             </div>
-                        @endif
+                            <div class="col-lg-6 right-input">
+                                <label>Your Phone</label>
+                                <input type="tel" name="phone" placeholder="Phone"
+                                    value="{{ old('phone', $contact->phone) }}" />
+                                {!! $errors->first('phone', '<label class="error">:message</label>') !!}
+
+                                <label>Profile Photo</label>
+                                <div class="upload position-relative">
+                                    <input class="custom-file-input" type="file" placeholder="Upload"
+                                        id="photoGalleryContact" name="photo">
+                                    <div id="upload-title-contact" class="upload-style">Upload</div>
+                                    <img class="upload-img-contact"
+                                        src="{{ asset('img') }}/invalid-arrowtop@3x.png" />
+                                </div>
+
+                                @if ($contact->image)
+                                    <img width="70" height="70" src="{{ $contact->image }}" />
+                                @endif
+                            </div>
+                        </div>
                         <div class="save-btn">
                             <button class="save">Save</button>
                         </div>
