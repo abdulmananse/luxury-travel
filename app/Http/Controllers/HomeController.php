@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Notification;
 use Revolution\Google\Sheets\Facades\Sheets;
+use Illuminate\Support\Facades\Http;
 
 use Carbon\Carbon;
 
@@ -1126,6 +1127,23 @@ class HomeController extends Controller
         $contactPerson = User::role('Contact_Person')->first();
         $property = Property::where('property_id', $request->property_id)->first();
         if ($property && $contactPerson) {
+
+            // add a deal
+            $dealUrl = config('app.pipedrive_base_url') . 'deals?api_token=' . config('app.pipedrive_api_key');
+            $dealResponse = Http::post($dealUrl, [
+                'title' => $request->property_id . ' - Nights: ' . $request->nights . ' - Check In (' .$request->check_in. ') - Check Out (' .$request->check_out . ') Message: ' . $request->message,
+                'value' => (int) $request->total_price,
+                'currency' => 'AUD',
+                'user_id' => (int) config('app.pipedrive_owner_id'),
+                'add_time' => date('Y-m-d H:i:s')
+            ]);
+
+            $dealStatus = false;
+            $dealResData = $dealResponse->object();
+            if ($dealResData->success) {
+                $dealStatus = true;
+            }
+
             $email = $contactPerson->email;
             Notification::route('mail', $email)
                 ->notify(new RequestToBook([
@@ -1136,7 +1154,7 @@ class HomeController extends Controller
                 ]));
         }
 
-        return ['success' => true, 'data' => $request->all()];
+        return ['success' => true, 'deal_created' => $dealStatus, 'data' => $request->all()];
     }
 
     public function aboutUs()
