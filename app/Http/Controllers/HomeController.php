@@ -1131,7 +1131,7 @@ class HomeController extends Controller
             // add a deal
             $dealUrl = config('app.pipedrive_base_url') . 'deals?api_token=' . config('app.pipedrive_api_key');
             $dealResponse = Http::post($dealUrl, [
-                'title' => $request->property_id . ' - Nights: ' . $request->nights . ' - Check In (' .$request->check_in. ') - Check Out (' .$request->check_out . ') Message: ' . $request->message,
+                'title' => $request->property_id .' - ' . $property->name . ' - Nights: ' . $request->nights . ' - Check In (' .$request->check_in. ') - Check Out (' .$request->check_out . ') Message: ' . $request->message,
                 'value' => (int) $request->total_price,
                 'currency' => 'AUD',
                 'user_id' => (int) config('app.pipedrive_owner_id'),
