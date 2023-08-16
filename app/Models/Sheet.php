@@ -16,7 +16,7 @@ class Sheet extends Model
      */
     protected $fillable = [
         'sheet_id',
+        'company_id',
         'name'
     ];
-
 }

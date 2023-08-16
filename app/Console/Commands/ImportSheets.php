@@ -52,7 +52,7 @@ class ImportSheets extends Command
     public function handle()
     {
         //$startDateTime = Carbon::now();
-	    //Log::error('Import Sheets Started', [$startDateTime->format('d-m-Y h:i A')]);
+        //Log::error('Import Sheets Started', [$startDateTime->format('d-m-Y h:i A')]);
         Sheet::truncate();
         //$this->info('Start: ' . $startDateTime->format('d-m-Y h:i A'));
 
@@ -64,6 +64,7 @@ class ImportSheets extends Command
             //$this->info($value . ' Sheet Imported');
             Sheet::updateOrCreate([
                 'sheet_id' => $id,
+                'company_id' => 1,
                 'name' => $value
             ]);
         }
